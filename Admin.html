@@ -1,0 +1,3025 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Transaction Admin Panel</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:
+    Arial,
+    "Noto Sans Bengali",
+    sans-serif;
+  background:#f4f6f9;
+  color:#1f2937;
+  min-height:100vh;
+}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+
+/* ================================
+   LOGIN
+================================ */
+
+.login-page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.login-box{
+  width:100%;
+  max-width:390px;
+  background:#fff;
+  border-radius:20px;
+  padding:30px 25px;
+  box-shadow:
+    0 10px 35px rgba(0,0,0,.08);
+}
+
+.login-title{
+  text-align:center;
+  font-size:27px;
+  font-weight:800;
+  margin-bottom:7px;
+}
+
+.login-subtitle{
+  text-align:center;
+  color:#6b7280;
+  font-size:14px;
+  margin-bottom:25px;
+}
+
+.input-group{
+  margin-bottom:17px;
+}
+
+.input-group label{
+  display:block;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+
+.input-group input{
+  width:100%;
+  height:48px;
+  border:1px solid #d1d5db;
+  border-radius:11px;
+  padding:0 14px;
+  outline:none;
+  transition:.2s;
+}
+
+.input-group input:focus{
+  border-color:#2563eb;
+  box-shadow:
+    0 0 0 3px rgba(37,99,235,.10);
+}
+
+.login-btn{
+  width:100%;
+  height:49px;
+  border:none;
+  border-radius:11px;
+  background:#2563eb;
+  color:#fff;
+  font-weight:800;
+}
+
+.login-btn:active{
+  transform:scale(.98);
+}
+
+.login-error{
+  display:none;
+  background:#fee2e2;
+  color:#b91c1c;
+  padding:10px 12px;
+  border-radius:9px;
+  font-size:13px;
+  margin-bottom:15px;
+  text-align:center;
+}
+
+
+/* ================================
+   ADMIN
+================================ */
+
+.admin-page{
+  display:none;
+}
+
+.topbar{
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 22px;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+
+.brand{
+  font-size:20px;
+  font-weight:800;
+}
+
+.logout-btn{
+  border:none;
+  background:#fee2e2;
+  color:#b91c1c;
+  padding:9px 14px;
+  border-radius:9px;
+  font-size:13px;
+  font-weight:700;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:22px;
+}
+
+
+/* ================================
+   MONTH FILTER
+================================ */
+
+.filter-card{
+  background:#fff;
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:20px;
+  box-shadow:
+    0 3px 14px rgba(0,0,0,.05);
+}
+
+.filter-title{
+  font-size:16px;
+  font-weight:800;
+  margin-bottom:13px;
+}
+
+.filter-row{
+  display:grid;
+  grid-template-columns:
+    1fr 1fr;
+  gap:12px;
+}
+
+.filter-row select{
+  width:100%;
+  height:46px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  padding:0 12px;
+  background:#fff;
+  outline:none;
+}
+
+
+/* ================================
+   SUMMARY
+================================ */
+
+.summary-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(3,1fr);
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.summary-card{
+  background:#fff;
+  border-radius:16px;
+  padding:18px;
+  box-shadow:
+    0 3px 14px rgba(0,0,0,.05);
+}
+
+.summary-label{
+  color:#6b7280;
+  font-size:13px;
+  margin-bottom:8px;
+}
+
+.summary-value{
+  font-size:24px;
+  font-weight:900;
+}
+
+.sale-card .summary-value{
+  color:#15803d;
+}
+
+.payment-card .summary-value{
+  color:#2563eb;
+}
+
+.due-card .summary-value{
+  color:#dc2626;
+}
+
+
+/* ================================
+   ADD TRANSACTION
+================================ */
+
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:20px;
+  box-shadow:
+    0 3px 14px rgba(0,0,0,.05);
+}
+
+.card-title{
+  font-size:18px;
+  font-weight:800;
+  margin-bottom:18px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(2,1fr);
+  gap:15px;
+}
+
+.form-group{
+  display:flex;
+  flex-direction:column;
+}
+
+.form-group label{
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select{
+  width:100%;
+  height:46px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  padding:0 12px;
+  background:#fff;
+  outline:none;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+  border-color:#2563eb;
+}
+
+
+/* ================================
+   TYPE SELECT
+================================ */
+
+.type-title{
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:9px;
+}
+
+.type-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.type-btn{
+  height:47px;
+  border-radius:10px;
+  border:2px solid #e5e7eb;
+  background:#fff;
+  font-weight:800;
+  transition:.2s;
+}
+
+.type-btn.sale.active{
+  background:#dcfce7;
+  border-color:#16a34a;
+  color:#15803d;
+}
+
+.type-btn.payment.active{
+  background:#dbeafe;
+  border-color:#2563eb;
+  color:#1d4ed8;
+}
+
+.option-box{
+  margin-top:12px;
+}
+
+
+/* ================================
+   SAVE BUTTON
+================================ */
+
+.save-btn{
+  width:100%;
+  height:49px;
+  border:none;
+  border-radius:10px;
+  background:#111827;
+  color:#fff;
+  font-weight:800;
+  margin-top:17px;
+}
+
+.save-btn:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+
+/* ================================
+   TABLE
+================================ */
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
+}
+
+thead{
+  background:#f3f4f6;
+}
+
+th,
+td{
+  padding:12px 10px;
+  text-align:left;
+  border-bottom:1px solid #e5e7eb;
+  font-size:13px;
+}
+
+th{
+  font-weight:800;
+}
+
+.sale-text{
+  color:#15803d;
+  font-weight:800;
+}
+
+.payment-text{
+  color:#2563eb;
+  font-weight:800;
+}
+
+.empty{
+  text-align:center;
+  color:#9ca3af;
+  padding:30px;
+}
+
+
+/* ================================
+   ADD NAME / OPTIONS
+================================ */
+
+.small-form{
+  display:grid;
+  grid-template-columns:
+    1fr auto;
+  gap:10px;
+}
+
+.small-form input{
+  height:45px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  padding:0 12px;
+  outline:none;
+}
+
+.small-btn{
+  border:none;
+  border-radius:10px;
+  padding:0 18px;
+  background:#2563eb;
+  color:#fff;
+  font-weight:700;
+}
+
+
+/* ================================
+   PERSON SUMMARY
+================================ */
+
+.people-table{
+  width:100%;
+  overflow-x:auto;
+}
+
+.people-table table{
+  min-width:650px;
+}
+
+
+/* ================================
+   LOADING
+================================ */
+
+.loading{
+  position:fixed;
+  inset:0;
+  background:rgba(255,255,255,.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+}
+
+.spinner{
+  width:38px;
+  height:38px;
+  border:4px solid #e5e7eb;
+  border-top-color:#2563eb;
+  border-radius:50%;
+  animation:
+    spin .7s linear infinite;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+
+/* ================================
+   TOAST
+================================ */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:
+    translate(-50%,20px);
+  background:#111827;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:10px;
+  font-size:13px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:200;
+}
+
+.toast.show{
+  opacity:1;
+  transform:
+    translate(-50%,0);
+}
+
+.toast.success{
+  background:#15803d;
+}
+
+.toast.error{
+  background:#dc2626;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media(max-width:700px){
+
+  .topbar{
+    padding:0 14px;
+  }
+
+  .brand{
+    font-size:17px;
+  }
+
+  .container{
+    padding:14px;
+  }
+
+  .summary-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .filter-row{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .card{
+    padding:16px;
+  }
+
+  .summary-card{
+    padding:15px;
+  }
+
+  .summary-value{
+    font-size:22px;
+  }
+
+  .small-form{
+    grid-template-columns:1fr;
+  }
+
+  .small-btn{
+    height:45px;
+  }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =================================================
+     LOADING
+================================================== -->
+
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+</div>
+
+
+<!-- =================================================
+     LOGIN PAGE
+================================================== -->
+
+<section class="login-page" id="loginPage">
+
+  <div class="login-box">
+
+    <div class="login-title">
+      Admin Panel
+    </div>
+
+    <div class="login-subtitle">
+      Transaction Management
+    </div>
+
+    <div class="login-error" id="loginError"></div>
+
+    <div class="input-group">
+
+      <label>
+        Username
+      </label>
+
+      <input
+        type="text"
+        id="username"
+        autocomplete="username"
+        placeholder="Username"
+      >
+
+    </div>
+
+
+    <div class="input-group">
+
+      <label>
+        Password
+      </label>
+
+      <input
+        type="password"
+        id="password"
+        autocomplete="current-password"
+        placeholder="Password"
+      >
+
+    </div>
+
+
+    <button
+      class="login-btn"
+      onclick="login()"
+      id="loginButton"
+    >
+      Login
+    </button>
+
+  </div>
+
+</section>
+
+
+
+<!-- =================================================
+     ADMIN PAGE
+================================================== -->
+
+<section class="admin-page" id="adminPage">
+
+
+  <!-- TOPBAR -->
+
+  <header class="topbar">
+
+    <div class="brand">
+      Transaction Admin
+    </div>
+
+    <button
+      class="logout-btn"
+      onclick="logout()"
+    >
+      Logout
+    </button>
+
+  </header>
+
+
+  <main class="container">
+
+
+    <!-- =================================================
+         MONTH FILTER
+    ================================================== -->
+
+    <div class="filter-card">
+
+      <div class="filter-title">
+        📅 মাস ও সাল নির্বাচন করুন
+      </div>
+
+      <div class="filter-row">
+
+        <select
+          id="filterMonth"
+          onchange="loadDashboard()"
+        ></select>
+
+        <select
+          id="filterYear"
+          onchange="loadDashboard()"
+        ></select>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SUMMARY
+    ================================================== -->
+
+    <div class="summary-grid">
+
+
+      <div class="summary-card sale-card">
+
+        <div class="summary-label">
+          মোট বিক্রয়
+        </div>
+
+        <div
+          class="summary-value"
+          id="totalSale"
+        >
+          0
+        </div>
+
+      </div>
+
+
+      <div class="summary-card payment-card">
+
+        <div class="summary-label">
+          মোট পেমেন্ট
+        </div>
+
+        <div
+          class="summary-value"
+          id="totalPayment"
+        >
+          0
+        </div>
+
+      </div>
+
+
+      <div class="summary-card due-card">
+
+        <div class="summary-label">
+          বর্তমানে পেমেন্ট বাকি
+        </div>
+
+        <div
+          class="summary-value"
+          id="totalDue"
+        >
+          0
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         ADD TRANSACTION
+    ================================================== -->
+
+    <div class="card">
+
+      <div class="card-title">
+        ➕ নতুন লেনদেন
+      </div>
+
+
+      <div class="form-grid">
+
+
+        <!-- DATE -->
+
+        <div class="form-group">
+
+          <label>
+            তারিখ
+          </label>
+
+          <input
+            type="date"
+            id="transactionDate"
+          >
+
+        </div>
+
+
+        <!-- AMOUNT -->
+
+        <div class="form-group">
+
+          <label>
+            টাকা
+          </label>
+
+          <input
+            type="number"
+            id="amount"
+            min="0"
+            step="1"
+            inputmode="numeric"
+            placeholder="টাকার পরিমাণ"
+          >
+
+        </div>
+
+
+        <!-- NAME -->
+
+        <div class="form-group">
+
+          <label>
+            নাম
+          </label>
+
+          <select
+            id="customerName"
+            onchange="customerChanged()"
+          >
+
+            <option value="">
+              নাম নির্বাচন করুন
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- TYPE -->
+
+        <div class="form-group">
+
+          <label>
+            ধরন
+          </label>
+
+          <div class="type-buttons">
+
+            <button
+              type="button"
+              class="type-btn sale"
+              id="saleBtn"
+              onclick="selectType('sale')"
+            >
+              বিক্রয়
+            </button>
+
+            <button
+              type="button"
+              class="type-btn payment"
+              id="paymentBtn"
+              onclick="selectType('payment')"
+            >
+              পেমেন্ট
+            </button>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- OPTION -->
+
+      <div
+        class="option-box"
+        id="optionBox"
+        style="display:none;"
+      >
+
+        <div class="form-group">
+
+          <label id="optionLabel">
+            ধরন নির্বাচন করুন
+          </label>
+
+          <select id="transactionOption">
+
+            <option value="">
+              নির্বাচন করুন
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="save-btn"
+        id="saveButton"
+        onclick="saveTransaction()"
+      >
+        💾 লেনদেন Save করুন
+      </button>
+
+    </div>
+
+
+
+    <!-- =================================================
+         ADD NAME
+    ================================================== -->
+
+    <div class="card">
+
+      <div class="card-title">
+        👤 নতুন নাম যোগ করুন
+      </div>
+
+      <div class="small-form">
+
+        <input
+          type="text"
+          id="newName"
+          placeholder="নতুন নাম"
+        >
+
+        <button
+          class="small-btn"
+          onclick="addName()"
+        >
+          যোগ করুন
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SALE OPTION
+    ================================================== -->
+
+    <div class="card">
+
+      <div class="card-title">
+        🛒 বিক্রয় Option যোগ করুন
+      </div>
+
+      <div class="small-form">
+
+        <input
+          type="text"
+          id="newSaleType"
+          placeholder="যেমন: Product"
+        >
+
+        <button
+          class="small-btn"
+          onclick="addSaleType()"
+        >
+          যোগ করুন
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PAYMENT OPTION
+    ================================================== -->
+
+    <div class="card">
+
+      <div class="card-title">
+        💳 পেমেন্ট Option যোগ করুন
+      </div>
+
+      <div class="small-form">
+
+        <input
+          type="text"
+          id="newPaymentType"
+          placeholder="যেমন: Cash"
+        >
+
+        <button
+          class="small-btn"
+          onclick="addPaymentType()"
+        >
+          যোগ করুন
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         MONTHLY TRANSACTIONS
+    ================================================== -->
+
+    <div class="card">
+
+      <div class="card-title">
+        📋 মাসিক লেনদেন
+      </div>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                তারিখ
+              </th>
+
+              <th>
+                নাম
+              </th>
+
+              <th>
+                টাকা
+              </th>
+
+              <th>
+                ধরন
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="transactionTable">
+
+            <tr>
+
+              <td
+                colspan="4"
+                class="empty"
+              >
+                Loading...
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PERSON SUMMARY
+    ================================================== -->
+
+    <div class="card">
+
+      <div class="card-title">
+        👥 নাম অনুযায়ী হিসাব
+      </div>
+
+      <div class="people-table">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                নাম
+              </th>
+
+              <th>
+                বিক্রয়
+              </th>
+
+              <th>
+                পেমেন্ট
+              </th>
+
+              <th>
+                বাকি
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="peopleTable">
+
+            <tr>
+
+              <td
+                colspan="4"
+                class="empty"
+              >
+                Loading...
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+  </main>
+
+</section>
+
+
+
+<!-- =================================================
+     TOAST
+================================================== -->
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
+
+
+<script>
+
+
+/* =====================================================
+   API URL
+===================================================== */
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbyw9_5mu5j2QHse1WqI8_t-ve6eSSEGlJdK5KpwHHjjy_3jVcyuXfnGUDc5Qe707_7Jgw/exec";
+
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+let adminToken =
+  localStorage.getItem(
+    "transaction_admin_token"
+  ) || "";
+
+let settings = {
+  names: [],
+  saleTypes: [],
+  paymentTypes: []
+};
+
+let selectedType = "";
+
+
+/* =====================================================
+   INITIAL
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    setToday();
+
+    createMonthYear();
+
+    if(adminToken){
+
+      validateSession();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   API CALL
+===================================================== */
+
+function api(
+  action,
+  params = {}
+){
+
+  return new Promise(
+    function(resolve,reject){
+
+      const callback =
+        "jsonp_" +
+        Date.now() +
+        "_" +
+        Math.floor(
+          Math.random()*100000
+        );
+
+
+      const query =
+        new URLSearchParams();
+
+
+      query.set(
+        "action",
+        action
+      );
+
+
+      query.set(
+        "callback",
+        callback
+      );
+
+
+      Object.keys(params)
+        .forEach(
+          function(key){
+
+            if(
+              params[key] !== undefined &&
+              params[key] !== null
+            ){
+
+              query.set(
+                key,
+                params[key]
+              );
+
+            }
+
+          }
+        );
+
+
+      const script =
+        document.createElement(
+          "script"
+        );
+
+
+      window[callback] =
+        function(data){
+
+          cleanup();
+
+          resolve(data);
+
+        };
+
+
+      script.onerror =
+        function(){
+
+          cleanup();
+
+          reject(
+            new Error(
+              "Server connection failed."
+            )
+          );
+
+        };
+
+
+      function cleanup(){
+
+        try{
+          delete window[callback];
+        }catch(e){}
+
+        script.remove();
+
+      }
+
+
+      script.src =
+        API_URL +
+        "?" +
+        query.toString();
+
+
+      document.body.appendChild(
+        script
+      );
+
+    }
+  );
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function login(){
+
+  const username =
+    document
+      .getElementById(
+        "username"
+      )
+      .value
+      .trim();
+
+
+  const password =
+    document
+      .getElementById(
+        "password"
+      )
+      .value;
+
+
+  const error =
+    document.getElementById(
+      "loginError"
+    );
+
+
+  error.style.display =
+    "none";
+
+
+  if(
+    !username ||
+    !password
+  ){
+
+    showLoginError(
+      "Username এবং Password দিন।"
+    );
+
+    return;
+  }
+
+
+  setLoading(true);
+
+
+  try{
+
+    const result =
+      await api(
+        "adminLogin",
+        {
+          username:
+            username,
+
+          password:
+            password
+        }
+      );
+
+
+    if(
+      result &&
+      result.success &&
+      result.token
+    ){
+
+      adminToken =
+        result.token;
+
+
+      localStorage.setItem(
+        "transaction_admin_token",
+        adminToken
+      );
+
+
+      showAdmin();
+
+      await loadSettings();
+
+      await loadDashboard();
+
+      showToast(
+        "Login সফল হয়েছে।",
+        "success"
+      );
+
+    }else{
+
+      showLoginError(
+        result.message ||
+        "Login failed."
+      );
+
+    }
+
+  }catch(error){
+
+    showLoginError(
+      "Server-এর সাথে সংযোগ হচ্ছে না।"
+    );
+
+  }finally{
+
+    setLoading(false);
+
+  }
+
+}
+
+
+/* =====================================================
+   VALIDATE SESSION
+===================================================== */
+
+async function validateSession(){
+
+  setLoading(true);
+
+  try{
+
+    const result =
+      await api(
+        "validateAdmin",
+        {
+          token:
+            adminToken
+        }
+      );
+
+
+    if(
+      result &&
+      result.success &&
+      result.authenticated
+    ){
+
+      showAdmin();
+
+      await loadSettings();
+
+      await loadDashboard();
+
+    }else{
+
+      logout(false);
+
+    }
+
+  }catch(error){
+
+    logout(false);
+
+  }finally{
+
+    setLoading(false);
+
+  }
+
+}
+
+
+/* =====================================================
+   SHOW ADMIN
+===================================================== */
+
+function showAdmin(){
+
+  document
+    .getElementById(
+      "loginPage"
+    )
+    .style.display =
+      "none";
+
+
+  document
+    .getElementById(
+      "adminPage"
+    )
+    .style.display =
+      "block";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout(
+  showMessage = true
+){
+
+  adminToken = "";
+
+  localStorage.removeItem(
+    "transaction_admin_token"
+  );
+
+
+  document
+    .getElementById(
+      "adminPage"
+    )
+    .style.display =
+      "none";
+
+
+  document
+    .getElementById(
+      "loginPage"
+    )
+    .style.display =
+      "flex";
+
+
+  if(showMessage){
+
+    showToast(
+      "Logout হয়েছে।",
+      "success"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   LOGIN ERROR
+===================================================== */
+
+function showLoginError(
+  message
+){
+
+  const error =
+    document.getElementById(
+      "loginError"
+    );
+
+
+  error.textContent =
+    message;
+
+
+  error.style.display =
+    "block";
+
+}
+
+
+/* =====================================================
+   LOAD SETTINGS
+===================================================== */
+
+async function loadSettings(){
+
+  const result =
+    await api(
+      "getSettings",
+      {
+        token:
+          adminToken
+      }
+    );
+
+
+  if(
+    !result ||
+    !result.success
+  ){
+
+    if(
+      result &&
+      result.authRequired
+    ){
+
+      logout(false);
+
+    }
+
+    throw new Error(
+      result.message ||
+      "Settings load failed."
+    );
+
+  }
+
+
+  settings =
+    result;
+
+
+  populateNames();
+
+}
+
+
+/* =====================================================
+   POPULATE NAMES
+===================================================== */
+
+function populateNames(){
+
+  const select =
+    document.getElementById(
+      "customerName"
+    );
+
+
+  select.innerHTML =
+    `
+      <option value="">
+        নাম নির্বাচন করুন
+      </option>
+    `;
+
+
+  (settings.names || [])
+    .forEach(
+      function(name){
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          name;
+
+
+        option.textContent =
+          name;
+
+
+        select.appendChild(
+          option
+        );
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   CUSTOMER CHANGED
+===================================================== */
+
+function customerChanged(){
+
+  // Nothing required here currently.
+
+}
+
+
+/* =====================================================
+   SELECT TYPE
+===================================================== */
+
+function selectType(
+  type
+){
+
+  selectedType =
+    type;
+
+
+  const saleBtn =
+    document.getElementById(
+      "saleBtn"
+    );
+
+
+  const paymentBtn =
+    document.getElementById(
+      "paymentBtn"
+    );
+
+
+  saleBtn.classList.remove(
+    "active"
+  );
+
+
+  paymentBtn.classList.remove(
+    "active"
+  );
+
+
+  if(
+    type === "sale"
+  ){
+
+    saleBtn.classList.add(
+      "active"
+    );
+
+    showOptions(
+      settings.saleTypes || [],
+      "বিক্রয়"
+    );
+
+  }else{
+
+    paymentBtn.classList.add(
+      "active"
+    );
+
+    showOptions(
+      settings.paymentTypes || [],
+      "পেমেন্ট"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   SHOW OPTIONS
+===================================================== */
+
+function showOptions(
+  options,
+  label
+){
+
+  const box =
+    document.getElementById(
+      "optionBox"
+    );
+
+
+  const select =
+    document.getElementById(
+      "transactionOption"
+    );
+
+
+  const optionLabel =
+    document.getElementById(
+      "optionLabel"
+    );
+
+
+  optionLabel.textContent =
+    label +
+    " Option";
+
+
+  select.innerHTML =
+    `
+      <option value="">
+        ${label} নির্বাচন করুন
+      </option>
+    `;
+
+
+  options.forEach(
+    function(item){
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        item;
+
+
+      option.textContent =
+        item;
+
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
+
+
+  box.style.display =
+    "block";
+
+}
+
+
+/* =====================================================
+   SAVE TRANSACTION
+===================================================== */
+
+async function saveTransaction(){
+
+  const date =
+    document
+      .getElementById(
+        "transactionDate"
+      )
+      .value;
+
+
+  const amount =
+    document
+      .getElementById(
+        "amount"
+      )
+      .value;
+
+
+  const name =
+    document
+      .getElementById(
+        "customerName"
+      )
+      .value;
+
+
+  const option =
+    document
+      .getElementById(
+        "transactionOption"
+      )
+      .value;
+
+
+  if(!date){
+
+    showToast(
+      "তারিখ নির্বাচন করুন।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if(
+    !amount ||
+    Number(amount) <= 0
+  ){
+
+    showToast(
+      "সঠিক টাকার পরিমাণ দিন।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if(!name){
+
+    showToast(
+      "নাম নির্বাচন করুন।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if(!selectedType){
+
+    showToast(
+      "বিক্রয় অথবা পেমেন্ট নির্বাচন করুন।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if(!option){
+
+    showToast(
+      "Option নির্বাচন করুন।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  /*
+   * Backend-এর জন্য final type.
+   *
+   * Example:
+   * বিক্রয় - Product
+   * পেমেন্ট - Cash
+   */
+
+  const type =
+    selectedType === "sale"
+      ? "বিক্রয় - " + option
+      : "পেমেন্ট - " + option;
+
+
+  setLoading(true);
+
+
+  try{
+
+    const result =
+      await api(
+        "saveTransaction",
+        {
+
+          token:
+            adminToken,
+
+          date:
+            date,
+
+          amount:
+            amount,
+
+          name:
+            name,
+
+          type:
+            type
+
+        }
+      );
+
+
+    if(
+      result &&
+      result.success
+    ){
+
+      showToast(
+        "লেনদেন সফলভাবে Save হয়েছে।",
+        "success"
+      );
+
+
+      document
+        .getElementById(
+          "amount"
+        )
+        .value =
+          "";
+
+
+      document
+        .getElementById(
+          "transactionOption"
+        )
+        .value =
+          "";
+
+
+      selectedType =
+        "";
+
+
+      document
+        .getElementById(
+          "saleBtn"
+        )
+        .classList.remove(
+          "active"
+        );
+
+
+      document
+        .getElementById(
+          "paymentBtn"
+        )
+        .classList.remove(
+          "active"
+        );
+
+
+      document
+        .getElementById(
+          "optionBox"
+        )
+        .style.display =
+          "none";
+
+
+      await loadDashboard();
+
+    }else{
+
+      if(
+        result &&
+        result.authRequired
+      ){
+
+        logout(false);
+
+        return;
+      }
+
+
+      showToast(
+        result.message ||
+        "Save failed.",
+        "error"
+      );
+
+    }
+
+  }catch(error){
+
+    showToast(
+      error.message ||
+      "Server error.",
+      "error"
+    );
+
+  }finally{
+
+    setLoading(false);
+
+  }
+
+}
+
+
+/* =====================================================
+   ADD NAME
+===================================================== */
+
+async function addName(){
+
+  const input =
+    document.getElementById(
+      "newName"
+    );
+
+
+  const name =
+    input.value.trim();
+
+
+  if(!name){
+
+    showToast(
+      "নাম লিখুন।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  setLoading(true);
+
+
+  try{
+
+    const result =
+      await api(
+        "addName",
+        {
+
+          token:
+            adminToken,
+
+          name:
+            name
+
+        }
+      );
+
+
+    if(
+      result &&
+      result.success
+    ){
+
+      input.value =
+        "";
+
+
+      await loadSettings();
+
+
+      showToast(
+        "নাম যোগ হয়েছে।",
+        "success"
+      );
+
+    }else{
+
+      showToast(
+        result.message ||
+        "নাম যোগ করা যায়নি।",
+        "error"
+      );
+
+    }
+
+  }catch(error){
+
+    showToast(
+      error.message,
+      "error"
+    );
+
+  }finally{
+
+    setLoading(false);
+
+  }
+
+}
+
+
+/* =====================================================
+   ADD SALE TYPE
+===================================================== */
+
+async function addSaleType(){
+
+  const input =
+    document.getElementById(
+      "newSaleType"
+    );
+
+
+  const value =
+    input.value.trim();
+
+
+  if(!value){
+
+    showToast(
+      "বিক্রয় Option লিখুন।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  setLoading(true);
+
+
+  try{
+
+    const result =
+      await api(
+        "addSaleType",
+        {
+
+          token:
+            adminToken,
+
+          value:
+            value
+
+        }
+      );
+
+
+    if(
+      result &&
+      result.success
+    ){
+
+      input.value =
+        "";
+
+
+      await loadSettings();
+
+
+      showToast(
+        "বিক্রয় Option যোগ হয়েছে।",
+        "success"
+      );
+
+    }else{
+
+      showToast(
+        result.message ||
+        "Option যোগ করা যায়নি।",
+        "error"
+      );
+
+    }
+
+  }catch(error){
+
+    showToast(
+      error.message,
+      "error"
+    );
+
+  }finally{
+
+    setLoading(false);
+
+  }
+
+}
+
+
+/* =====================================================
+   ADD PAYMENT TYPE
+===================================================== */
+
+async function addPaymentType(){
+
+  const input =
+    document.getElementById(
+      "newPaymentType"
+    );
+
+
+  const value =
+    input.value.trim();
+
+
+  if(!value){
+
+    showToast(
+      "পেমেন্ট Option লিখুন।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  setLoading(true);
+
+
+  try{
+
+    const result =
+      await api(
+        "addPaymentType",
+        {
+
+          token:
+            adminToken,
+
+          value:
+            value
+
+        }
+      );
+
+
+    if(
+      result &&
+      result.success
+    ){
+
+      input.value =
+        "";
+
+
+      await loadSettings();
+
+
+      showToast(
+        "পেমেন্ট Option যোগ হয়েছে।",
+        "success"
+      );
+
+    }else{
+
+      showToast(
+        result.message ||
+        "Option যোগ করা যায়নি।",
+        "error"
+      );
+
+    }
+
+  }catch(error){
+
+    showToast(
+      error.message,
+      "error"
+    );
+
+  }finally{
+
+    setLoading(false);
+
+  }
+
+}
+
+
+/* =====================================================
+   MONTH / YEAR
+===================================================== */
+
+function createMonthYear(){
+
+  const monthSelect =
+    document.getElementById(
+      "filterMonth"
+    );
+
+
+  const yearSelect =
+    document.getElementById(
+      "filterYear"
+    );
+
+
+  const months = [
+
+    "জানুয়ারি",
+    "ফেব্রুয়ারি",
+    "মার্চ",
+    "এপ্রিল",
+    "মে",
+    "জুন",
+    "জুলাই",
+    "আগস্ট",
+    "সেপ্টেম্বর",
+    "অক্টোবর",
+    "নভেম্বর",
+    "ডিসেম্বর"
+
+  ];
+
+
+  monthSelect.innerHTML =
+    "";
+
+
+  months.forEach(
+    function(month,index){
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        index + 1;
+
+
+      option.textContent =
+        month;
+
+
+      monthSelect.appendChild(
+        option
+      );
+
+    }
+  );
+
+
+  const currentYear =
+    new Date()
+      .getFullYear();
+
+
+  yearSelect.innerHTML =
+    "";
+
+
+  for(
+    let year =
+      currentYear - 5;
+
+    year <=
+      currentYear + 5;
+
+    year++
+  ){
+
+    const option =
+      document.createElement(
+        "option"
+      );
+
+
+    option.value =
+      year;
+
+
+    option.textContent =
+      year;
+
+
+    yearSelect.appendChild(
+      option
+    );
+
+  }
+
+
+  monthSelect.value =
+    new Date()
+      .getMonth() + 1;
+
+
+  yearSelect.value =
+    currentYear;
+
+}
+
+
+/* =====================================================
+   LOAD DASHBOARD
+===================================================== */
+
+async function loadDashboard(){
+
+  if(!adminToken){
+    return;
+  }
+
+
+  const month =
+    document
+      .getElementById(
+        "filterMonth"
+      )
+      .value;
+
+
+  const year =
+    document
+      .getElementById(
+        "filterYear"
+      )
+      .value;
+
+
+  try{
+
+    const result =
+      await api(
+        "getAdminSummary",
+        {
+
+          token:
+            adminToken,
+
+          month:
+            month,
+
+          year:
+            year
+
+        }
+      );
+
+
+    if(
+      !result ||
+      !result.success
+    ){
+
+      if(
+        result &&
+        result.authRequired
+      ){
+
+        logout(false);
+
+        return;
+      }
+
+
+      throw new Error(
+        result.message ||
+        "Summary load failed."
+      );
+
+    }
+
+
+    updateSummary(
+      result.total
+    );
+
+
+    updatePeopleTable(
+      result.data || []
+    );
+
+
+    await loadTransactions();
+
+  }catch(error){
+
+    showToast(
+      error.message ||
+      "Dashboard load failed.",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   UPDATE SUMMARY
+===================================================== */
+
+function updateSummary(
+  total
+){
+
+  total =
+    total || {};
+
+
+  document
+    .getElementById(
+      "totalSale"
+    )
+    .textContent =
+      money(
+        total.sale || 0
+      );
+
+
+  document
+    .getElementById(
+      "totalPayment"
+    )
+    .textContent =
+      money(
+        total.payment || 0
+      );
+
+
+  document
+    .getElementById(
+      "totalDue"
+    )
+    .textContent =
+      money(
+        total.due || 0
+      );
+
+}
+
+
+/* =====================================================
+   LOAD TRANSACTIONS
+===================================================== */
+
+async function loadTransactions(){
+
+  const month =
+    document
+      .getElementById(
+        "filterMonth"
+      )
+      .value;
+
+
+  const year =
+    document
+      .getElementById(
+        "filterYear"
+      )
+      .value;
+
+
+  const result =
+    await api(
+      "getTransactions",
+      {
+
+        token:
+          adminToken,
+
+        name:
+          "ALL",
+
+        month:
+          month,
+
+        year:
+          year
+
+      }
+    );
+
+
+  if(
+    !result ||
+    !result.success
+  ){
+
+    throw new Error(
+      result.message ||
+      "Transactions load failed."
+    );
+
+  }
+
+
+  renderTransactions(
+    result.transactions || []
+  );
+
+}
+
+
+/* =====================================================
+   RENDER TRANSACTIONS
+===================================================== */
+
+function renderTransactions(
+  transactions
+){
+
+  const tbody =
+    document.getElementById(
+      "transactionTable"
+    );
+
+
+  if(
+    !transactions.length
+  ){
+
+    tbody.innerHTML =
+      `
+        <tr>
+          <td
+            colspan="4"
+            class="empty"
+          >
+            এই মাসে কোনো লেনদেন নেই।
+          </td>
+        </tr>
+      `;
+
+    return;
+  }
+
+
+  /*
+   * Latest first.
+   */
+
+  const list =
+    [...transactions]
+      .reverse();
+
+
+  tbody.innerHTML =
+    list.map(
+      function(item){
+
+        const isSale =
+          String(
+            item.type || ""
+          )
+          .startsWith(
+            "বিক্রয়"
+          );
+
+
+        return `
+
+          <tr>
+
+            <td>
+              ${escapeHtml(
+                item.date || ""
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                item.name || ""
+              )}
+            </td>
+
+            <td>
+              ${money(
+                item.amount || 0
+              )}
+            </td>
+
+            <td
+              class="${
+                isSale
+                  ? "sale-text"
+                  : "payment-text"
+              }"
+            >
+              ${escapeHtml(
+                item.type || ""
+              )}
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* =====================================================
+   PEOPLE TABLE
+===================================================== */
+
+function updatePeopleTable(
+  data
+){
+
+  const tbody =
+    document.getElementById(
+      "peopleTable"
+    );
+
+
+  if(!data.length){
+
+    tbody.innerHTML =
+      `
+        <tr>
+          <td
+            colspan="4"
+            class="empty"
+          >
+            কোনো তথ্য নেই।
+          </td>
+        </tr>
+      `;
+
+    return;
+  }
+
+
+  tbody.innerHTML =
+    data.map(
+      function(item){
+
+        return `
+
+          <tr>
+
+            <td>
+              <strong>
+                ${escapeHtml(
+                  item.name || ""
+                )}
+              </strong>
+            </td>
+
+            <td
+              class="sale-text"
+            >
+              ${money(
+                item.sale || 0
+              )}
+            </td>
+
+            <td
+              class="payment-text"
+            >
+              ${money(
+                item.payment || 0
+              )}
+            </td>
+
+            <td
+              style="
+                color:${
+                  Number(item.due || 0) > 0
+                    ? '#dc2626'
+                    : '#15803d'
+                };
+                font-weight:800;
+              "
+            >
+              ${money(
+                item.due || 0
+              )}
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* =====================================================
+   TODAY
+===================================================== */
+
+function setToday(){
+
+  const now =
+    new Date();
+
+
+  const year =
+    now.getFullYear();
+
+
+  const month =
+    String(
+      now.getMonth()+1
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  const day =
+    String(
+      now.getDate()
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  document
+    .getElementById(
+      "transactionDate"
+    )
+    .value =
+      `${year}-${month}-${day}`;
+
+}
+
+
+/* =====================================================
+   MONEY
+===================================================== */
+
+function money(
+  value
+){
+
+  const number =
+    Number(
+      value
+    ) || 0;
+
+
+  return new Intl.NumberFormat(
+    "en-US",
+    {
+      maximumFractionDigits:0
+    }
+  ).format(
+    number
+  ) + " ৳";
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(
+  value
+){
+
+  return String(
+    value
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+function setLoading(
+  status
+){
+
+  document
+    .getElementById(
+      "loading"
+    )
+    .style.display =
+      status
+        ? "flex"
+        : "none";
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+let toastTimer;
+
+
+function showToast(
+  message,
+  type = ""
+){
+
+  const toast =
+    document.getElementById(
+      "toast"
+    );
+
+
+  toast.textContent =
+    message;
+
+
+  toast.className =
+    "toast show " +
+    type;
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastTimer =
+    setTimeout(
+      function(){
+
+        toast.className =
+          "toast";
+
+      },
+      2800
+    );
+
+}
+
+
+/* =====================================================
+   ENTER KEY LOGIN
+===================================================== */
+
+document
+  .getElementById(
+    "password"
+  )
+  .addEventListener(
+    "keydown",
+    function(event){
+
+      if(
+        event.key ===
+        "Enter"
+      ){
+
+        login();
+
+      }
+
+    }
+  );
+
+
+</script>
+
+</body>
+  </html>
