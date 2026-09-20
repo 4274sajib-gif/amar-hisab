@@ -12,19 +12,26 @@
   -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+html,
+body{
   margin:0;
   padding:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
   background:#f4f6f5;
   color:#202423;
   font-family:Arial,"Noto Sans Bengali",sans-serif;
 }
 
 body{
-  min-height:100vh;
+  min-height:100dvh;
 }
 
-button,input,select,textarea{
+button,
+input,
+select,
+textarea{
   font-family:inherit;
 }
 
@@ -36,17 +43,20 @@ button{
   display:none!important;
 }
 
+
 /* =========================
    LOGIN
 ========================= */
 
 #loginScreen{
-  min-height:100vh;
+  width:100%;
+  height:100dvh;
   display:flex;
   align-items:center;
   justify-content:center;
   padding:20px;
   background:#f4f6f5;
+  overflow:hidden;
 }
 
 .login-box{
@@ -141,27 +151,40 @@ button{
   margin-top:12px;
 }
 
+
 /* =========================
    APP
 ========================= */
 
 #app{
-  min-height:100vh;
-  padding-bottom:72px;
+  width:100%;
+  height:100dvh;
+  min-height:100dvh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
 }
 
+
+/* =========================
+   TOP HEADER
+========================= */
+
 .top-header{
+  flex:0 0 auto;
+  height:67px;
   background:#0b6b4f;
   color:#fff;
-  padding:16px 16px 17px;
-  position:sticky;
-  top:0;
+  padding:10px 14px;
+  position:relative;
   z-index:20;
   box-shadow:0 2px 8px rgba(0,0,0,.12);
 }
 
 .header-row{
+  width:100%;
   max-width:520px;
+  height:100%;
   margin:auto;
   display:flex;
   align-items:center;
@@ -171,18 +194,99 @@ button{
 .app-title{
   font-size:20px;
   font-weight:800;
+  line-height:22px;
 }
 
 .header-user{
-  font-size:12px;
+  font-size:11px;
   opacity:.9;
+  line-height:15px;
 }
 
-.main{
-  max-width:520px;
-  margin:auto;
-  padding:14px 12px 20px;
+
+/* =========================
+   HEADER RIGHT
+========================= */
+
+.header-right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  justify-content:center;
+  gap:2px;
+  min-width:70px;
 }
+
+#syncStatus{
+  min-width:70px;
+  text-align:right;
+  white-space:nowrap;
+  font-size:11px;
+  line-height:14px;
+}
+
+.header-logout{
+  width:30px;
+  height:24px;
+  padding:0;
+  border:0;
+  border-radius:7px;
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  line-height:1;
+  box-shadow:0 1px 3px rgba(0,0,0,.12);
+}
+
+.header-logout:active{
+  transform:scale(.93);
+  background:rgba(255,255,255,.22);
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+  width:100%;
+  max-width:520px;
+  flex:1 1 auto;
+  min-height:0;
+  margin:auto;
+  padding:10px 12px 8px;
+  overflow:hidden;
+}
+
+
+/* =========================
+   PAGES
+========================= */
+
+#addPage,
+#historyPage{
+  width:100%;
+  height:100%;
+  min-height:0;
+}
+
+#addPage{
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding-bottom:2px;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+}
+
+#historyPage{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
 
 /* =========================
    BALANCE
@@ -191,29 +295,30 @@ button{
 .balance-card{
   background:#fff;
   border-radius:15px;
-  padding:17px 18px;
-  margin-bottom:13px;
+  padding:14px 17px;
+  margin-bottom:10px;
   box-shadow:0 2px 9px rgba(0,0,0,.055);
 }
 
 .balance-label{
   color:#747b78;
   font-size:13px;
-  margin-bottom:5px;
+  margin-bottom:4px;
 }
 
 .balance-value{
-  font-size:29px;
+  font-size:27px;
   font-weight:800;
   color:#0b6b4f;
   line-height:1.15;
 }
 
 .balance-status{
-  margin-top:7px;
-  font-size:11px;
+  margin-top:5px;
+  font-size:10px;
   color:#777;
 }
+
 
 /* =========================
    FORM CARD
@@ -222,15 +327,19 @@ button{
 .form-card{
   background:#fff;
   border-radius:15px;
-  padding:16px;
+  padding:14px;
   box-shadow:0 2px 9px rgba(0,0,0,.055);
+}
+
+.form-card .form-group{
+  margin-bottom:11px;
 }
 
 .type-buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:9px;
-  margin-bottom:15px;
+  margin-bottom:12px;
 }
 
 .type-btn{
@@ -238,7 +347,7 @@ button{
   background:#fafbfa;
   color:#555;
   border-radius:10px;
-  padding:12px;
+  padding:10px;
   font-size:15px;
   font-weight:800;
 }
@@ -264,9 +373,9 @@ button{
   border:1px solid #dfe4e1;
   background:#fafbfa;
   border-radius:11px;
-  padding:14px 55px 14px 13px;
+  padding:12px 55px 12px 13px;
   outline:none;
-  font-size:20px;
+  font-size:19px;
   font-weight:700;
   text-align:left;
 }
@@ -292,10 +401,10 @@ button{
   border-radius:11px;
   background:#0b6b4f;
   color:#fff;
-  padding:14px;
+  padding:12px;
   font-size:16px;
   font-weight:800;
-  margin-top:4px;
+  margin-top:2px;
 }
 
 .save-btn:disabled{
@@ -303,10 +412,10 @@ button{
 }
 
 .form-message{
-  min-height:20px;
+  min-height:18px;
   text-align:center;
-  font-size:13px;
-  margin-top:10px;
+  font-size:12px;
+  margin-top:8px;
 }
 
 .form-message.success{
@@ -317,20 +426,87 @@ button{
   color:#d52f2f;
 }
 
+
 /* =========================
-   HISTORY
+   TRANSACTION FILTER
 ========================= */
 
-.page-title{
-  font-size:18px;
-  font-weight:800;
-  margin:3px 2px 12px;
+.transaction-filter{
+  flex:0 0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:7px;
+  margin-bottom:8px;
 }
 
+.filter-btn{
+  border:1px solid #dfe4e1;
+  background:#fff;
+  color:#666;
+  border-radius:9px;
+  padding:8px 5px;
+  font-size:12px;
+  font-weight:800;
+  box-shadow:0 1px 4px rgba(0,0,0,.035);
+}
+
+.filter-btn.active{
+  background:#0b6b4f;
+  color:#fff;
+  border-color:#0b6b4f;
+}
+
+.filter-btn.expense-active{
+  background:#d83232;
+  color:#fff;
+  border-color:#d83232;
+}
+
+
+/* =========================
+   HISTORY CATEGORY FILTER
+========================= */
+
+.history-category-filter{
+  flex:0 0 auto;
+  width:100%;
+  margin-bottom:8px;
+}
+
+
+/* =========================
+   SCROLLABLE TRANSACTION AREA
+========================= */
+
 .history-list{
+  flex:1 1 auto;
+  min-height:0;
+
   display:flex;
   flex-direction:column;
-  gap:7px;
+  gap:5px;
+
+  overflow-y:auto;
+  overflow-x:hidden;
+
+  padding-right:2px;
+  padding-bottom:3px;
+
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+}
+
+.history-list::-webkit-scrollbar{
+  width:4px;
+}
+
+.history-list::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.history-list::-webkit-scrollbar-thumb{
+  background:#cfd6d2;
+  border-radius:10px;
 }
 
 .empty-box{
@@ -340,16 +516,21 @@ button{
   text-align:center;
   color:#888;
   font-size:14px;
+  flex-shrink:0;
 }
 
-/* Amaya-like compact transaction card */
+
+/* =========================
+   COMPACT TRANSACTION CARD
+========================= */
 
 .txn-card{
   background:#fff;
-  border-radius:11px;
-  padding:10px 12px 9px;
-  box-shadow:0 1px 5px rgba(0,0,0,.055);
+  border-radius:9px;
+  padding:7px 10px 7px;
+  box-shadow:0 1px 4px rgba(0,0,0,.05);
   border-left:3px solid #0b6b4f;
+  flex-shrink:0;
 }
 
 .txn-card.expense{
@@ -364,13 +545,13 @@ button{
 }
 
 .txn-date{
-  font-size:11px;
+  font-size:10px;
   color:#777;
   font-weight:600;
 }
 
 .txn-type{
-  font-size:11px;
+  font-size:10px;
   font-weight:800;
 }
 
@@ -383,10 +564,10 @@ button{
 }
 
 .txn-amount{
-  font-size:19px;
-  line-height:1.15;
+  font-size:17px;
+  line-height:1.1;
   font-weight:800;
-  margin:5px 0 5px;
+  margin:3px 0 3px;
 }
 
 .txn-amount.income{
@@ -398,9 +579,9 @@ button{
 }
 
 .txn-bottom{
-  font-size:12px;
+  font-size:11px;
   color:#4e5653;
-  line-height:1.25;
+  line-height:1.2;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -418,6 +599,7 @@ button{
   padding:0 3px;
   color:#aaa;
 }
+
 
 /* =========================
    LOADING
@@ -443,19 +625,20 @@ button{
 }
 
 @keyframes spin{
-  to{transform:rotate(360deg)}
+  to{
+    transform:rotate(360deg)
+  }
 }
+
 
 /* =========================
    BOTTOM NAV
 ========================= */
 
 .bottom-nav{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  height:62px;
+  flex:0 0 auto;
+  width:100%;
+  height:60px;
   background:#fff;
   border-top:1px solid #e4e7e5;
   display:flex;
@@ -466,6 +649,7 @@ button{
 .nav-inner{
   width:100%;
   max-width:520px;
+  height:100%;
   display:grid;
   grid-template-columns:1fr 1fr;
 }
@@ -489,51 +673,166 @@ button{
   color:#0b6b4f;
 }
 
+
 /* =========================
-   LOGOUT
+   OLD LOGOUT HIDDEN
 ========================= */
 
 .logout-row{
-  margin-top:14px;
+  display:none!important;
 }
 
-.logout-btn{
-  width:100%;
-  border:1px solid #e5cccc;
-  background:#fff;
-  color:#c72e2e;
-  border-radius:11px;
-  padding:11px;
-  font-size:13px;
-  font-weight:700;
-}
 
 /* =========================
-   RESPONSIVE
+   SMALL PHONE
 ========================= */
 
-@media(max-width:360px){
+@media(max-width:380px){
+
+  .top-header{
+    height:63px;
+    padding:8px 11px;
+  }
+
   .main{
     padding-left:9px;
     padding-right:9px;
+    padding-top:8px;
+  }
+
+  .app-title{
+    font-size:18px;
+  }
+
+  .balance-card{
+    padding:12px 15px;
+    margin-bottom:8px;
   }
 
   .balance-value{
-    font-size:26px;
+    font-size:25px;
+  }
+
+  .form-card{
+    padding:12px;
+  }
+
+  .form-card .form-group{
+    margin-bottom:9px;
+  }
+
+  .form-label{
+    font-size:12px;
+    margin-bottom:5px;
+  }
+
+  .input,
+  .select,
+  .note-input{
+    padding:10px 11px;
+    font-size:14px;
+  }
+
+  .amount-input{
+    padding:11px 50px 11px 12px;
+    font-size:18px;
+  }
+
+  .type-btn{
+    padding:9px;
+  }
+
+  .save-btn{
+    padding:11px;
+  }
+
+  .bottom-nav{
+    height:58px;
   }
 
   .txn-amount{
-    font-size:18px;
+    font-size:16px;
   }
+
+}
+
+
+/* =========================
+   VERY SMALL HEIGHT PHONE
+========================= */
+
+@media(max-height:700px){
+
+  .top-header{
+    height:59px;
+    padding-top:7px;
+    padding-bottom:7px;
+  }
+
+  .main{
+    padding-top:6px;
+    padding-bottom:5px;
+  }
+
+  .balance-card{
+    padding:10px 14px;
+    margin-bottom:7px;
+  }
+
+  .balance-value{
+    font-size:24px;
+  }
+
+  .balance-status{
+    margin-top:3px;
+    font-size:9px;
+  }
+
+  .form-card{
+    padding:11px;
+  }
+
+  .form-card .form-group{
+    margin-bottom:8px;
+  }
+
+  .type-buttons{
+    margin-bottom:9px;
+  }
+
+  .type-btn{
+    padding:8px;
+  }
+
+  .input,
+  .select,
+  .note-input{
+    padding:9px 10px;
+  }
+
+  .amount-input{
+    padding:10px 50px 10px 11px;
+    font-size:17px;
+  }
+
+  .save-btn{
+    padding:10px;
+  }
+
+  .bottom-nav{
+    height:55px;
+  }
+
+  .nav-icon{
+    font-size:17px;
+    line-height:19px;
+  }
+
 }
 </style>
 </head>
 
 <body>
-
-<!-- =========================
-     LOGIN SCREEN
-========================= -->
 
 <section id="loginScreen">
 
@@ -548,39 +847,50 @@ button{
     </div>
 
     <div class="form-group">
-      <label class="form-label">Username</label>
+
+      <label class="form-label">
+        Username
+      </label>
+
       <input
         id="loginUsername"
         class="input"
         type="text"
         autocomplete="username"
         placeholder="Username">
+
     </div>
 
     <div class="form-group">
-      <label class="form-label">Password</label>
+
+      <label class="form-label">
+        Password
+      </label>
+
       <input
         id="loginPassword"
         class="input"
         type="password"
         autocomplete="current-password"
         placeholder="Password">
+
     </div>
 
-    <button id="loginBtn" class="login-btn">
+    <button
+      id="loginBtn"
+      class="login-btn">
       Login
     </button>
 
-    <div id="loginError" class="login-error"></div>
+    <div
+      id="loginError"
+      class="login-error">
+    </div>
 
   </div>
 
 </section>
 
-
-<!-- =========================
-     MAIN APP
-========================= -->
 
 <section id="app" class="hidden">
 
@@ -589,12 +899,38 @@ button{
     <div class="header-row">
 
       <div>
-        <div class="app-title">আমার হিসাব</div>
-        <div id="headerUsername" class="header-user"></div>
+
+        <div class="app-title">
+          আমার হিসাব
+        </div>
+
+        <div
+          id="headerUsername"
+          class="header-user">
+        </div>
+
       </div>
 
-      <div id="syncStatus" class="header-user">
-        Offline
+
+      <!-- Sync + Logout -->
+
+      <div class="header-right">
+
+        <div
+          id="syncStatus"
+          class="header-user">
+          Offline
+        </div>
+
+        <button
+          id="logoutBtn"
+          class="header-logout"
+          type="button"
+          aria-label="Logout"
+          title="Logout">
+          🚪
+        </button>
+
       </div>
 
     </div>
@@ -604,8 +940,6 @@ button{
 
   <main class="main">
 
-    <!-- ADD PAGE -->
-
     <section id="addPage">
 
       <div class="balance-card">
@@ -614,11 +948,15 @@ button{
           বর্তমান ব্যালেন্স
         </div>
 
-        <div id="balanceValue" class="balance-value">
+        <div
+          id="balanceValue"
+          class="balance-value">
           0 TK
         </div>
 
-        <div id="balanceStatus" class="balance-status">
+        <div
+          id="balanceStatus"
+          class="balance-status">
           হিসাব লোড হচ্ছে...
         </div>
 
@@ -657,7 +995,9 @@ button{
               autocomplete="off"
               placeholder="0">
 
-            <span class="amount-currency">TK</span>
+            <span class="amount-currency">
+              TK
+            </span>
 
           </div>
 
@@ -697,7 +1037,9 @@ button{
             Category
           </label>
 
-          <select id="categorySelect" class="select">
+          <select
+            id="categorySelect"
+            class="select">
           </select>
 
         </div>
@@ -725,33 +1067,67 @@ button{
           Save
         </button>
 
-        <div id="formMessage" class="form-message"></div>
+        <div
+          id="formMessage"
+          class="form-message">
+        </div>
 
-      </div>
-
-
-      <div class="logout-row">
-        <button id="logoutBtn" class="logout-btn">
-          Logout
-        </button>
       </div>
 
     </section>
 
 
-    <!-- HISTORY PAGE -->
+    <section
+      id="historyPage"
+      class="hidden">
 
-    <section id="historyPage" class="hidden">
+      <div class="transaction-filter">
 
-      <div class="page-title">
-        সকল লেনদেন
+        <button
+          id="filterAll"
+          class="filter-btn active"
+          type="button">
+          সব
+        </button>
+
+        <button
+          id="filterIncome"
+          class="filter-btn"
+          type="button">
+          আয়
+        </button>
+
+        <button
+          id="filterExpense"
+          class="filter-btn"
+          type="button">
+          ব্যয়
+        </button>
+
       </div>
 
-      <div id="historyList" class="history-list">
+
+      <select
+        id="historyCategoryFilter"
+        class="select history-category-filter">
+
+        <option value="all">
+          সব Category
+        </option>
+
+      </select>
+
+
+      <div
+        id="historyList"
+        class="history-list">
 
         <div class="loading">
+
           <span class="spinner"></span>
+
           লেনদেন লোড হচ্ছে...
+
         </div>
 
       </div>
@@ -760,8 +1136,6 @@ button{
 
   </main>
 
-
-  <!-- BOTTOM NAV -->
 
   <nav class="bottom-nav">
 
@@ -772,17 +1146,24 @@ button{
         class="nav-btn active"
         type="button">
 
-        <span class="nav-icon">＋</span>
+        <span class="nav-icon">
+          ＋
+        </span>
+
         যোগ করুন
 
       </button>
+
 
       <button
         id="navHistory"
         class="nav-btn"
         type="button">
 
-        <span class="nav-icon">☷</span>
+        <span class="nav-icon">
+          ☷
+        </span>
+
         সকল হিসাব
 
       </button>
@@ -803,33 +1184,46 @@ button{
 const API =
 "https://script.google.com/macros/s/AKfycbwywJPWi2Q1sIXA4gLx2r0qb78yByaKZ7RvwmxDEpmqwqUVtCcyMXzuqEWupu50G6Vj/exec";
 
-const APP_NAME = "AmarHisab";
+const APP_NAME =
+  "AmarHisab";
 
 const STORAGE = {
-  session: APP_NAME + "_session",
-  transactions: APP_NAME + "_transactions",
-  pending: APP_NAME + "_pending"
+
+  session:
+    APP_NAME + "_session",
+
+  transactions:
+    APP_NAME + "_transactions",
+
+  pending:
+    APP_NAME + "_pending"
+
 };
 
 
 /* =========================================================
    CATEGORIES
-   Google Sheets থেকে load হবে না.
 ========================================================= */
 
 const INCOME_CATEGORIES = [
+
   "বেতন",
   "ব্যবসা",
-  "কমিশন",
+  "প্রফিট",
   "অন্যান্য"
+
 ];
 
+
 const EXPENSE_CATEGORIES = [
-  "খাবার",
-  "বাজার",
-  "যাতায়াত",
+
+  "বিকাশ",
+  "ফ্যামিলি",
+  "ব্যবসা",
   "বিল",
+  "ডিপোজিট",
   "অন্যান্য"
+
 ];
 
 
@@ -837,15 +1231,39 @@ const EXPENSE_CATEGORIES = [
    STATE
 ========================================================= */
 
-let currentType = "income";
+let currentType =
+  "income";
 
-let transactions = [];
+let transactions =
+  [];
 
-let pendingTransactions = [];
+let pendingTransactions =
+  [];
 
-let session = null;
+let session =
+  null;
 
-let isSaving = false;
+let isSaving =
+  false;
+
+
+/* =========================================================
+   TRANSACTION FILTER STATE
+========================================================= */
+
+let transactionFilter =
+  "all";
+
+let categoryFilter =
+  "all";
+
+
+/* =========================================================
+   HISTORY DROPDOWN STATE
+========================================================= */
+
+let lastHistoryCategoryFilterMode =
+  "";
 
 
 /* =========================================================
@@ -853,76 +1271,149 @@ let isSaving = false;
 ========================================================= */
 
 const loginScreen =
-  document.getElementById("loginScreen");
+  document.getElementById(
+    "loginScreen"
+  );
 
 const app =
-  document.getElementById("app");
+  document.getElementById(
+    "app"
+  );
 
 const loginUsername =
-  document.getElementById("loginUsername");
+  document.getElementById(
+    "loginUsername"
+  );
 
 const loginPassword =
-  document.getElementById("loginPassword");
+  document.getElementById(
+    "loginPassword"
+  );
 
 const loginBtn =
-  document.getElementById("loginBtn");
+  document.getElementById(
+    "loginBtn"
+  );
 
 const loginError =
-  document.getElementById("loginError");
+  document.getElementById(
+    "loginError"
+  );
 
 const headerUsername =
-  document.getElementById("headerUsername");
+  document.getElementById(
+    "headerUsername"
+  );
 
 const syncStatus =
-  document.getElementById("syncStatus");
+  document.getElementById(
+    "syncStatus"
+  );
 
 const balanceValue =
-  document.getElementById("balanceValue");
+  document.getElementById(
+    "balanceValue"
+  );
 
 const balanceStatus =
-  document.getElementById("balanceStatus");
+  document.getElementById(
+    "balanceStatus"
+  );
 
 const dateInput =
-  document.getElementById("dateInput");
+  document.getElementById(
+    "dateInput"
+  );
 
 const amountInput =
-  document.getElementById("amountInput");
+  document.getElementById(
+    "amountInput"
+  );
 
 const incomeBtn =
-  document.getElementById("incomeBtn");
+  document.getElementById(
+    "incomeBtn"
+  );
 
 const expenseBtn =
-  document.getElementById("expenseBtn");
+  document.getElementById(
+    "expenseBtn"
+  );
 
 const categorySelect =
-  document.getElementById("categorySelect");
+  document.getElementById(
+    "categorySelect"
+  );
 
 const noteInput =
-  document.getElementById("noteInput");
+  document.getElementById(
+    "noteInput"
+  );
 
 const saveBtn =
-  document.getElementById("saveBtn");
+  document.getElementById(
+    "saveBtn"
+  );
 
 const formMessage =
-  document.getElementById("formMessage");
+  document.getElementById(
+    "formMessage"
+  );
 
 const historyList =
-  document.getElementById("historyList");
+  document.getElementById(
+    "historyList"
+  );
 
 const addPage =
-  document.getElementById("addPage");
+  document.getElementById(
+    "addPage"
+  );
 
 const historyPage =
-  document.getElementById("historyPage");
+  document.getElementById(
+    "historyPage"
+  );
 
 const navAdd =
-  document.getElementById("navAdd");
+  document.getElementById(
+    "navAdd"
+  );
 
 const navHistory =
-  document.getElementById("navHistory");
+  document.getElementById(
+    "navHistory"
+  );
 
 const logoutBtn =
-  document.getElementById("logoutBtn");
+  document.getElementById(
+    "logoutBtn"
+  );
+
+
+/* =========================================================
+   FILTER ELEMENTS
+========================================================= */
+
+const filterAll =
+  document.getElementById(
+    "filterAll"
+  );
+
+const filterIncome =
+  document.getElementById(
+    "filterIncome"
+  );
+
+const filterExpense =
+  document.getElementById(
+    "filterExpense"
+  );
+
+const historyCategoryFilter =
+  document.getElementById(
+    "historyCategoryFilter"
+  );
 
 
 /* =========================================================
@@ -934,15 +1425,23 @@ function loadLocalData(){
   try{
 
     const savedSession =
-      localStorage.getItem(STORAGE.session);
+      localStorage.getItem(
+        STORAGE.session
+      );
 
     if(savedSession){
-      session = JSON.parse(savedSession);
+
+      session =
+        JSON.parse(
+          savedSession
+        );
+
     }
 
   }catch(e){
 
-    session = null;
+    session =
+      null;
 
   }
 
@@ -950,16 +1449,21 @@ function loadLocalData(){
   try{
 
     const savedTransactions =
-      localStorage.getItem(STORAGE.transactions);
+      localStorage.getItem(
+        STORAGE.transactions
+      );
 
     transactions =
       savedTransactions
-      ? JSON.parse(savedTransactions)
+      ? JSON.parse(
+          savedTransactions
+        )
       : [];
 
   }catch(e){
 
-    transactions = [];
+    transactions =
+      [];
 
   }
 
@@ -967,16 +1471,21 @@ function loadLocalData(){
   try{
 
     const savedPending =
-      localStorage.getItem(STORAGE.pending);
+      localStorage.getItem(
+        STORAGE.pending
+      );
 
     pendingTransactions =
       savedPending
-      ? JSON.parse(savedPending)
+      ? JSON.parse(
+          savedPending
+        )
       : [];
 
   }catch(e){
 
-    pendingTransactions = [];
+    pendingTransactions =
+      [];
 
   }
 
@@ -986,8 +1495,13 @@ function loadLocalData(){
 function saveLocalTransactions(){
 
   localStorage.setItem(
+
     STORAGE.transactions,
-    JSON.stringify(transactions)
+
+    JSON.stringify(
+      transactions
+    )
+
   );
 
 }
@@ -996,8 +1510,13 @@ function saveLocalTransactions(){
 function saveLocalPending(){
 
   localStorage.setItem(
+
     STORAGE.pending,
-    JSON.stringify(pendingTransactions)
+
+    JSON.stringify(
+      pendingTransactions
+    )
+
   );
 
 }
@@ -1009,34 +1528,65 @@ function saveLocalPending(){
 
 function escapeHTML(value){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return String(
+    value ?? ""
+  )
+
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+
+  .replace(
+    /</g,
+    "&lt;"
+  )
+
+  .replace(
+    />/g,
+    "&gt;"
+  )
+
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 
 }
 
 
-/* =========================================================
-   INDIAN COMMA FORMAT
-========================================================= */
-
 function formatIndianNumber(value){
 
   let raw =
-    String(value ?? "")
-      .replace(/[^\d]/g,"");
+    String(
+      value ?? ""
+    )
+    .replace(
+      /[^\d]/g,
+      ""
+    );
 
   if(!raw){
+
     return "0";
+
   }
 
-  raw = raw.replace(/^0+(?=\d)/,"");
+  raw =
+    raw.replace(
+      /^0+(?=\d)/,
+      ""
+    );
 
   if(raw.length <= 3){
+
     return raw;
+
   }
 
   const last3 =
@@ -1045,7 +1595,8 @@ function formatIndianNumber(value){
   let rest =
     raw.slice(0,-3);
 
-  let result = "";
+  let result =
+    "";
 
   while(rest.length > 2){
 
@@ -1059,7 +1610,12 @@ function formatIndianNumber(value){
 
   }
 
-  return rest + result + "," + last3;
+  return (
+    rest +
+    result +
+    "," +
+    last3
+  );
 
 }
 
@@ -1067,11 +1623,18 @@ function formatIndianNumber(value){
 function amountToNumber(value){
 
   const raw =
-    String(value ?? "")
-      .replace(/[^\d]/g,"");
+    String(
+      value ?? ""
+    )
+    .replace(
+      /[^\d]/g,
+      ""
+    );
 
   if(!raw){
+
     return 0;
+
   }
 
   return Number(raw);
@@ -1085,20 +1648,31 @@ function amountToNumber(value){
 
 function getToday(){
 
-  const d = new Date();
+  const d =
+    new Date();
 
   const year =
     d.getFullYear();
 
   const month =
-    String(d.getMonth()+1)
-      .padStart(2,"0");
+    String(
+      d.getMonth()+1
+    ).padStart(
+      2,
+      "0"
+    );
 
   const day =
-    String(d.getDate())
-      .padStart(2,"0");
+    String(
+      d.getDate()
+    ).padStart(
+      2,
+      "0"
+    );
 
-  return `${year}-${month}-${day}`;
+  return (
+    `${year}-${month}-${day}`
+  );
 
 }
 
@@ -1106,38 +1680,64 @@ function getToday(){
 function formatDate(value){
 
   if(!value){
+
     return "";
+
   }
 
   const text =
     String(value);
 
-  if(/^\d{4}-\d{2}-\d{2}$/.test(text)){
+  if(
+    /^\d{4}-\d{2}-\d{2}$/.test(
+      text
+    )
+  ){
 
     const parts =
       text.split("-");
 
-    return `${parts[2]}-${parts[1]}-${parts[0]}`;
+    return (
+      `${parts[2]}-${parts[1]}-${parts[0]}`
+    );
 
   }
 
   const d =
     new Date(value);
 
-  if(Number.isNaN(d.getTime())){
+  if(
+    Number.isNaN(
+      d.getTime()
+    )
+  ){
+
     return text;
+
   }
 
   const day =
-    String(d.getDate()).padStart(2,"0");
+    String(
+      d.getDate()
+    ).padStart(
+      2,
+      "0"
+    );
 
   const month =
-    String(d.getMonth()+1).padStart(2,"0");
+    String(
+      d.getMonth()+1
+    ).padStart(
+      2,
+      "0"
+    );
 
   const year =
     d.getFullYear();
 
-  return `${day}-${month}-${year}`;
+  return (
+    `${day}-${month}-${year}`
+  );
 
 }
 
@@ -1148,12 +1748,16 @@ function formatDate(value){
 
 function createTransactionId(){
 
-  return "TXN" +
-    Date.now().toString(36).toUpperCase() +
+  return (
+    "TXN" +
+    Date.now()
+      .toString(36)
+      .toUpperCase() +
     Math.random()
       .toString(36)
       .slice(2,7)
-      .toUpperCase();
+      .toUpperCase()
+  );
 
 }
 
@@ -1165,13 +1769,23 @@ function createTransactionId(){
 async function apiPost(payload){
 
   const response =
-    await fetch(API,{
-      method:"POST",
-      headers:{
-        "Content-Type":"text/plain;charset=utf-8"
-      },
-      body:JSON.stringify(payload)
-    });
+    await fetch(
+      API,
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+            "text/plain;charset=utf-8"
+        },
+
+        body:
+          JSON.stringify(
+            payload
+          )
+
+      }
+    );
 
   const text =
     await response.text();
@@ -1181,7 +1795,9 @@ async function apiPost(payload){
   try{
 
     data =
-      JSON.parse(text);
+      JSON.parse(
+        text
+      );
 
   }catch(e){
 
@@ -1191,7 +1807,10 @@ async function apiPost(payload){
 
   }
 
-  if(data && data.ok === false){
+  if(
+    data &&
+    data.ok === false
+  ){
 
     throw new Error(
       data.message ||
@@ -1237,25 +1856,37 @@ async function doLogin(){
   }
 
 
-  loginBtn.disabled = true;
+  loginBtn.disabled =
+    true;
 
   loginBtn.textContent =
     "Login হচ্ছে...";
 
-  loginError.textContent = "";
+  loginError.textContent =
+    "";
 
 
   try{
 
     const data =
       await apiPost({
-        action:"login",
-        username:username,
-        password:password
+
+        action:
+          "login",
+
+        username:
+          username,
+
+        password:
+          password
+
       });
 
 
-    if(!data || data.ok === false){
+    if(
+      !data ||
+      data.ok === false
+    ){
 
       throw new Error(
         data?.message ||
@@ -1283,8 +1914,13 @@ async function doLogin(){
 
 
     localStorage.setItem(
+
       STORAGE.session,
-      JSON.stringify(session)
+
+      JSON.stringify(
+        session
+      )
+
     );
 
 
@@ -1295,7 +1931,9 @@ async function doLogin(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     loginError.textContent =
       error.message ||
@@ -1303,7 +1941,8 @@ async function doLogin(){
 
   }finally{
 
-    loginBtn.disabled = false;
+    loginBtn.disabled =
+      false;
 
     loginBtn.textContent =
       "Login";
@@ -1319,9 +1958,13 @@ async function doLogin(){
 
 function showApp(){
 
-  loginScreen.classList.add("hidden");
+  loginScreen.classList.add(
+    "hidden"
+  );
 
-  app.classList.remove("hidden");
+  app.classList.remove(
+    "hidden"
+  );
 
   headerUsername.textContent =
     session?.username
@@ -1333,13 +1976,19 @@ function showApp(){
 
 function showLogin(){
 
-  app.classList.add("hidden");
+  app.classList.add(
+    "hidden"
+  );
 
-  loginScreen.classList.remove("hidden");
+  loginScreen.classList.remove(
+    "hidden"
+  );
 
-  loginPassword.value = "";
+  loginPassword.value =
+    "";
 
-  loginError.textContent = "";
+  loginError.textContent =
+    "";
 
 }
 
@@ -1350,7 +1999,8 @@ function showLogin(){
 
 function logout(){
 
-  session = null;
+  session =
+    null;
 
   localStorage.removeItem(
     STORAGE.session
@@ -1362,23 +2012,125 @@ function logout(){
 
 
 /* =========================================================
-   CATEGORY
+   ADD FORM CATEGORY
 ========================================================= */
 
 function updateCategories(){
 
   const list =
     currentType === "income"
-      ? INCOME_CATEGORIES
-      : EXPENSE_CATEGORIES;
+    ? INCOME_CATEGORIES
+    : EXPENSE_CATEGORIES;
 
 
   categorySelect.innerHTML =
-    list.map(category =>
-      `<option value="${escapeHTML(category)}">
-        ${escapeHTML(category)}
-      </option>`
+    list.map(
+      category =>
+        `<option value="${escapeHTML(category)}">
+          ${escapeHTML(category)}
+        </option>`
     ).join("");
+
+}
+
+
+/* =========================================================
+   HISTORY CATEGORY FILTER
+========================================================= */
+
+function getHistoryCategoryList(){
+
+  if(
+    transactionFilter === "income"
+  ){
+
+    return INCOME_CATEGORIES;
+
+  }
+
+  if(
+    transactionFilter === "expense"
+  ){
+
+    return EXPENSE_CATEGORIES;
+
+  }
+
+  return [
+    ...new Set([
+      ...INCOME_CATEGORIES,
+      ...EXPENSE_CATEGORIES
+    ])
+  ];
+
+}
+
+
+function updateHistoryCategoryFilter(
+  force = false
+){
+
+  const mode =
+    transactionFilter;
+
+
+  if(
+    !force &&
+    mode ===
+    lastHistoryCategoryFilterMode
+  ){
+
+    return;
+
+  }
+
+
+  const list =
+    getHistoryCategoryList();
+
+
+  if(
+    categoryFilter !== "all" &&
+    !list.includes(
+      categoryFilter
+    )
+  ){
+
+    categoryFilter =
+      "all";
+
+  }
+
+
+  const currentValue =
+    categoryFilter;
+
+
+  const optionsHTML =
+    `<option value="all">
+      সব Category
+    </option>` +
+
+    list
+      .map(
+        category =>
+          `<option value="${escapeHTML(category)}">
+            ${escapeHTML(category)}
+          </option>`
+      )
+      .join("");
+
+
+  historyCategoryFilter.innerHTML =
+    optionsHTML;
+
+
+  historyCategoryFilter.value =
+    currentValue;
+
+
+  lastHistoryCategoryFilterMode =
+    mode;
 
 }
 
@@ -1389,9 +2141,12 @@ function updateCategories(){
 
 function setType(type){
 
-  currentType = type;
+  currentType =
+    type;
 
-  if(type === "income"){
+  if(
+    type === "income"
+  ){
 
     incomeBtn.classList.add(
       "active-income"
@@ -1424,27 +2179,40 @@ function setType(type){
 
 function calculateBalance(){
 
-  let balance = 0;
+  let balance =
+    0;
 
-  transactions.forEach(tx => {
+  transactions.forEach(
+    tx => {
 
-    const amount =
-      Number(tx.amount) || 0;
+      const amount =
+        Number(
+          tx.amount
+        ) || 0;
 
-    const type =
-      normalizeType(tx.type);
+      const type =
+        normalizeType(
+          tx.type
+        );
 
-    if(type === "income"){
+      if(
+        type === "income"
+      ){
 
-      balance += amount;
+        balance +=
+          amount;
 
-    }else if(type === "expense"){
+      }else if(
+        type === "expense"
+      ){
 
-      balance -= amount;
+        balance -=
+          amount;
+
+      }
 
     }
-
-  });
+  );
 
   return balance;
 
@@ -1458,14 +2226,17 @@ function renderBalance(){
 
   const formatted =
     formatIndianNumber(
-      Math.abs(balance)
+      Math.abs(
+        balance
+      )
     );
 
 
   if(balance >= 0){
 
     balanceValue.textContent =
-      formatted + " TK";
+      formatted +
+      " TK";
 
     balanceValue.style.color =
       "#0b6b4f";
@@ -1473,7 +2244,9 @@ function renderBalance(){
   }else{
 
     balanceValue.textContent =
-      "-" + formatted + " TK";
+      "-" +
+      formatted +
+      " TK";
 
     balanceValue.style.color =
       "#d83232";
@@ -1485,7 +2258,6 @@ function renderBalance(){
     transactions.length +
     "টি লেনদেন • Local data";
 
-
 }
 
 
@@ -1496,14 +2268,18 @@ function renderBalance(){
 function normalizeType(type){
 
   const value =
-    String(type ?? "")
-      .trim()
-      .toLowerCase();
+    String(
+      type ?? ""
+    )
+    .trim()
+    .toLowerCase();
 
   if(
+
     value === "income" ||
     value === "আয়" ||
     value === "আয়"
+
   ){
 
     return "income";
@@ -1511,9 +2287,11 @@ function normalizeType(type){
   }
 
   if(
+
     value === "expense" ||
     value === "ব্যয়" ||
     value === "ব্যয়"
+
   ){
 
     return "expense";
@@ -1584,33 +2362,195 @@ function normalizeTransaction(tx){
 
 function sortTransactions(){
 
-  transactions.sort((a,b) => {
+  transactions.sort(
+    (a,b) => {
 
-    const dateA =
-      new Date(
-        a.createdAt ||
-        a.date ||
-        0
-      ).getTime();
+      const dateA =
+        new Date(
+          a.createdAt ||
+          a.date ||
+          0
+        ).getTime();
 
-    const dateB =
-      new Date(
-        b.createdAt ||
-        b.date ||
-        0
-      ).getTime();
+      const dateB =
+        new Date(
+          b.createdAt ||
+          b.date ||
+          0
+        ).getTime();
 
-    if(dateB !== dateA){
-      return dateB - dateA;
+      if(
+        dateB !== dateA
+      ){
+
+        return (
+          dateB -
+          dateA
+        );
+
+      }
+
+      return String(
+        b.transactionId ||
+        ""
+      ).localeCompare(
+        String(
+          a.transactionId ||
+          ""
+        )
+      );
+
     }
+  );
 
-    return String(
-      b.transactionId || ""
-    ).localeCompare(
-      String(a.transactionId || "")
+}
+
+
+/* =========================================================
+   FILTER BUTTON STATE
+========================================================= */
+
+function updateFilterButtons(){
+
+  filterAll.classList.remove(
+    "active"
+  );
+
+  filterIncome.classList.remove(
+    "active"
+  );
+
+  filterExpense.classList.remove(
+    "active"
+  );
+
+  filterExpense.classList.remove(
+    "expense-active"
+  );
+
+
+  if(
+    transactionFilter === "all"
+  ){
+
+    filterAll.classList.add(
+      "active"
     );
 
-  });
+  }else if(
+    transactionFilter === "income"
+  ){
+
+    filterIncome.classList.add(
+      "active"
+    );
+
+  }else if(
+    transactionFilter === "expense"
+  ){
+
+    filterExpense.classList.add(
+      "expense-active"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   SET TRANSACTION FILTER
+========================================================= */
+
+function setTransactionFilter(
+  filter
+){
+
+  transactionFilter =
+    filter;
+
+  categoryFilter =
+    "all";
+
+  updateFilterButtons();
+
+  updateHistoryCategoryFilter(
+    true
+  );
+
+  renderTransactions();
+
+}
+
+
+/* =========================================================
+   GET FILTERED TRANSACTIONS
+========================================================= */
+
+function getFilteredTransactions(){
+
+  return transactions.filter(
+    tx => {
+
+      const type =
+        normalizeType(
+          tx.type
+        );
+
+
+      const typeMatch =
+        transactionFilter === "all" ||
+        type === transactionFilter;
+
+
+      const txCategory =
+        String(
+          tx.category || ""
+        ).trim();
+
+
+      const categoryMatch =
+        categoryFilter === "all" ||
+        txCategory ===
+        categoryFilter;
+
+
+      return (
+        typeMatch &&
+        categoryMatch
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   TRANSACTION RENDER SIGNATURE
+   Prevents unnecessary redraw / flicker
+========================================================= */
+
+let lastRenderSignature =
+  "";
+
+
+function getTransactionRenderSignature(){
+
+  return transactions
+    .map(
+      tx =>
+        [
+          tx.transactionId,
+          tx.date,
+          tx.amount,
+          normalizeType(tx.type),
+          tx.category,
+          tx.note,
+          tx.createdAt
+        ].join("|")
+    )
+    .join("||");
 
 }
 
@@ -1623,15 +2563,128 @@ function renderTransactions(){
 
   sortTransactions();
 
+
+  const renderSignature =
+    transactionFilter +
+    "|" +
+    categoryFilter +
+    "|" +
+    getTransactionRenderSignature();
+
+
+  /*
+    Data/filter একই থাকলে
+    DOM আর rebuild হবে না।
+
+    এতে প্রতি 10 সেকেন্ডের scan-এর সময়
+    page blink/jump করবে না।
+  */
+
+  if(
+    renderSignature ===
+    lastRenderSignature
+  ){
+
+    return;
+
+  }
+
+
+  lastRenderSignature =
+    renderSignature;
+
+
   renderBalance();
 
+  updateFilterButtons();
 
-  if(!transactions.length){
+  updateHistoryCategoryFilter(
+    false
+  );
 
-    historyList.innerHTML =
-      `<div class="empty-box">
-        এখনো কোনো লেনদেন নেই
-      </div>`;
+
+  const previousScrollTop =
+    historyList.scrollTop;
+
+
+  const filteredTransactions =
+    getFilteredTransactions();
+
+
+  if(
+    !filteredTransactions.length
+  ){
+
+    if(
+      transactionFilter ===
+      "income"
+    ){
+
+      if(
+        categoryFilter !==
+        "all"
+      ){
+
+        historyList.innerHTML =
+          `<div class="empty-box">
+            এই Category-তে কোনো আয় পাওয়া যায়নি
+          </div>`;
+
+      }else{
+
+        historyList.innerHTML =
+          `<div class="empty-box">
+            কোনো আয় পাওয়া যায়নি
+          </div>`;
+
+      }
+
+    }else if(
+      transactionFilter ===
+      "expense"
+    ){
+
+      if(
+        categoryFilter !==
+        "all"
+      ){
+
+        historyList.innerHTML =
+          `<div class="empty-box">
+            এই Category-তে কোনো ব্যয় পাওয়া যায়নি
+          </div>`;
+
+      }else{
+
+        historyList.innerHTML =
+          `<div class="empty-box">
+            কোনো ব্যয় পাওয়া যায়নি
+          </div>`;
+
+      }
+
+    }else if(
+      categoryFilter !==
+      "all"
+    ){
+
+      historyList.innerHTML =
+        `<div class="empty-box">
+          এই Category-তে কোনো লেনদেন নেই
+        </div>`;
+
+    }else{
+
+      historyList.innerHTML =
+        `<div class="empty-box">
+          এখনো কোনো লেনদেন নেই
+        </div>`;
+
+    }
+
+
+    historyList.scrollTop =
+      0;
 
     return;
 
@@ -1639,76 +2692,134 @@ function renderTransactions(){
 
 
   historyList.innerHTML =
-    transactions.map(tx => {
+    filteredTransactions
+      .map(
+        tx => {
 
-      const type =
-        normalizeType(tx.type);
+          const type =
+            normalizeType(
+              tx.type
+            );
 
-      const income =
-        type === "income";
+          const income =
+            type ===
+            "income";
 
-      const amount =
-        formatIndianNumber(
-          Math.abs(
-            Number(tx.amount) || 0
-          )
-        );
-
-
-      const category =
-        escapeHTML(
-          tx.category || ""
-        );
-
-      const note =
-        escapeHTML(
-          tx.note || ""
-        );
+          const amount =
+            formatIndianNumber(
+              Math.abs(
+                Number(
+                  tx.amount
+                ) || 0
+              )
+            );
 
 
-      const bottom =
-        note
-        ? `<span class="txn-category">
-             ${category}
-           </span>
-           <span class="txn-dot">•</span>
-           <span class="txn-note">
-             ${note}
-           </span>`
-        : `<span class="txn-category">
-             ${category}
-           </span>`;
+          const category =
+            escapeHTML(
+              tx.category ||
+              ""
+            );
+
+          const note =
+            escapeHTML(
+              tx.note ||
+              ""
+            );
 
 
-      return `
-        <div class="txn-card ${income ? "" : "expense"}">
+          const bottom =
+            note
 
-          <div class="txn-top">
+            ? `<span class="txn-category">
+                 ${category}
+               </span>
+               <span class="txn-dot">
+                 •
+               </span>
+               <span class="txn-note">
+                 ${note}
+               </span>`
 
-            <div class="txn-date">
-              ${escapeHTML(
-                formatDate(tx.date)
-              )}
+            : `<span class="txn-category">
+                 ${category}
+               </span>`;
+
+
+          return `
+
+            <div class="txn-card ${
+              income
+              ? ""
+              : "expense"
+            }">
+
+              <div class="txn-top">
+
+                <div class="txn-date">
+                  ${escapeHTML(
+                    formatDate(
+                      tx.date
+                    )
+                  )}
+                </div>
+
+                <div class="txn-type ${
+                  income
+                  ? "income"
+                  : "expense"
+                }">
+
+                  ${
+                    income
+                    ? "আয়"
+                    : "ব্যয়"
+                  }
+
+                </div>
+
+              </div>
+
+
+              <div class="txn-amount ${
+                income
+                ? "income"
+                : "expense"
+              }">
+
+                ${
+                  income
+                  ? "+"
+                  : "-"
+                }
+
+                ${amount} TK
+
+              </div>
+
+
+              <div class="txn-bottom">
+
+                ${bottom}
+
+              </div>
+
             </div>
 
-            <div class="txn-type ${income ? "income" : "expense"}">
-              ${income ? "আয়" : "ব্যয়"}
-            </div>
+          `;
 
-          </div>
+        }
+      )
+      .join("");
 
-          <div class="txn-amount ${income ? "income" : "expense"}">
-            ${income ? "+" : "-"} ${amount} TK
-          </div>
 
-          <div class="txn-bottom">
-            ${bottom}
-          </div>
+  /*
+    Transaction list redraw হলেও
+    আগের scroll position ধরে রাখবে।
+  */
 
-        </div>
-      `;
-
-    }).join("");
+  historyList.scrollTop =
+    previousScrollTop;
 
 }
 
@@ -1728,7 +2839,9 @@ function addLocalTransaction(tx){
 
   if(!exists){
 
-    transactions.unshift(tx);
+    transactions.unshift(
+      tx
+    );
 
     saveLocalTransactions();
 
@@ -1752,7 +2865,9 @@ function addPending(tx){
 
   if(!exists){
 
-    pendingTransactions.push(tx);
+    pendingTransactions.push(
+      tx
+    );
 
     saveLocalPending();
 
@@ -1761,7 +2876,9 @@ function addPending(tx){
 }
 
 
-function removePending(transactionId){
+function removePending(
+  transactionId
+){
 
   pendingTransactions =
     pendingTransactions.filter(
@@ -1782,7 +2899,9 @@ function removePending(transactionId){
 async function saveTransaction(){
 
   if(isSaving){
+
     return;
+
   }
 
 
@@ -1813,7 +2932,10 @@ async function saveTransaction(){
   }
 
 
-  if(!amount || amount <= 0){
+  if(
+    !amount ||
+    amount <= 0
+  ){
 
     showFormMessage(
       "সঠিক Amount দিন",
@@ -1865,18 +2987,18 @@ async function saveTransaction(){
   };
 
 
-  /* Local-first */
-
-  addLocalTransaction(tx);
+  addLocalTransaction(
+    tx
+  );
 
   renderTransactions();
 
 
-  /* Clear form immediately */
+  amountInput.value =
+    "";
 
-  amountInput.value = "";
-
-  noteInput.value = "";
+  noteInput.value =
+    "";
 
   dateInput.value =
     getToday();
@@ -1888,9 +3010,11 @@ async function saveTransaction(){
   );
 
 
-  isSaving = true;
+  isSaving =
+    true;
 
-  saveBtn.disabled = true;
+  saveBtn.disabled =
+    true;
 
   saveBtn.textContent =
     "Sync হচ্ছে...";
@@ -1933,7 +3057,10 @@ async function saveTransaction(){
       });
 
 
-    if(data && data.ok === false){
+    if(
+      data &&
+      data.ok === false
+    ){
 
       throw new Error(
         data.message ||
@@ -1961,10 +3088,14 @@ async function saveTransaction(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
 
-    addPending(tx);
+    addPending(
+      tx
+    );
 
 
     showFormMessage(
@@ -1979,9 +3110,11 @@ async function saveTransaction(){
 
   }finally{
 
-    isSaving = false;
+    isSaving =
+      false;
 
-    saveBtn.disabled = false;
+    saveBtn.disabled =
+      false;
 
     saveBtn.textContent =
       "Save";
@@ -1997,7 +3130,9 @@ async function saveTransaction(){
 
 async function syncPending(){
 
-  if(!pendingTransactions.length){
+  if(
+    !pendingTransactions.length
+  ){
 
     setSyncStatus(
       "Synced"
@@ -2014,10 +3149,14 @@ async function syncPending(){
 
 
   const list =
-    [...pendingTransactions];
+    [
+      ...pendingTransactions
+    ];
 
 
-  for(const tx of list){
+  for(
+    const tx of list
+  ){
 
     try{
 
@@ -2083,7 +3222,9 @@ async function syncPending(){
   }
 
 
-  if(pendingTransactions.length){
+  if(
+    pendingTransactions.length
+  ){
 
     setSyncStatus(
       "Pending"
@@ -2115,12 +3256,17 @@ async function loadTransactions(){
 
     const data =
       await apiPost({
+
         action:
           "getTransactions"
+
       });
 
 
-    if(data && data.ok === false){
+    if(
+      data &&
+      data.ok === false
+    ){
 
       throw new Error(
         data.message ||
@@ -2130,10 +3276,15 @@ async function loadTransactions(){
     }
 
 
-    let serverTransactions = [];
+    let serverTransactions =
+      [];
 
 
-    if(Array.isArray(data)){
+    if(
+      Array.isArray(
+        data
+      )
+    ){
 
       serverTransactions =
         data;
@@ -2161,17 +3312,14 @@ async function loadTransactions(){
 
     const normalized =
       serverTransactions
-        .map(normalizeTransaction)
+        .map(
+          normalizeTransaction
+        )
         .filter(
           tx =>
             tx.transactionId
         );
 
-
-    /*
-      Local pending transaction যেন
-      server data দিয়ে হারিয়ে না যায়।
-    */
 
     const pendingIds =
       new Set(
@@ -2235,10 +3383,6 @@ async function loadTransactions(){
     );
 
 
-    /*
-      Local data থাকলে সেটাই দেখাবে।
-    */
-
     renderTransactions();
 
 
@@ -2261,17 +3405,25 @@ async function loadServerBalance(){
 
     const data =
       await apiPost({
+
         action:
           "getBalance"
+
       });
 
 
-    if(data && data.ok === false){
+    if(
+      data &&
+      data.ok === false
+    ){
+
       return;
+
     }
 
 
-    let balance = null;
+    let balance =
+      null;
 
 
     if(
@@ -2294,11 +3446,15 @@ async function loadServerBalance(){
     }
 
 
-    if(balance !== null){
+    if(
+      balance !== null
+    ){
 
       const formatted =
         formatIndianNumber(
-          Math.abs(balance)
+          Math.abs(
+            balance
+          )
         );
 
 
@@ -2331,7 +3487,9 @@ async function loadServerBalance(){
    SYNC STATUS
 ========================================================= */
 
-function setSyncStatus(status){
+function setSyncStatus(
+  status
+){
 
   syncStatus.textContent =
     status;
@@ -2362,14 +3520,18 @@ function showFormMessage(
 
 
   showFormMessage.timer =
-    setTimeout(() => {
+    setTimeout(
+      () => {
 
-      formMessage.textContent = "";
+        formMessage.textContent =
+          "";
 
-      formMessage.className =
-        "form-message";
+        formMessage.className =
+          "form-message";
 
-    },3500);
+      },
+      3500
+    );
 
 }
 
@@ -2378,9 +3540,13 @@ function showFormMessage(
    PAGE NAVIGATION
 ========================================================= */
 
-function showPage(page){
+function showPage(
+  page
+){
 
-  if(page === "add"){
+  if(
+    page === "add"
+  ){
 
     addPage.classList.remove(
       "hidden"
@@ -2437,12 +3603,21 @@ async function initializeApp(){
     "income"
   );
 
+  categoryFilter =
+    "all";
+
+  lastHistoryCategoryFilterMode =
+    "";
+
+  lastRenderSignature =
+    "";
+
+  updateHistoryCategoryFilter(
+    true
+  );
+
   renderTransactions();
 
-  /*
-    Local data আগে দেখাবে।
-    তারপর Google Sheets থেকে update.
-  */
 
   await loadTransactions();
 
@@ -2467,17 +3642,28 @@ amountInput.addEventListener(
 
     const digitsBeforeCursor =
       before
-        .slice(0,cursorEnd)
-        .replace(/[^\d]/g,"")
+        .slice(
+          0,
+          cursorEnd
+        )
+        .replace(
+          /[^\d]/g,
+          ""
+        )
         .length;
 
 
     const raw =
-      before.replace(/[^\d]/g,"");
+      before.replace(
+        /[^\d]/g,
+        ""
+      );
 
 
     const formatted =
-      formatIndianNumber(raw);
+      formatIndianNumber(
+        raw
+      );
 
 
     this.value =
@@ -2486,20 +3672,20 @@ amountInput.addEventListener(
       : "";
 
 
-    /*
-      Cursor position যতটা সম্ভব
-      স্বাভাবিক রাখা।
-    */
+    let position =
+      0;
 
-    let position = 0;
-
-    let digitCount = 0;
+    let digitCount =
+      0;
 
     while(
+
       position <
       this.value.length &&
+
       digitCount <
       digitsBeforeCursor
+
     ){
 
       if(
@@ -2534,7 +3720,9 @@ amountInput.addEventListener(
   "keydown",
   function(e){
 
-    if(e.key === "Enter"){
+    if(
+      e.key === "Enter"
+    ){
 
       e.preventDefault();
 
@@ -2579,7 +3767,9 @@ loginPassword.addEventListener(
   "keydown",
   e => {
 
-    if(e.key === "Enter"){
+    if(
+      e.key === "Enter"
+    ){
 
       doLogin();
 
@@ -2593,7 +3783,9 @@ loginUsername.addEventListener(
   "keydown",
   e => {
 
-    if(e.key === "Enter"){
+    if(
+      e.key === "Enter"
+    ){
 
       loginPassword.focus();
 
@@ -2607,7 +3799,9 @@ incomeBtn.addEventListener(
   "click",
   () => {
 
-    setType("income");
+    setType(
+      "income"
+    );
 
   }
 );
@@ -2617,7 +3811,9 @@ expenseBtn.addEventListener(
   "click",
   () => {
 
-    setType("expense");
+    setType(
+      "expense"
+    );
 
   }
 );
@@ -2633,7 +3829,9 @@ navAdd.addEventListener(
   "click",
   () => {
 
-    showPage("add");
+    showPage(
+      "add"
+    );
 
   }
 );
@@ -2643,7 +3841,9 @@ navHistory.addEventListener(
   "click",
   () => {
 
-    showPage("history");
+    showPage(
+      "history"
+    );
 
   }
 );
@@ -2652,6 +3852,63 @@ navHistory.addEventListener(
 logoutBtn.addEventListener(
   "click",
   logout
+);
+
+
+/* =========================================================
+   TRANSACTION FILTER EVENTS
+========================================================= */
+
+filterAll.addEventListener(
+  "click",
+  () => {
+
+    setTransactionFilter(
+      "all"
+    );
+
+  }
+);
+
+
+filterIncome.addEventListener(
+  "click",
+  () => {
+
+    setTransactionFilter(
+      "income"
+    );
+
+  }
+);
+
+
+filterExpense.addEventListener(
+  "click",
+  () => {
+
+    setTransactionFilter(
+      "expense"
+    );
+
+  }
+);
+
+
+/* =========================================================
+   CATEGORY FILTER EVENT
+========================================================= */
+
+historyCategoryFilter.addEventListener(
+  "change",
+  () => {
+
+    categoryFilter =
+      historyCategoryFilter.value;
+
+    renderTransactions();
+
+  }
 );
 
 
@@ -2705,11 +3962,6 @@ setInterval(
 
 
     await syncPending();
-
-    /*
-      প্রতি 10 সেকেন্ডে server থেকে
-      latest transactions নেওয়া হবে।
-    */
 
     await loadTransactions();
 
