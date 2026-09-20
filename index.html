@@ -2,7 +2,9 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
 <title>আমার হিসাব</title>
 
@@ -12,20 +14,18 @@
   -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
+html,body{
   margin:0;
   padding:0;
   width:100%;
   height:100%;
   overflow:hidden;
-  background:#f4f6f5;
-  color:#202423;
-  font-family:Arial,"Noto Sans Bengali",sans-serif;
 }
 
 body{
-  min-height:100dvh;
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:#f4f6f5;
+  color:#202522;
 }
 
 button,
@@ -43,282 +43,349 @@ button{
   display:none!important;
 }
 
-
 /* =========================
    LOGIN
 ========================= */
 
 #loginScreen{
-  width:100%;
-  height:100dvh;
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at top,#e7f5ef 0%,#f4f6f5 45%,#eef2f0 100%);
   display:flex;
   align-items:center;
   justify-content:center;
   padding:20px;
-  background:#f4f6f5;
-  overflow:hidden;
+  z-index:1000;
 }
 
 .login-box{
   width:100%;
-  max-width:390px;
+  max-width:380px;
   background:#fff;
-  border-radius:18px;
+  border-radius:24px;
   padding:28px 22px 24px;
-  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  box-shadow:
+    0 8px 0 #dce6e1,
+    0 18px 35px rgba(0,0,0,.12);
 }
 
 .login-logo{
-  width:58px;
-  height:58px;
-  margin:0 auto 12px;
-  border-radius:16px;
-  background:#0b6b4f;
-  color:#fff;
+  width:68px;
+  height:68px;
+  margin:0 auto 14px;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:25px;
-  font-weight:800;
+
+  border-radius:20px;
+
+  color:#fff;
+  font-size:34px;
+  font-weight:900;
+
+  background:
+    linear-gradient(145deg,#15906d,#0b6b4f 55%,#07523d);
+
+  box-shadow:
+    0 4px 0 #064735,
+    0 9px 18px rgba(11,107,79,.25),
+    inset 0 1px 0 rgba(255,255,255,.30);
 }
 
 .login-title{
   text-align:center;
   font-size:25px;
-  font-weight:800;
+  font-weight:900;
+  color:#0b6b4f;
   margin-bottom:5px;
 }
 
 .login-subtitle{
   text-align:center;
-  color:#777;
-  font-size:13px;
+  font-size:12px;
+  color:#7b8580;
   margin-bottom:24px;
 }
 
-.form-label{
-  display:block;
-  font-size:13px;
-  font-weight:700;
-  margin:0 0 7px;
-}
-
-.input,
-.select,
-.note-input{
+.login-input{
   width:100%;
-  border:1px solid #dfe4e1;
-  background:#fafbfa;
-  border-radius:11px;
-  padding:13px 13px;
+  height:48px;
+  border:1px solid #dce5e1;
+  border-radius:13px;
+  padding:0 14px;
   outline:none;
-  font-size:15px;
-  color:#202423;
+  background:#f8faf9;
+  font-size:14px;
+  margin-bottom:11px;
 }
 
-.input:focus,
-.select:focus,
-.note-input:focus{
+.login-input:focus{
   border-color:#0b6b4f;
   background:#fff;
-}
-
-.form-group{
-  margin-bottom:15px;
+  box-shadow:0 0 0 3px rgba(11,107,79,.08);
 }
 
 .login-btn{
   width:100%;
+  height:48px;
   border:0;
-  border-radius:11px;
-  background:#0b6b4f;
+  border-radius:13px;
+
   color:#fff;
-  padding:14px;
-  font-size:16px;
+  background:linear-gradient(145deg,#14906c,#0b6b4f);
+
+  font-size:15px;
   font-weight:800;
-  margin-top:4px;
+
+  box-shadow:
+    0 3px 0 #064735,
+    0 7px 14px rgba(11,107,79,.18);
 }
 
 .login-btn:active{
-  transform:scale(.99);
+  transform:translateY(2px);
+  box-shadow:
+    0 1px 0 #064735,
+    0 4px 9px rgba(11,107,79,.16);
 }
 
 .login-error{
-  color:#d52f2f;
-  font-size:13px;
+  min-height:18px;
   text-align:center;
-  min-height:19px;
-  margin-top:12px;
+  color:#d83232;
+  font-size:12px;
+  margin-top:10px;
 }
-
 
 /* =========================
    APP
 ========================= */
 
 #app{
+  display:none;
   width:100%;
-  height:100dvh;
-  min-height:100dvh;
+  height:100%;
   overflow:hidden;
-  display:flex;
-  flex-direction:column;
 }
 
-
-/* =========================
-   TOP HEADER
-========================= */
-
-.top-header{
-  flex:0 0 auto;
-  height:67px;
+.app-header{
+  height:62px;
   background:#0b6b4f;
   color:#fff;
-  padding:10px 14px;
-  position:relative;
-  z-index:20;
-  box-shadow:0 2px 8px rgba(0,0,0,.12);
-}
 
-.header-row{
-  width:100%;
-  max-width:520px;
-  height:100%;
-  margin:auto;
   display:flex;
   align-items:center;
-  justify-content:space-between;
+
+  padding:0 13px;
+
+  box-shadow:
+    0 3px 10px rgba(0,0,0,.14);
+
+  position:relative;
+  z-index:20;
+}
+
+.header-left{
+  min-width:0;
+  flex:1;
 }
 
 .app-title{
-  font-size:20px;
-  font-weight:800;
-  line-height:22px;
+  font-size:18px;
+  line-height:20px;
+  font-weight:900;
 }
 
-.header-user{
-  font-size:11px;
-  opacity:.9;
-  line-height:15px;
+.username{
+  font-size:10px;
+  opacity:.78;
+  margin-top:2px;
 }
-
-
-/* =========================
-   HEADER RIGHT
-========================= */
 
 .header-right{
   display:flex;
-  flex-direction:column;
-  align-items:flex-end;
-  justify-content:center;
-  gap:2px;
-  min-width:70px;
+  align-items:center;
+  gap:8px;
 }
 
-#syncStatus{
-  min-width:70px;
-  text-align:right;
+.sync-status{
+  font-size:10px;
   white-space:nowrap;
-  font-size:11px;
-  line-height:14px;
+  opacity:.9;
 }
 
-.header-logout{
-  width:30px;
-  height:24px;
-  padding:0;
+.logout-btn{
+  width:34px;
+  height:34px;
   border:0;
-  border-radius:7px;
-  background:rgba(255,255,255,.14);
+  border-radius:10px;
+
   color:#fff;
+  background:rgba(255,255,255,.13);
+
+  font-size:18px;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:15px;
-  line-height:1;
-  box-shadow:0 1px 3px rgba(0,0,0,.12);
 }
 
-.header-logout:active{
-  transform:scale(.93);
+.logout-btn:active{
   background:rgba(255,255,255,.22);
 }
 
-
 /* =========================
-   MAIN
+   CONTENT
 ========================= */
 
 .main{
-  width:100%;
-  max-width:520px;
-  flex:1 1 auto;
-  min-height:0;
-  margin:auto;
-  padding:10px 12px 8px;
+  height:calc(100% - 62px);
   overflow:hidden;
+  position:relative;
 }
 
-
-/* =========================
-   PAGES
-========================= */
-
-#addPage,
-#historyPage{
-  width:100%;
+.page{
+  display:none;
   height:100%;
-  min-height:0;
-}
-
-#addPage{
   overflow-y:auto;
   overflow-x:hidden;
-  padding-bottom:2px;
+
+  padding:12px 12px 82px;
   -webkit-overflow-scrolling:touch;
-  overscroll-behavior:contain;
 }
 
-#historyPage{
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
+.page.active{
+  display:block;
 }
 
+.container{
+  width:100%;
+  max-width:520px;
+  margin:0 auto;
+}
 
 /* =========================
-   BALANCE
+   3D BALANCE CARD
 ========================= */
 
 .balance-card{
-  background:#fff;
-  border-radius:15px;
-  padding:14px 17px;
+  position:relative;
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      145deg,
+      #15906d 0%,
+      #0b6b4f 45%,
+      #07523d 100%
+    );
+
+  border-radius:20px;
+
+  padding:18px 20px 19px;
   margin-bottom:10px;
-  box-shadow:0 2px 9px rgba(0,0,0,.055);
+
+  border:1px solid rgba(255,255,255,.20);
+
+  box-shadow:
+    0 3px 0 #064735,
+    0 6px 0 #053d2f,
+    0 12px 18px rgba(0,0,0,.18),
+    0 18px 28px rgba(11,107,79,.20),
+    inset 0 1px 0 rgba(255,255,255,.28),
+    inset 0 -10px 20px rgba(0,0,0,.10);
+}
+
+.balance-card::before{
+  content:"";
+  position:absolute;
+
+  left:10px;
+  right:10px;
+  top:7px;
+
+  height:3px;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.52),
+      transparent
+    );
+
+  box-shadow:
+    0 0 8px rgba(255,255,255,.18);
+
+  pointer-events:none;
+}
+
+.balance-card::after{
+  content:"";
+
+  position:absolute;
+
+  width:175px;
+  height:175px;
+
+  right:-74px;
+  top:-84px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.18) 0%,
+      rgba(255,255,255,.07) 30%,
+      transparent 68%
+    );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.08);
+
+  pointer-events:none;
 }
 
 .balance-label{
-  color:#747b78;
-  font-size:13px;
-  margin-bottom:4px;
+  position:relative;
+  z-index:2;
+
+  color:rgba(255,255,255,.84);
+
+  font-size:12px;
+  font-weight:700;
+
+  margin-bottom:7px;
+
+  text-shadow:
+    0 1px 2px rgba(0,0,0,.22);
 }
 
 .balance-value{
-  font-size:27px;
-  font-weight:800;
-  color:#0b6b4f;
-  line-height:1.15;
+  position:relative;
+  z-index:2;
+
+  color:#fff!important;
+
+  font-size:30px;
+  font-weight:900;
+
+  line-height:1.12;
+  letter-spacing:-.5px;
+
+  text-shadow:
+    0 2px 2px rgba(0,0,0,.20),
+    0 4px 8px rgba(0,0,0,.16);
 }
 
 .balance-status{
-  margin-top:5px;
-  font-size:10px;
-  color:#777;
+  display:none!important;
 }
-
 
 /* =========================
    FORM CARD
@@ -326,612 +393,552 @@ button{
 
 .form-card{
   background:#fff;
-  border-radius:15px;
+  border:1px solid #e4ebe8;
+  border-radius:18px;
+
   padding:14px;
-  box-shadow:0 2px 9px rgba(0,0,0,.055);
+
+  box-shadow:
+    0 3px 0 #e0e7e3,
+    0 7px 17px rgba(0,0,0,.06);
 }
 
-.form-card .form-group{
+.field{
   margin-bottom:11px;
 }
 
-.type-buttons{
+.field-label{
+  display:block;
+  font-size:11px;
+  font-weight:800;
+  color:#5f6965;
+  margin-bottom:5px;
+}
+
+.input,
+.select,
+.textarea{
+  width:100%;
+  border:1px solid #dce5e1;
+  border-radius:11px;
+
+  background:#f9fbfa;
+
+  outline:none;
+
+  font-size:14px;
+  color:#202522;
+}
+
+.input,
+.select{
+  height:44px;
+  padding:0 12px;
+}
+
+.textarea{
+  min-height:70px;
+  padding:10px 12px;
+  resize:none;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus{
+  border-color:#0b6b4f;
+  background:#fff;
+  box-shadow:0 0 0 3px rgba(11,107,79,.07);
+}
+
+/* =========================
+   TYPE BUTTON
+========================= */
+
+.type-row{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:9px;
-  margin-bottom:12px;
+  gap:8px;
 }
 
 .type-btn{
-  border:1px solid #dfe4e1;
-  background:#fafbfa;
-  color:#555;
-  border-radius:10px;
-  padding:10px;
-  font-size:15px;
+  height:43px;
+
+  border:1px solid #dce5e1;
+  border-radius:11px;
+
+  background:#f7f9f8;
+  color:#606a66;
+
+  font-size:13px;
   font-weight:800;
 }
 
-.type-btn.active-income{
-  background:#e8f5ef;
+.type-btn.active.income{
+  background:#e7f6f0;
+  border-color:#0b6b4f;
   color:#0b6b4f;
-  border-color:#0b6b4f;
+  box-shadow:inset 0 0 0 1px rgba(11,107,79,.08);
 }
 
-.type-btn.active-expense{
+.type-btn.active.expense{
   background:#fff0f0;
-  color:#c72e2e;
-  border-color:#c72e2e;
+  border-color:#d83232;
+  color:#d83232;
+  box-shadow:inset 0 0 0 1px rgba(216,50,50,.07);
 }
 
-.amount-wrap{
-  position:relative;
-}
-
-.amount-input{
-  width:100%;
-  border:1px solid #dfe4e1;
-  background:#fafbfa;
-  border-radius:11px;
-  padding:12px 55px 12px 13px;
-  outline:none;
-  font-size:19px;
-  font-weight:700;
-  text-align:left;
-}
-
-.amount-input:focus{
-  border-color:#0b6b4f;
-  background:#fff;
-}
-
-.amount-currency{
-  position:absolute;
-  right:13px;
-  top:50%;
-  transform:translateY(-50%);
-  color:#777;
-  font-weight:700;
-  font-size:13px;
-}
+/* =========================
+   SAVE
+========================= */
 
 .save-btn{
   width:100%;
+  height:47px;
+
   border:0;
-  border-radius:11px;
-  background:#0b6b4f;
+  border-radius:12px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #15906d,
+      #0b6b4f
+    );
+
   color:#fff;
-  padding:12px;
-  font-size:16px;
-  font-weight:800;
-  margin-top:2px;
+
+  font-size:14px;
+  font-weight:900;
+
+  box-shadow:
+    0 3px 0 #064735,
+    0 7px 14px rgba(11,107,79,.18);
 }
 
-.save-btn:disabled{
-  opacity:.6;
+.save-btn:active{
+  transform:translateY(2px);
+
+  box-shadow:
+    0 1px 0 #064735,
+    0 4px 9px rgba(11,107,79,.16);
 }
 
 .form-message{
-  min-height:18px;
+  min-height:17px;
   text-align:center;
-  font-size:12px;
+  font-size:11px;
   margin-top:8px;
 }
 
 .form-message.success{
-  color:#16824f;
+  color:#0b6b4f;
 }
 
 .form-message.error{
-  color:#d52f2f;
+  color:#d83232;
 }
 
-
 /* =========================
-   TRANSACTION FILTER
+   HISTORY FILTER
 ========================= */
 
-.transaction-filter{
-  flex:0 0 auto;
+.history-card{
+  background:#fff;
+
+  border:1px solid #e4ebe8;
+  border-radius:17px;
+
+  padding:11px;
+
+  box-shadow:
+    0 3px 0 #e0e7e3,
+    0 7px 17px rgba(0,0,0,.05);
+
+  /* ONLY CHANGE:
+     filter fixed + transaction area scroll */
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.filter-row{
   display:grid;
-  grid-template-columns:1fr 1fr 1fr;
+  grid-template-columns:repeat(3,1fr);
   gap:7px;
-  margin-bottom:8px;
+  margin-bottom:9px;
+
+  /* keep filter area fixed */
+  flex:0 0 auto;
 }
 
 .filter-btn{
-  border:1px solid #dfe4e1;
-  background:#fff;
-  color:#666;
-  border-radius:9px;
-  padding:8px 5px;
-  font-size:12px;
+  height:38px;
+
+  border:1px solid #dce5e1;
+  border-radius:10px;
+
+  background:#f7f9f8;
+  color:#66706c;
+
+  font-size:11px;
   font-weight:800;
-  box-shadow:0 1px 4px rgba(0,0,0,.035);
 }
 
 .filter-btn.active{
   background:#0b6b4f;
-  color:#fff;
   border-color:#0b6b4f;
-}
-
-.filter-btn.expense-active{
-  background:#d83232;
   color:#fff;
-  border-color:#d83232;
 }
 
+.history-category-wrap{
+  margin-bottom:9px;
 
-/* =========================
-   HISTORY CATEGORY FILTER
-========================= */
-
-.history-category-filter{
+  /* keep category dropdown fixed */
   flex:0 0 auto;
-  width:100%;
-  margin-bottom:8px;
 }
 
+.history-category-wrap.hidden{
+  display:none!important;
+}
 
 /* =========================
-   SCROLLABLE TRANSACTION AREA
+   TRANSACTION LIST
 ========================= */
 
-.history-list{
-  flex:1 1 auto;
-  min-height:0;
-
+.transaction-list{
   display:flex;
   flex-direction:column;
-  gap:5px;
+  gap:7px;
 
+  /* ONLY CHANGE:
+     transaction cards scroll here */
+  flex:1;
+  min-height:0;
   overflow-y:auto;
   overflow-x:hidden;
 
-  padding-right:2px;
-  padding-bottom:3px;
-
   -webkit-overflow-scrolling:touch;
-  overscroll-behavior:contain;
+
+  padding-bottom:2px;
 }
 
-.history-list::-webkit-scrollbar{
-  width:4px;
-}
-
-.history-list::-webkit-scrollbar-track{
-  background:transparent;
-}
-
-.history-list::-webkit-scrollbar-thumb{
-  background:#cfd6d2;
-  border-radius:10px;
-}
-
-.empty-box{
+.transaction-card{
+  position:relative;
+  padding:9px 11px;
+  border-radius:12px;
   background:#fff;
-  border-radius:13px;
-  padding:28px 15px;
-  text-align:center;
-  color:#888;
-  font-size:14px;
-  flex-shrink:0;
+  border:1px solid #e6ebe9;
+  box-shadow:0 2px 5px rgba(0,0,0,.035);
 }
 
-
-/* =========================
-   COMPACT TRANSACTION CARD
-========================= */
-
-.txn-card{
-  background:#fff;
-  border-radius:9px;
-  padding:7px 10px 7px;
-  box-shadow:0 1px 4px rgba(0,0,0,.05);
+.transaction-card.income{
   border-left:3px solid #0b6b4f;
-  flex-shrink:0;
 }
 
-.txn-card.expense{
-  border-left-color:#d83232;
+.transaction-card.expense{
+  border-left:3px solid #d83232;
 }
 
-.txn-top{
+.txn-row-top,
+.txn-row-bottom{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:8px;
+  gap:10px;
+  min-width:0;
 }
 
-.txn-date{
-  font-size:10px;
-  color:#777;
-  font-weight:600;
-}
-
-.txn-type{
-  font-size:10px;
-  font-weight:800;
-}
-
-.txn-type.income{
-  color:#0b6b4f;
-}
-
-.txn-type.expense{
-  color:#d83232;
+.txn-row-bottom{
+  margin-top:3px;
 }
 
 .txn-amount{
-  font-size:17px;
-  line-height:1.1;
-  font-weight:800;
-  margin:3px 0 3px;
+  font-size:13px;
+  font-weight:900;
+  line-height:1.15;
+  white-space:nowrap;
 }
 
-.txn-amount.income{
+.transaction-card.income .txn-amount{
   color:#0b6b4f;
 }
 
-.txn-amount.expense{
+.transaction-card.expense .txn-amount{
   color:#d83232;
 }
 
-.txn-bottom{
-  font-size:11px;
-  color:#4e5653;
-  line-height:1.2;
+.txn-date{
+  flex:0 0 auto;
+  font-size:9px;
+  color:#929a97;
   white-space:nowrap;
+}
+
+.txn-info{
+  min-width:0;
+  flex:1;
+  display:flex;
+  align-items:center;
+  gap:5px;
   overflow:hidden;
-  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .txn-category{
-  font-weight:700;
+  font-size:11px;
+  font-weight:900;
+  color:#252b28;
+  flex:0 0 auto;
+}
+
+.txn-note-separator{
+  font-size:10px;
+  color:#a1a9a5;
+  flex:0 0 auto;
 }
 
 .txn-note{
-  color:#777;
+  font-size:10px;
+  color:#747d79;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
-.txn-dot{
-  padding:0 3px;
-  color:#aaa;
+.txn-type{
+  flex:0 0 auto;
+  font-size:9px;
+  font-weight:800;
+  white-space:nowrap;
 }
 
+.transaction-card.income .txn-type{
+  color:#0b6b4f;
+}
 
-/* =========================
-   LOADING
-========================= */
+.transaction-card.expense .txn-type{
+  color:#d83232;
+}
 
-.loading{
+.empty-state{
   text-align:center;
-  padding:25px 10px;
-  color:#888;
-  font-size:13px;
+  padding:35px 15px;
+  color:#8a9390;
+  font-size:12px;
 }
-
-.spinner{
-  display:inline-block;
-  width:16px;
-  height:16px;
-  border:2px solid #ddd;
-  border-top-color:#0b6b4f;
-  border-radius:50%;
-  animation:spin .7s linear infinite;
-  vertical-align:-3px;
-  margin-right:5px;
-}
-
-@keyframes spin{
-  to{
-    transform:rotate(360deg)
-  }
-}
-
 
 /* =========================
    BOTTOM NAV
 ========================= */
 
 .bottom-nav{
-  flex:0 0 auto;
-  width:100%;
-  height:60px;
-  background:#fff;
-  border-top:1px solid #e4e7e5;
-  display:flex;
-  justify-content:center;
-  z-index:30;
-}
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
 
-.nav-inner{
-  width:100%;
-  max-width:520px;
-  height:100%;
-  display:grid;
-  grid-template-columns:1fr 1fr;
+  height:60px;
+
+  background:rgba(255,255,255,.97);
+
+  border-top:1px solid #e1e8e5;
+
+  box-shadow:
+    0 -5px 18px rgba(0,0,0,.07);
+
+  display:flex;
+
+  z-index:50;
 }
 
 .nav-btn{
+  flex:1;
+
   border:0;
-  background:#fff;
-  color:#777;
-  font-size:12px;
-  font-weight:700;
+  background:transparent;
+
+  color:#89928e;
+
+  font-size:10px;
+  font-weight:800;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  gap:3px;
 }
 
 .nav-icon{
-  display:block;
   font-size:19px;
-  line-height:21px;
-  margin-bottom:2px;
+  line-height:19px;
 }
 
 .nav-btn.active{
   color:#0b6b4f;
 }
 
-
 /* =========================
-   OLD LOGOUT HIDDEN
+   RESPONSIVE
 ========================= */
 
-.logout-row{
-  display:none!important;
-}
-
-
-/* =========================
-   SMALL PHONE
-========================= */
-
-@media(max-width:380px){
-
-  .top-header{
-    height:63px;
-    padding:8px 11px;
-  }
-
-  .main{
-    padding-left:9px;
-    padding-right:9px;
-    padding-top:8px;
-  }
-
-  .app-title{
-    font-size:18px;
-  }
+@media(max-width:420px){
 
   .balance-card{
-    padding:12px 15px;
-    margin-bottom:8px;
+    padding:16px 17px 18px;
+    margin-bottom:9px;
+    border-radius:19px;
   }
 
   .balance-value{
-    font-size:25px;
+    font-size:28px;
   }
 
   .form-card{
     padding:12px;
   }
 
-  .form-card .form-group{
-    margin-bottom:9px;
-  }
+}
 
-  .form-label{
-    font-size:12px;
-    margin-bottom:5px;
-  }
+@media(max-height:700px){
 
-  .input,
-  .select,
-  .note-input{
-    padding:10px 11px;
-    font-size:14px;
-  }
-
-  .amount-input{
-    padding:11px 50px 11px 12px;
-    font-size:18px;
-  }
-
-  .type-btn{
-    padding:9px;
-  }
-
-  .save-btn{
-    padding:11px;
-  }
-
-  .bottom-nav{
+  .app-header{
     height:58px;
   }
 
-  .txn-amount{
-    font-size:16px;
+  .main{
+    height:calc(100% - 58px);
+  }
+
+  .page{
+    padding-top:9px;
+  }
+
+  .balance-card{
+    padding:13px 15px 15px;
+    margin-bottom:8px;
+  }
+
+  .balance-value{
+    font-size:26px;
+  }
+
+  .field{
+    margin-bottom:8px;
+  }
+
+  .input,
+  .select{
+    height:41px;
+  }
+
+  .textarea{
+    min-height:58px;
+  }
+
+  .save-btn{
+    height:44px;
   }
 
 }
 
-
 /* =========================
-   VERY SMALL HEIGHT PHONE
+   LOADING
 ========================= */
 
-@media(max-height:700px){
-
-  .top-header{
-    height:59px;
-    padding-top:7px;
-    padding-bottom:7px;
-  }
-
-  .main{
-    padding-top:6px;
-    padding-bottom:5px;
-  }
-
-  .balance-card{
-    padding:10px 14px;
-    margin-bottom:7px;
-  }
-
-  .balance-value{
-    font-size:24px;
-  }
-
-  .balance-status{
-    margin-top:3px;
-    font-size:9px;
-  }
-
-  .form-card{
-    padding:11px;
-  }
-
-  .form-card .form-group{
-    margin-bottom:8px;
-  }
-
-  .type-buttons{
-    margin-bottom:9px;
-  }
-
-  .type-btn{
-    padding:8px;
-  }
-
-  .input,
-  .select,
-  .note-input{
-    padding:9px 10px;
-  }
-
-  .amount-input{
-    padding:10px 50px 10px 11px;
-    font-size:17px;
-  }
-
-  .save-btn{
-    padding:10px;
-  }
-
-  .bottom-nav{
-    height:55px;
-  }
-
-  .nav-icon{
-    font-size:17px;
-    line-height:19px;
-  }
-
+.loading{
+  opacity:.65;
+  pointer-events:none;
 }
 </style>
 </head>
 
 <body>
 
-<section id="loginScreen">
+<!-- =========================
+     LOGIN SCREEN
+========================= -->
+
+<div id="loginScreen">
 
   <div class="login-box">
 
     <div class="login-logo">৳</div>
 
-    <div class="login-title">আমার হিসাব</div>
+    <div class="login-title">
+      আমার হিসাব
+    </div>
 
     <div class="login-subtitle">
-      আপনার Username এবং Password দিয়ে Login করুন
+      সহজে আয়-ব্যয়ের হিসাব রাখুন
     </div>
 
-    <div class="form-group">
+    <input
+      id="usernameInput"
+      class="login-input"
+      type="text"
+      autocomplete="username"
+      placeholder="Username"
+    >
 
-      <label class="form-label">
-        Username
-      </label>
-
-      <input
-        id="loginUsername"
-        class="input"
-        type="text"
-        autocomplete="username"
-        placeholder="Username">
-
-    </div>
-
-    <div class="form-group">
-
-      <label class="form-label">
-        Password
-      </label>
-
-      <input
-        id="loginPassword"
-        class="input"
-        type="password"
-        autocomplete="current-password"
-        placeholder="Password">
-
-    </div>
+    <input
+      id="passwordInput"
+      class="login-input"
+      type="password"
+      autocomplete="current-password"
+      placeholder="Password"
+    >
 
     <button
       id="loginBtn"
-      class="login-btn">
+      class="login-btn"
+      type="button"
+    >
       Login
     </button>
 
-    <div
-      id="loginError"
-      class="login-error">
-    </div>
+    <div id="loginError" class="login-error"></div>
 
   </div>
 
-</section>
+</div>
 
 
-<section id="app" class="hidden">
+<!-- =========================
+     APP
+========================= -->
 
-  <header class="top-header">
+<div id="app">
 
-    <div class="header-row">
+  <header class="app-header">
 
-      <div>
+    <div class="header-left">
 
-        <div class="app-title">
-          আমার হিসাব
-        </div>
-
-        <div
-          id="headerUsername"
-          class="header-user">
-        </div>
-
+      <div class="app-title">
+        আমার হিসাব
       </div>
 
+      <div id="usernameDisplay" class="username"></div>
 
-      <!-- Sync + Logout -->
+    </div>
 
-      <div class="header-right">
+    <div class="header-right">
 
-        <div
-          id="syncStatus"
-          class="header-user">
-          Offline
-        </div>
-
-        <button
-          id="logoutBtn"
-          class="header-logout"
-          type="button"
-          aria-label="Logout"
-          title="Logout">
-          🚪
-        </button>
-
+      <div id="syncStatus" class="sync-status">
+        Offline
       </div>
+
+      <button
+        id="logoutBtn"
+        class="logout-btn"
+        type="button"
+        aria-label="Logout"
+      >
+        🚪
+      </button>
 
     </div>
 
@@ -940,136 +947,147 @@ button{
 
   <main class="main">
 
-    <section id="addPage">
+    <!-- =========================
+         ADD PAGE
+    ========================= -->
 
-      <div class="balance-card">
+    <section
+      id="addPage"
+      class="page active"
+    >
 
-        <div class="balance-label">
-          বর্তমান ব্যালেন্স
-        </div>
-
-        <div
-          id="balanceValue"
-          class="balance-value">
-          0 TK
-        </div>
+      <div class="container">
 
         <div
-          id="balanceStatus"
-          class="balance-status">
-          হিসাব লোড হচ্ছে...
+          id="kqdsi4"
+          class="balance-card"
+        >
+
+          <div class="balance-label">
+            বর্তমান ব্যালেন্স
+          </div>
+
+          <div
+            id="balanceValue"
+            class="balance-value"
+          >
+            0 TK
+          </div>
+
+          <div
+            id="balanceStatus"
+            class="balance-status"
+          ></div>
+
         </div>
 
-      </div>
+
+        <div class="form-card">
+
+          <div class="field">
+
+            <label class="field-label">
+              তারিখ
+            </label>
+
+            <input
+              id="dateInput"
+              class="input"
+              type="date"
+            >
+
+          </div>
 
 
-      <div class="form-card">
+          <div class="field">
 
-        <div class="form-group">
-
-          <label class="form-label">
-            তারিখ
-          </label>
-
-          <input
-            id="dateInput"
-            class="input"
-            type="date">
-
-        </div>
-
-
-        <div class="form-group">
-
-          <label class="form-label">
-            Amount
-          </label>
-
-          <div class="amount-wrap">
+            <label class="field-label">
+              Amount
+            </label>
 
             <input
               id="amountInput"
-              class="amount-input"
+              class="input"
               type="text"
               inputmode="numeric"
               autocomplete="off"
-              placeholder="0">
-
-            <span class="amount-currency">
-              TK
-            </span>
+              placeholder="টাকার পরিমাণ"
+            >
 
           </div>
 
-        </div>
 
+          <div class="field">
 
-        <div class="form-group">
+            <label class="field-label">
+              হিসাবের ধরন
+            </label>
 
-          <label class="form-label">
-            ধরন
-          </label>
+            <div class="type-row">
 
-          <div class="type-buttons">
+              <button
+                id="incomeBtn"
+                class="type-btn income active"
+                type="button"
+              >
+                আয়
+              </button>
 
-            <button
-              id="incomeBtn"
-              class="type-btn active-income"
-              type="button">
-              + আয়
-            </button>
+              <button
+                id="expenseBtn"
+                class="type-btn expense"
+                type="button"
+              >
+                ব্যয়
+              </button>
 
-            <button
-              id="expenseBtn"
-              class="type-btn"
-              type="button">
-              − ব্যয়
-            </button>
+            </div>
 
           </div>
 
-        </div>
+
+          <div class="field">
+
+            <label class="field-label">
+              ক্যাটাগরি
+            </label>
+
+            <select
+              id="categoryInput"
+              class="select"
+            ></select>
+
+          </div>
 
 
-        <div class="form-group">
+          <div class="field">
 
-          <label class="form-label">
-            Category
-          </label>
+            <label class="field-label">
+              নোট
+            </label>
 
-          <select
-            id="categorySelect"
-            class="select">
-          </select>
+            <textarea
+              id="noteInput"
+              class="textarea"
+              placeholder="প্রয়োজনে কিছু লিখুন"
+            ></textarea>
 
-        </div>
-
-
-        <div class="form-group">
-
-          <label class="form-label">
-            Note
-          </label>
-
-          <textarea
-            id="noteInput"
-            class="note-input"
-            rows="2"
-            placeholder="প্রয়োজনে কিছু লিখুন..."></textarea>
-
-        </div>
+          </div>
 
 
-        <button
-          id="saveBtn"
-          class="save-btn"
-          type="button">
-          Save
-        </button>
+          <button
+            id="saveBtn"
+            class="save-btn"
+            type="button"
+          >
+            হিসাব সংরক্ষণ করুন
+          </button>
 
-        <div
-          id="formMessage"
-          class="form-message">
+          <div
+            id="formMessage"
+            class="form-message"
+          ></div>
+
         </div>
 
       </div>
@@ -1077,56 +1095,65 @@ button{
     </section>
 
 
+    <!-- =========================
+         HISTORY PAGE
+    ========================= -->
+
     <section
       id="historyPage"
-      class="hidden">
+      class="page"
+    >
 
-      <div class="transaction-filter">
+      <div class="container">
 
-        <button
-          id="filterAll"
-          class="filter-btn active"
-          type="button">
-          সব
-        </button>
+        <div class="history-card">
 
-        <button
-          id="filterIncome"
-          class="filter-btn"
-          type="button">
-          আয়
-        </button>
+          <div class="filter-row">
 
-        <button
-          id="filterExpense"
-          class="filter-btn"
-          type="button">
-          ব্যয়
-        </button>
+            <button
+              class="filter-btn active"
+              data-filter="all"
+              type="button"
+            >
+              সব
+            </button>
 
-      </div>
+            <button
+              class="filter-btn"
+              data-filter="income"
+              type="button"
+            >
+              আয়
+            </button>
 
+            <button
+              class="filter-btn"
+              data-filter="expense"
+              type="button"
+            >
+              ব্যয়
+            </button>
 
-      <select
-        id="historyCategoryFilter"
-        class="select history-category-filter">
-
-        <option value="all">
-          সব ক্যাটাগরি
-        </option>
-
-      </select>
+          </div>
 
 
-      <div
-        id="historyList"
-        class="history-list">
+          <div
+            id="historyCategoryWrap"
+            class="history-category-wrap hidden"
+          >
 
-        <div class="loading">
+            <select
+              id="historyCategoryFilter"
+              class="select"
+            ></select>
 
-          <span class="spinner"></span>
+          </div>
 
-          লেনদেন লোড হচ্ছে...
+
+          <div
+            id="transactionList"
+            class="transaction-list"
+          ></div>
 
         </div>
 
@@ -1137,42 +1164,38 @@ button{
   </main>
 
 
+  <!-- =========================
+       BOTTOM NAV
+  ========================= -->
+
   <nav class="bottom-nav">
 
-    <div class="nav-inner">
+    <button
+      id="addNavBtn"
+      class="nav-btn active"
+      type="button"
+    >
 
-      <button
-        id="navAdd"
-        class="nav-btn active"
-        type="button">
+      <span class="nav-icon">➕</span>
+      <span>যোগ করুন</span>
 
-        <span class="nav-icon">
-          ＋
-        </span>
-
-        যোগ করুন
-
-      </button>
+    </button>
 
 
-      <button
-        id="navHistory"
-        class="nav-btn"
-        type="button">
+    <button
+      id="historyNavBtn"
+      class="nav-btn"
+      type="button"
+    >
 
-        <span class="nav-icon">
-          ☷
-        </span>
+      <span class="nav-icon">📋</span>
+      <span>সকল হিসাব</span>
 
-        সকল হিসাব
-
-      </button>
-
-    </div>
+    </button>
 
   </nav>
 
-</section>
+</div>
 
 
 <script>
@@ -1184,87 +1207,13 @@ button{
 const API =
 "https://script.google.com/macros/s/AKfycbwywJPWi2Q1sIXA4gLx2r0qb78yByaKZ7RvwmxDEpmqwqUVtCcyMXzuqEWupu50G6Vj/exec";
 
-const APP_NAME =
-  "AmarHisab";
+const APP_NAME = "AmarHisab";
 
 const STORAGE = {
-
-  session:
-    APP_NAME + "_session",
-
-  transactions:
-    APP_NAME + "_transactions",
-
-  pending:
-    APP_NAME + "_pending"
-
+  session: APP_NAME + "_session",
+  transactions: APP_NAME + "_transactions",
+  pending: APP_NAME + "_pending"
 };
-
-
-/* =========================================================
-   CATEGORIES
-========================================================= */
-
-const INCOME_CATEGORIES = [
-
-  "বেতন",
-  "ব্যবসা",
-  "প্রফিট",
-  "অন্যান্য"
-
-];
-
-
-const EXPENSE_CATEGORIES = [
-
-  "বিকাশ",
-  "ফ্যামিলি",
-  "ব্যবসা",
-  "বিল",
-  "ব্যাংক ডিপোজিট",
-  "অনলাইন অর্ডার",
-  "অন্যান্য"
-
-];
-
-
-/* =========================================================
-   STATE
-========================================================= */
-
-let currentType =
-  "income";
-
-let transactions =
-  [];
-
-let pendingTransactions =
-  [];
-
-let session =
-  null;
-
-let isSaving =
-  false;
-
-
-/* =========================================================
-   TRANSACTION FILTER STATE
-========================================================= */
-
-let transactionFilter =
-  "all";
-
-let categoryFilter =
-  "all";
-
-
-/* =========================================================
-   HISTORY DROPDOWN STATE
-========================================================= */
-
-let lastHistoryCategoryFilterMode =
-  "";
 
 
 /* =========================================================
@@ -1272,149 +1221,130 @@ let lastHistoryCategoryFilterMode =
 ========================================================= */
 
 const loginScreen =
-  document.getElementById(
-    "loginScreen"
-  );
+  document.getElementById("loginScreen");
 
 const app =
-  document.getElementById(
-    "app"
-  );
+  document.getElementById("app");
 
-const loginUsername =
-  document.getElementById(
-    "loginUsername"
-  );
+const usernameInput =
+  document.getElementById("usernameInput");
 
-const loginPassword =
-  document.getElementById(
-    "loginPassword"
-  );
+const passwordInput =
+  document.getElementById("passwordInput");
 
 const loginBtn =
-  document.getElementById(
-    "loginBtn"
-  );
+  document.getElementById("loginBtn");
 
 const loginError =
-  document.getElementById(
-    "loginError"
-  );
+  document.getElementById("loginError");
 
-const headerUsername =
-  document.getElementById(
-    "headerUsername"
-  );
+const usernameDisplay =
+  document.getElementById("usernameDisplay");
 
 const syncStatus =
-  document.getElementById(
-    "syncStatus"
-  );
-
-const balanceValue =
-  document.getElementById(
-    "balanceValue"
-  );
-
-const balanceStatus =
-  document.getElementById(
-    "balanceStatus"
-  );
-
-const dateInput =
-  document.getElementById(
-    "dateInput"
-  );
-
-const amountInput =
-  document.getElementById(
-    "amountInput"
-  );
-
-const incomeBtn =
-  document.getElementById(
-    "incomeBtn"
-  );
-
-const expenseBtn =
-  document.getElementById(
-    "expenseBtn"
-  );
-
-const categorySelect =
-  document.getElementById(
-    "categorySelect"
-  );
-
-const noteInput =
-  document.getElementById(
-    "noteInput"
-  );
-
-const saveBtn =
-  document.getElementById(
-    "saveBtn"
-  );
-
-const formMessage =
-  document.getElementById(
-    "formMessage"
-  );
-
-const historyList =
-  document.getElementById(
-    "historyList"
-  );
-
-const addPage =
-  document.getElementById(
-    "addPage"
-  );
-
-const historyPage =
-  document.getElementById(
-    "historyPage"
-  );
-
-const navAdd =
-  document.getElementById(
-    "navAdd"
-  );
-
-const navHistory =
-  document.getElementById(
-    "navHistory"
-  );
+  document.getElementById("syncStatus");
 
 const logoutBtn =
-  document.getElementById(
-    "logoutBtn"
-  );
+  document.getElementById("logoutBtn");
+
+const addPage =
+  document.getElementById("addPage");
+
+const historyPage =
+  document.getElementById("historyPage");
+
+const balanceValue =
+  document.getElementById("balanceValue");
+
+const balanceStatus =
+  document.getElementById("balanceStatus");
+
+const dateInput =
+  document.getElementById("dateInput");
+
+const amountInput =
+  document.getElementById("amountInput");
+
+const incomeBtn =
+  document.getElementById("incomeBtn");
+
+const expenseBtn =
+  document.getElementById("expenseBtn");
+
+const categoryInput =
+  document.getElementById("categoryInput");
+
+const noteInput =
+  document.getElementById("noteInput");
+
+const saveBtn =
+  document.getElementById("saveBtn");
+
+const formMessage =
+  document.getElementById("formMessage");
+
+const transactionList =
+  document.getElementById("transactionList");
+
+const historyCategoryWrap =
+  document.getElementById("historyCategoryWrap");
+
+const historyCategoryFilter =
+  document.getElementById("historyCategoryFilter");
+
+const addNavBtn =
+  document.getElementById("addNavBtn");
+
+const historyNavBtn =
+  document.getElementById("historyNavBtn");
+
+const filterButtons =
+  document.querySelectorAll(".filter-btn");
 
 
 /* =========================================================
-   FILTER ELEMENTS
+   CATEGORIES
 ========================================================= */
 
-const filterAll =
-  document.getElementById(
-    "filterAll"
-  );
+const INCOME_CATEGORIES = [
+  "বেতন",
+  "ব্যবসা",
+  "প্রফিট",
+  "অন্যান্য"
+];
 
-const filterIncome =
-  document.getElementById(
-    "filterIncome"
-  );
+const EXPENSE_CATEGORIES = [
+  "বিকাশ",
+  "ফ্যামিলি",
+  "ব্যবসা",
+  "বিল",
+  "ব্যাংক ডিপোজিট",
+  "অনলাইন অর্ডার",
+  "অন্যান্য"
+];
 
-const filterExpense =
-  document.getElementById(
-    "filterExpense"
-  );
 
-const historyCategoryFilter =
-  document.getElementById(
-    "historyCategoryFilter"
-  );
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentType = "income";
+
+let transactions = [];
+
+let pendingTransactions = [];
+
+let session = null;
+
+let isSaving = false;
+
+let transactionFilter = "all";
+
+let categoryFilter = "all";
+
+let lastHistoryCategoryFilterMode = "";
+
+let lastRenderSignature = "";
 
 
 /* =========================================================
@@ -1425,68 +1355,59 @@ function loadLocalData(){
 
   try{
 
-    const savedSession =
-      localStorage.getItem(
-        STORAGE.session
-      );
+    const storedSession =
+      localStorage.getItem(STORAGE.session);
 
-    if(savedSession){
+    const storedTransactions =
+      localStorage.getItem(STORAGE.transactions);
+
+    const storedPending =
+      localStorage.getItem(STORAGE.pending);
+
+
+    if(storedSession){
 
       session =
-        JSON.parse(
-          savedSession
-        );
+        JSON.parse(storedSession);
 
     }
 
-  }catch(e){
 
-    session =
-      null;
+    if(storedTransactions){
 
-  }
+      const parsed =
+        JSON.parse(storedTransactions);
 
+      if(Array.isArray(parsed)){
 
-  try{
+        transactions =
+          parsed.map(normalizeTransaction);
 
-    const savedTransactions =
-      localStorage.getItem(
-        STORAGE.transactions
-      );
+      }
 
-    transactions =
-      savedTransactions
-      ? JSON.parse(
-          savedTransactions
-        )
-      : [];
-
-  }catch(e){
-
-    transactions =
-      [];
-
-  }
+    }
 
 
-  try{
+    if(storedPending){
 
-    const savedPending =
-      localStorage.getItem(
-        STORAGE.pending
-      );
+      const parsed =
+        JSON.parse(storedPending);
 
-    pendingTransactions =
-      savedPending
-      ? JSON.parse(
-          savedPending
-        )
-      : [];
+      if(Array.isArray(parsed)){
 
-  }catch(e){
+        pendingTransactions =
+          parsed.map(normalizeTransaction);
 
-    pendingTransactions =
-      [];
+      }
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Local data error:",
+      error
+    );
 
   }
 
@@ -1495,30 +1416,42 @@ function loadLocalData(){
 
 function saveLocalTransactions(){
 
-  localStorage.setItem(
+  try{
 
-    STORAGE.transactions,
+    localStorage.setItem(
+      STORAGE.transactions,
+      JSON.stringify(transactions)
+    );
 
-    JSON.stringify(
-      transactions
-    )
+  }catch(error){
 
-  );
+    console.error(
+      "Save transactions error:",
+      error
+    );
+
+  }
 
 }
 
 
 function saveLocalPending(){
 
-  localStorage.setItem(
+  try{
 
-    STORAGE.pending,
+    localStorage.setItem(
+      STORAGE.pending,
+      JSON.stringify(pendingTransactions)
+    );
 
-    JSON.stringify(
-      pendingTransactions
-    )
+  }catch(error){
 
-  );
+    console.error(
+      "Save pending error:",
+      error
+    );
+
+  }
 
 }
 
@@ -1529,93 +1462,50 @@ function saveLocalPending(){
 
 function escapeHTML(value){
 
-  return String(
-    value ?? ""
-  )
-
-  .replace(
-    /&/g,
-    "&amp;"
-  )
-
-  .replace(
-    /</g,
-    "&lt;"
-  )
-
-  .replace(
-    />/g,
-    "&gt;"
-  )
-
-  .replace(
-    /"/g,
-    "&quot;"
-  )
-
-  .replace(
-    /'/g,
-    "&#039;"
-  );
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
 
 function formatIndianNumber(value){
 
-  let raw =
-    String(
-      value ?? ""
-    )
-    .replace(
-      /[^\d]/g,
-      ""
-    );
+  let str =
+    String(value ?? "")
+      .replace(/[^\d]/g,"");
 
-  if(!raw){
+  if(!str){
 
     return "0";
 
   }
 
-  raw =
-    raw.replace(
-      /^0+(?=\d)/,
-      ""
-    );
+  str =
+    str.replace(/^0+(?=\d)/,"");
 
-  if(raw.length <= 3){
+  if(str.length <= 3){
 
-    return raw;
+    return str;
 
   }
 
-  const last3 =
-    raw.slice(-3);
+  const lastThree =
+    str.slice(-3);
 
-  let rest =
-    raw.slice(0,-3);
-
-  let result =
-    "";
-
-  while(rest.length > 2){
-
-    result =
-      "," +
-      rest.slice(-2) +
-      result;
-
-    rest =
-      rest.slice(0,-2);
-
-  }
+  const other =
+    str.slice(0,-3);
 
   return (
-    rest +
-    result +
-    "," +
-    last3
+    other.replace(
+      /\B(?=(\d{2})+(?!\d))/g,
+      ","
+    )
+    + "," +
+    lastThree
   );
 
 }
@@ -1623,57 +1513,43 @@ function formatIndianNumber(value){
 
 function amountToNumber(value){
 
-  const raw =
-    String(
-      value ?? ""
-    )
-    .replace(
-      /[^\d]/g,
-      ""
-    );
+  const cleaned =
+    String(value ?? "")
+      .replace(/,/g,"")
+      .replace(/[^\d]/g,"");
 
-  if(!raw){
+  if(!cleaned){
 
     return 0;
 
   }
 
-  return Number(raw);
+  const number =
+    Number(cleaned);
+
+  return Number.isFinite(number)
+    ? number
+    : 0;
 
 }
 
 
-/* =========================================================
-   DATE
-========================================================= */
-
 function getToday(){
 
-  const d =
-    new Date();
+  const d = new Date();
 
   const year =
     d.getFullYear();
 
   const month =
-    String(
-      d.getMonth()+1
-    ).padStart(
-      2,
-      "0"
-    );
+    String(d.getMonth()+1)
+      .padStart(2,"0");
 
   const day =
-    String(
-      d.getDate()
-    ).padStart(
-      2,
-      "0"
-    );
+    String(d.getDate())
+      .padStart(2,"0");
 
-  return (
-    `${year}-${month}-${day}`
-  );
+  return `${year}-${month}-${day}`;
 
 }
 
@@ -1686,77 +1562,55 @@ function formatDate(value){
 
   }
 
-  const text =
+  const str =
     String(value);
 
-  if(
-    /^\d{4}-\d{2}-\d{2}$/.test(
-      text
-    )
-  ){
+  if(/^\d{4}-\d{2}-\d{2}$/.test(str)){
 
-    const parts =
-      text.split("-");
+    const [
+      y,
+      m,
+      d
+    ] =
+      str.split("-");
 
-    return (
-      `${parts[2]}-${parts[1]}-${parts[0]}`
-    );
+    return `${d}/${m}/${y}`;
 
   }
 
-  const d =
+  const date =
     new Date(value);
 
-  if(
-    Number.isNaN(
-      d.getTime()
-    )
-  ){
+  if(Number.isNaN(date.getTime())){
 
-    return text;
+    return str;
 
   }
 
   const day =
-    String(
-      d.getDate()
-    ).padStart(
-      2,
-      "0"
-    );
+    String(date.getDate())
+      .padStart(2,"0");
 
   const month =
-    String(
-      d.getMonth()+1
-    ).padStart(
-      2,
-      "0"
-    );
+    String(date.getMonth()+1)
+      .padStart(2,"0");
 
   const year =
-    d.getFullYear();
+    date.getFullYear();
 
-  return (
-    `${day}-${month}-${year}`
-  );
+  return `${day}/${month}/${year}`;
 
 }
 
-
-/* =========================================================
-   TRANSACTION ID
-========================================================= */
 
 function createTransactionId(){
 
   return (
     "TXN" +
-    Date.now()
-      .toString(36)
-      .toUpperCase() +
+    Date.now() +
     Math.random()
       .toString(36)
-      .slice(2,7)
+      .slice(2,8)
       .toUpperCase()
   );
 
@@ -1770,56 +1624,46 @@ function createTransactionId(){
 async function apiPost(payload){
 
   const response =
-    await fetch(
-      API,
-      {
-        method:"POST",
+    await fetch(API,{
+      method:"POST",
+      headers:{
+        "Content-Type":
+          "text/plain;charset=utf-8"
+      },
+      body:JSON.stringify(payload)
+    });
 
-        headers:{
-          "Content-Type":
-            "text/plain;charset=utf-8"
-        },
-
-        body:
-          JSON.stringify(
-            payload
-          )
-
-      }
-    );
 
   const text =
     await response.text();
 
+
   let data;
+
 
   try{
 
     data =
-      JSON.parse(
-        text
-      );
+      JSON.parse(text);
 
-  }catch(e){
+  }catch(error){
 
     throw new Error(
-      "Server response বুঝতে সমস্যা হয়েছে"
+      "Server response invalid"
     );
 
   }
 
-  if(
-    data &&
-    data.ok === false
-  ){
+
+  if(data && data.ok === false){
 
     throw new Error(
       data.message ||
-      data.error ||
-      "Request failed"
+      "Server error"
     );
 
   }
+
 
   return data;
 
@@ -1833,10 +1677,11 @@ async function apiPost(payload){
 async function doLogin(){
 
   const username =
-    loginUsername.value.trim();
+    usernameInput.value.trim();
 
   const password =
-    loginPassword.value;
+    passwordInput.value;
+
 
   if(!username){
 
@@ -1846,6 +1691,7 @@ async function doLogin(){
     return;
 
   }
+
 
   if(!password){
 
@@ -1857,48 +1703,35 @@ async function doLogin(){
   }
 
 
-  loginBtn.disabled =
-    true;
+  loginBtn.disabled = true;
 
   loginBtn.textContent =
     "Login হচ্ছে...";
 
-  loginError.textContent =
-    "";
+  loginError.textContent = "";
 
 
   try{
 
     const data =
       await apiPost({
-
-        action:
-          "login",
-
-        username:
-          username,
-
-        password:
-          password
-
+        action:"login",
+        username,
+        password
       });
 
 
-    if(
-      !data ||
-      data.ok === false
-    ){
+    if(!data || data.ok === false){
 
       throw new Error(
         data?.message ||
-        "Username অথবা Password ভুল"
+        "Login failed"
       );
 
     }
 
 
     session = {
-
       username:
         data.username ||
         username,
@@ -1910,18 +1743,12 @@ async function doLogin(){
 
       loginAt:
         Date.now()
-
     };
 
 
     localStorage.setItem(
-
       STORAGE.session,
-
-      JSON.stringify(
-        session
-      )
-
+      JSON.stringify(session)
     );
 
 
@@ -1932,9 +1759,7 @@ async function doLogin(){
 
   }catch(error){
 
-    console.error(
-      error
-    );
+    console.error(error);
 
     loginError.textContent =
       error.message ||
@@ -1942,8 +1767,7 @@ async function doLogin(){
 
   }finally{
 
-    loginBtn.disabled =
-      false;
+    loginBtn.disabled = false;
 
     loginBtn.textContent =
       "Login";
@@ -1954,77 +1778,72 @@ async function doLogin(){
 
 
 /* =========================================================
-   SHOW / HIDE APP
+   SHOW / HIDE
 ========================================================= */
 
 function showApp(){
 
-  loginScreen.classList.add(
-    "hidden"
-  );
+  loginScreen.style.display =
+    "none";
 
-  app.classList.remove(
-    "hidden"
-  );
+  app.style.display =
+    "block";
 
-  headerUsername.textContent =
+  usernameDisplay.textContent =
     session?.username
-    ? session.username
-    : "";
+      ? session.username
+      : "";
 
 }
 
 
 function showLogin(){
 
-  app.classList.add(
-    "hidden"
-  );
+  app.style.display =
+    "none";
 
-  loginScreen.classList.remove(
-    "hidden"
-  );
-
-  loginPassword.value =
-    "";
-
-  loginError.textContent =
-    "";
+  loginScreen.style.display =
+    "flex";
 
 }
 
 
-/* =========================================================
-   LOGOUT
-========================================================= */
-
 function logout(){
 
-  session =
-    null;
+  session = null;
 
   localStorage.removeItem(
     STORAGE.session
   );
 
+  transactions = [];
+
+  pendingTransactions = [];
+
   showLogin();
+
+  usernameInput.value = "";
+
+  passwordInput.value = "";
+
+  loginError.textContent = "";
 
 }
 
 
 /* =========================================================
-   ADD FORM CATEGORY
+   CATEGORY
 ========================================================= */
 
 function updateCategories(){
 
   const list =
     currentType === "income"
-    ? INCOME_CATEGORIES
-    : EXPENSE_CATEGORIES;
+      ? INCOME_CATEGORIES
+      : EXPENSE_CATEGORIES;
 
 
-  categorySelect.innerHTML =
+  categoryInput.innerHTML =
     list.map(
       category =>
         `<option value="${escapeHTML(category)}">
@@ -2032,37 +1851,25 @@ function updateCategories(){
         </option>`
     ).join("");
 
+
 }
 
 
-/* =========================================================
-   HISTORY CATEGORY FILTER
-========================================================= */
-
 function getHistoryCategoryList(){
 
-  if(
-    transactionFilter === "income"
-  ){
+  if(transactionFilter === "income"){
 
     return INCOME_CATEGORIES;
 
   }
 
-  if(
-    transactionFilter === "expense"
-  ){
+  if(transactionFilter === "expense"){
 
     return EXPENSE_CATEGORIES;
 
   }
 
-  return [
-    ...new Set([
-      ...INCOME_CATEGORIES,
-      ...EXPENSE_CATEGORIES
-    ])
-  ];
+  return [];
 
 }
 
@@ -2077,8 +1884,7 @@ function updateHistoryCategoryFilter(
 
   if(
     !force &&
-    mode ===
-    lastHistoryCategoryFilterMode
+    lastHistoryCategoryFilterMode === mode
   ){
 
     return;
@@ -2086,52 +1892,61 @@ function updateHistoryCategoryFilter(
   }
 
 
-  const list =
+  lastHistoryCategoryFilterMode =
+    mode;
+
+
+  const categories =
     getHistoryCategoryList();
 
 
   if(
-    categoryFilter !== "all" &&
-    !list.includes(
-      categoryFilter
-    )
+    mode === "income" ||
+    mode === "expense"
   ){
 
-    categoryFilter =
-      "all";
-
-  }
-
-
-  const currentValue =
-    categoryFilter;
+    historyCategoryWrap
+      .classList
+      .remove("hidden");
 
 
-  const optionsHTML =
-    `<option value="all">
-      সব Category
-    </option>` +
-
-    list
-      .map(
+    historyCategoryFilter.innerHTML =
+      `<option value="all">সব ক্যাটাগরি</option>` +
+      categories.map(
         category =>
           `<option value="${escapeHTML(category)}">
             ${escapeHTML(category)}
           </option>`
-      )
-      .join("");
+      ).join("");
 
 
-  historyCategoryFilter.innerHTML =
-    optionsHTML;
+    if(
+      categories.includes(categoryFilter)
+    ){
 
+      historyCategoryFilter.value =
+        categoryFilter;
 
-  historyCategoryFilter.value =
-    currentValue;
+    }else{
 
+      categoryFilter = "all";
 
-  lastHistoryCategoryFilterMode =
-    mode;
+      historyCategoryFilter.value =
+        "all";
+
+    }
+
+  }else{
+
+    historyCategoryWrap
+      .classList
+      .add("hidden");
+
+    categoryFilter = "all";
+
+    historyCategoryFilter.innerHTML = "";
+
+  }
 
 }
 
@@ -2143,31 +1958,21 @@ function updateHistoryCategoryFilter(
 function setType(type){
 
   currentType =
-    type;
+    type === "expense"
+      ? "expense"
+      : "income";
 
-  if(
-    type === "income"
-  ){
 
-    incomeBtn.classList.add(
-      "active-income"
-    );
+  incomeBtn.classList.toggle(
+    "active",
+    currentType === "income"
+  );
 
-    expenseBtn.classList.remove(
-      "active-expense"
-    );
+  expenseBtn.classList.toggle(
+    "active",
+    currentType === "expense"
+  );
 
-  }else{
-
-    expenseBtn.classList.add(
-      "active-expense"
-    );
-
-    incomeBtn.classList.remove(
-      "active-income"
-    );
-
-  }
 
   updateCategories();
 
@@ -2180,40 +1985,27 @@ function setType(type){
 
 function calculateBalance(){
 
-  let balance =
-    0;
+  let balance = 0;
 
-  transactions.forEach(
-    tx => {
 
-      const amount =
-        Number(
-          tx.amount
-        ) || 0;
+  for(const tx of transactions){
 
-      const type =
-        normalizeType(
-          tx.type
-        );
+    const amount =
+      Number(tx.amount) || 0;
 
-      if(
-        type === "income"
-      ){
 
-        balance +=
-          amount;
+    if(tx.type === "income"){
 
-      }else if(
-        type === "expense"
-      ){
+      balance += amount;
 
-        balance -=
-          amount;
+    }else if(tx.type === "expense"){
 
-      }
+      balance -= amount;
 
     }
-  );
+
+  }
+
 
   return balance;
 
@@ -2225,132 +2017,190 @@ function renderBalance(){
   const balance =
     calculateBalance();
 
+
   const formatted =
     formatIndianNumber(
-      Math.abs(
-        balance
-      )
+      Math.abs(balance)
     );
 
 
   if(balance >= 0){
 
     balanceValue.textContent =
-      formatted +
-      " TK";
+      formatted + " TK";
 
     balanceValue.style.color =
-      "#0b6b4f";
+      "#ffffff";
 
   }else{
 
     balanceValue.textContent =
-      "-" +
-      formatted +
-      " TK";
+      "-" + formatted + " TK";
 
     balanceValue.style.color =
-      "#d83232";
+      "#ffd6d6";
 
   }
-
-
-  balanceStatus.textContent =
-    transactions.length +
-    "টি লেনদেন • Local data";
 
 }
 
 
 /* =========================================================
-   NORMALIZE TYPE
+   SERVER BALANCE
+========================================================= */
+
+async function loadServerBalance(){
+
+  try{
+
+    const data =
+      await apiPost({
+        action:"getBalance"
+      });
+
+
+    let balance = null;
+
+
+    if(
+      typeof data?.balance === "number"
+    ){
+
+      balance =
+        data.balance;
+
+    }else if(
+      typeof data?.data?.balance === "number"
+    ){
+
+      balance =
+        data.data.balance;
+
+    }
+
+
+    if(
+      typeof balance !== "number" ||
+      !Number.isFinite(balance)
+    ){
+
+      return;
+
+    }
+
+
+    const formatted =
+      formatIndianNumber(
+        Math.abs(balance)
+      );
+
+
+    if(balance >= 0){
+
+      balanceValue.textContent =
+        formatted + " TK";
+
+      balanceValue.style.color =
+        "#ffffff";
+
+    }else{
+
+      balanceValue.textContent =
+        "-" + formatted + " TK";
+
+      balanceValue.style.color =
+        "#ffd6d6";
+
+    }
+
+  }catch(error){
+
+    console.log(
+      "Server balance unavailable:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   NORMALIZE
 ========================================================= */
 
 function normalizeType(type){
 
   const value =
-    String(
-      type ?? ""
-    )
-    .trim()
-    .toLowerCase();
+    String(type ?? "")
+      .trim()
+      .toLowerCase();
+
 
   if(
-
     value === "income" ||
     value === "আয়" ||
     value === "আয়"
-
   ){
 
     return "income";
 
   }
 
-  if(
 
+  if(
     value === "expense" ||
     value === "ব্যয়" ||
     value === "ব্যয়"
-
   ){
 
     return "expense";
 
   }
 
-  return value;
+
+  return "income";
 
 }
 
-
-/* =========================================================
-   TRANSACTION NORMALIZATION
-========================================================= */
 
 function normalizeTransaction(tx){
 
   return {
 
     transactionId:
-      tx.transactionId ||
-      tx.TransactionID ||
-      tx.id ||
-      "",
+      tx?.transactionId ||
+      tx?.id ||
+      createTransactionId(),
 
     date:
-      tx.date ||
-      tx.Date ||
-      "",
+      tx?.date ||
+      getToday(),
 
     amount:
       Number(
-        tx.amount ??
-        tx.Amount ??
+        tx?.amount ??
+        tx?.value ??
         0
-      ),
+      ) || 0,
 
     type:
       normalizeType(
-        tx.type ??
-        tx.Type ??
-        ""
+        tx?.type
       ),
 
     category:
-      tx.category ??
-      tx.Category ??
+      tx?.category ||
       "",
 
     note:
-      tx.note ??
-      tx.Note ??
+      tx?.note ||
       "",
 
     createdAt:
-      tx.createdAt ??
-      tx.CreatedAt ??
-      ""
+      tx?.createdAt ||
+      tx?.timestamp ||
+      new Date().toISOString()
 
   };
 
@@ -2358,46 +2208,37 @@ function normalizeTransaction(tx){
 
 
 /* =========================================================
-   TRANSACTION SORT
+   SORT
 ========================================================= */
 
 function sortTransactions(){
 
   transactions.sort(
-    (a,b) => {
+    (a,b)=>{
 
-      const dateA =
+      const createdA =
         new Date(
-          a.createdAt ||
-          a.date ||
-          0
+          a.createdAt || 0
         ).getTime();
 
-      const dateB =
+      const createdB =
         new Date(
-          b.createdAt ||
-          b.date ||
-          0
+          b.createdAt || 0
         ).getTime();
 
-      if(
-        dateB !== dateA
-      ){
 
-        return (
-          dateB -
-          dateA
-        );
+      if(createdB !== createdA){
+
+        return createdB - createdA;
 
       }
 
+
       return String(
-        b.transactionId ||
-        ""
+        b.transactionId || ""
       ).localeCompare(
         String(
-          a.transactionId ||
-          ""
+          a.transactionId || ""
         )
       );
 
@@ -2408,72 +2249,37 @@ function sortTransactions(){
 
 
 /* =========================================================
-   FILTER BUTTON STATE
+   FILTER BUTTONS
 ========================================================= */
 
 function updateFilterButtons(){
 
-  filterAll.classList.remove(
-    "active"
+  filterButtons.forEach(
+    button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.filter ===
+        transactionFilter
+      );
+
+    }
   );
-
-  filterIncome.classList.remove(
-    "active"
-  );
-
-  filterExpense.classList.remove(
-    "active"
-  );
-
-  filterExpense.classList.remove(
-    "expense-active"
-  );
-
-
-  if(
-    transactionFilter === "all"
-  ){
-
-    filterAll.classList.add(
-      "active"
-    );
-
-  }else if(
-    transactionFilter === "income"
-  ){
-
-    filterIncome.classList.add(
-      "active"
-    );
-
-  }else if(
-    transactionFilter === "expense"
-  ){
-
-    filterExpense.classList.add(
-      "expense-active"
-    );
-
-  }
 
 }
 
 
 /* =========================================================
-   SET TRANSACTION FILTER
+   SET FILTER
 ========================================================= */
 
-function setTransactionFilter(
-  filter
-){
+function setTransactionFilter(filter){
 
   transactionFilter =
-    filter;
+    filter || "all";
 
   categoryFilter =
     "all";
-
-  updateFilterButtons();
 
   updateHistoryCategoryFilter(
     true
@@ -2485,73 +2291,81 @@ function setTransactionFilter(
 
 
 /* =========================================================
-   GET FILTERED TRANSACTIONS
+   FILTERED TRANSACTIONS
 ========================================================= */
 
 function getFilteredTransactions(){
 
-  return transactions.filter(
-    tx => {
-
-      const type =
-        normalizeType(
-          tx.type
-        );
+  let result =
+    transactions;
 
 
-      const typeMatch =
-        transactionFilter === "all" ||
-        type === transactionFilter;
+  if(
+    transactionFilter !== "all"
+  ){
 
-
-      const txCategory =
-        String(
-          tx.category || ""
-        ).trim();
-
-
-      const categoryMatch =
-        categoryFilter === "all" ||
-        txCategory ===
-        categoryFilter;
-
-
-      return (
-        typeMatch &&
-        categoryMatch
+    result =
+      result.filter(
+        tx =>
+          tx.type ===
+          transactionFilter
       );
 
-    }
-  );
+  }
+
+
+  if(
+    categoryFilter !== "all"
+  ){
+
+    result =
+      result.filter(
+        tx =>
+          tx.category ===
+          categoryFilter
+      );
+
+  }
+
+
+  return result;
 
 }
 
 
 /* =========================================================
-   TRANSACTION RENDER SIGNATURE
-   Prevents unnecessary redraw / flicker
+   RENDER SIGNATURE
 ========================================================= */
-
-let lastRenderSignature =
-  "";
-
 
 function getTransactionRenderSignature(){
 
-  return transactions
-    .map(
-      tx =>
-        [
+  const filtered =
+    getFilteredTransactions();
+
+
+  return JSON.stringify({
+
+    filter:
+      transactionFilter,
+
+    category:
+      categoryFilter,
+
+    data:
+      filtered.map(
+        tx => [
+
           tx.transactionId,
           tx.date,
           tx.amount,
-          normalizeType(tx.type),
+          tx.type,
           tx.category,
-          tx.note,
-          tx.createdAt
-        ].join("|")
-    )
-    .join("||");
+          tx.note
+
+        ]
+      )
+
+  });
 
 }
 
@@ -2564,25 +2378,23 @@ function renderTransactions(){
 
   sortTransactions();
 
+  renderBalance();
 
-  const renderSignature =
-    transactionFilter +
-    "|" +
-    categoryFilter +
-    "|" +
+  updateFilterButtons();
+
+  updateHistoryCategoryFilter();
+
+
+  const filtered =
+    getFilteredTransactions();
+
+
+  const signature =
     getTransactionRenderSignature();
 
 
-  /*
-    Data/filter একই থাকলে
-    DOM আর rebuild হবে না।
-
-    এতে প্রতি 10 সেকেন্ডের scan-এর সময়
-    page blink/jump করবে না।
-  */
-
   if(
-    renderSignature ===
+    signature ===
     lastRenderSignature
   ){
 
@@ -2592,241 +2404,112 @@ function renderTransactions(){
 
 
   lastRenderSignature =
-    renderSignature;
+    signature;
 
 
-  renderBalance();
+  if(!filtered.length){
 
-  updateFilterButtons();
-
-  updateHistoryCategoryFilter(
-    false
-  );
-
-
-  const previousScrollTop =
-    historyList.scrollTop;
-
-
-  const filteredTransactions =
-    getFilteredTransactions();
-
-
-  if(
-    !filteredTransactions.length
-  ){
-
-    if(
-      transactionFilter ===
-      "income"
-    ){
-
-      if(
-        categoryFilter !==
-        "all"
-      ){
-
-        historyList.innerHTML =
-          `<div class="empty-box">
-            এই Category-তে কোনো আয় পাওয়া যায়নি
-          </div>`;
-
-      }else{
-
-        historyList.innerHTML =
-          `<div class="empty-box">
-            কোনো আয় পাওয়া যায়নি
-          </div>`;
-
-      }
-
-    }else if(
-      transactionFilter ===
-      "expense"
-    ){
-
-      if(
-        categoryFilter !==
-        "all"
-      ){
-
-        historyList.innerHTML =
-          `<div class="empty-box">
-            এই Category-তে কোনো ব্যয় পাওয়া যায়নি
-          </div>`;
-
-      }else{
-
-        historyList.innerHTML =
-          `<div class="empty-box">
-            কোনো ব্যয় পাওয়া যায়নি
-          </div>`;
-
-      }
-
-    }else if(
-      categoryFilter !==
-      "all"
-    ){
-
-      historyList.innerHTML =
-        `<div class="empty-box">
-          এই Category-তে কোনো লেনদেন নেই
-        </div>`;
-
-    }else{
-
-      historyList.innerHTML =
-        `<div class="empty-box">
-          এখনো কোনো লেনদেন নেই
-        </div>`;
-
-    }
-
-
-    historyList.scrollTop =
-      0;
+    transactionList.innerHTML =
+      `
+      <div class="empty-state">
+        কোনো হিসাব পাওয়া যায়নি
+      </div>
+      `;
 
     return;
 
   }
 
 
-  historyList.innerHTML =
-    filteredTransactions
-      .map(
-        tx => {
-
-          const type =
-            normalizeType(
-              tx.type
-            );
-
-          const income =
-            type ===
-            "income";
-
-          const amount =
-            formatIndianNumber(
-              Math.abs(
-                Number(
-                  tx.amount
-                ) || 0
-              )
-            );
+  const scrollTop =
+    historyPage.scrollTop;
 
 
-          const category =
-            escapeHTML(
-              tx.category ||
-              ""
-            );
+  transactionList.innerHTML =
+    filtered.map(
+      tx => {
 
-          const note =
-            escapeHTML(
-              tx.note ||
-              ""
-            );
-
-
-          const bottom =
-            note
-
-            ? `<span class="txn-category">
-                 ${category}
-               </span>
-               <span class="txn-dot">
-                 •
-               </span>
-               <span class="txn-note">
-                 ${note}
-               </span>`
-
-            : `<span class="txn-category">
-                 ${category}
-               </span>`;
+        const amount =
+          formatIndianNumber(
+            Math.abs(
+              Number(tx.amount) || 0
+            )
+          );
 
 
-          return `
-
-            <div class="txn-card ${
-              income
-              ? ""
-              : "expense"
-            }">
-
-              <div class="txn-top">
-
-                <div class="txn-date">
-                  ${escapeHTML(
-                    formatDate(
-                      tx.date
-                    )
-                  )}
-                </div>
-
-                <div class="txn-type ${
-                  income
-                  ? "income"
-                  : "expense"
-                }">
-
-                  ${
-                    income
-                    ? "আয়"
-                    : "ব্যয়"
-                  }
-
-                </div>
-
-              </div>
+        const isIncome =
+          tx.type === "income";
 
 
-              <div class="txn-amount ${
-                income
-                ? "income"
-                : "expense"
-              }">
-
-                ${
-                  income
-                  ? "+"
-                  : "-"
-                }
-
-                ${amount} TK
-
-              </div>
+        const typeText =
+          isIncome
+            ? "আয়"
+            : "ব্যয়";
 
 
-              <div class="txn-bottom">
-
-                ${bottom}
-
-              </div>
-
-            </div>
-
-          `;
-
-        }
-      )
-      .join("");
+        const sign =
+          isIncome
+            ? "+"
+            : "-";
 
 
-  /*
-    Transaction list redraw হলেও
-    আগের scroll position ধরে রাখবে।
-  */
+        return `
+<div class="transaction-card ${isIncome ? "income" : "expense"}">
 
-  historyList.scrollTop =
-    previousScrollTop;
+  <div class="txn-row-top">
+
+    <div class="txn-amount">
+      ${sign}${amount} TK
+    </div>
+
+    <div class="txn-date">
+      ${escapeHTML(formatDate(tx.date))}
+    </div>
+
+  </div>
+
+  <div class="txn-row-bottom">
+
+    <div class="txn-info">
+
+      <span class="txn-category">
+        ${escapeHTML(tx.category || "অন্যান্য")}
+      </span>
+
+      ${
+        tx.note
+          ? `
+            <span class="txn-note-separator">•</span>
+            <span class="txn-note">
+              ${escapeHTML(tx.note)}
+            </span>
+          `
+          : ""
+      }
+
+    </div>
+
+    <div class="txn-type">
+      ${typeText}
+    </div>
+
+  </div>
+
+</div>
+`;
+
+      }
+    ).join("");
+
+
+  historyPage.scrollTop =
+    scrollTop;
 
 }
 
 
 /* =========================================================
-   LOCAL ADD
+   LOCAL TRANSACTION
 ========================================================= */
 
 function addLocalTransaction(tx){
@@ -2838,15 +2521,17 @@ function addLocalTransaction(tx){
         tx.transactionId
     );
 
+
   if(!exists){
 
     transactions.unshift(
-      tx
+      normalizeTransaction(tx)
     );
 
-    saveLocalTransactions();
-
   }
+
+
+  saveLocalTransactions();
 
 }
 
@@ -2864,22 +2549,22 @@ function addPending(tx){
         tx.transactionId
     );
 
+
   if(!exists){
 
     pendingTransactions.push(
-      tx
+      normalizeTransaction(tx)
     );
 
-    saveLocalPending();
-
   }
+
+
+  saveLocalPending();
 
 }
 
 
-function removePending(
-  transactionId
-){
+function removePending(transactionId){
 
   pendingTransactions =
     pendingTransactions.filter(
@@ -2888,7 +2573,28 @@ function removePending(
         transactionId
     );
 
+
   saveLocalPending();
+
+}
+
+
+/* =========================================================
+   FORM MESSAGE
+========================================================= */
+
+function showFormMessage(
+  message,
+  type = ""
+){
+
+  formMessage.textContent =
+    message;
+
+  formMessage.className =
+    "form-message " +
+    type;
+
 
 }
 
@@ -2909,13 +2615,16 @@ async function saveTransaction(){
   const date =
     dateInput.value;
 
+
   const amount =
     amountToNumber(
       amountInput.value
     );
 
+
   const category =
-    categorySelect.value;
+    categoryInput.value;
+
 
   const note =
     noteInput.value.trim();
@@ -2924,7 +2633,7 @@ async function saveTransaction(){
   if(!date){
 
     showFormMessage(
-      "তারিখ নির্বাচন করুন",
+      "তারিখ দিন",
       "error"
     );
 
@@ -2933,10 +2642,7 @@ async function saveTransaction(){
   }
 
 
-  if(
-    !amount ||
-    amount <= 0
-  ){
+  if(amount <= 0){
 
     showFormMessage(
       "সঠিক Amount দিন",
@@ -2953,7 +2659,7 @@ async function saveTransaction(){
   if(!category){
 
     showFormMessage(
-      "Category নির্বাচন করুন",
+      "ক্যাটাগরি নির্বাচন করুন",
       "error"
     );
 
@@ -2967,20 +2673,16 @@ async function saveTransaction(){
     transactionId:
       createTransactionId(),
 
-    date:
-      date,
+    date,
 
-    amount:
-      amount,
+    amount,
 
     type:
       currentType,
 
-    category:
-      category,
+    category,
 
-    note:
-      note,
+    note,
 
     createdAt:
       new Date().toISOString()
@@ -2988,47 +2690,162 @@ async function saveTransaction(){
   };
 
 
-  addLocalTransaction(
-    tx
+  isSaving = true;
+
+  saveBtn.classList.add(
+    "loading"
   );
+
+
+  /* Local first */
+
+  addLocalTransaction(tx);
+
+  lastRenderSignature = "";
 
   renderTransactions();
 
 
-  amountInput.value =
-    "";
+  amountInput.value = "";
 
-  noteInput.value =
-    "";
+  noteInput.value = "";
 
   dateInput.value =
     getToday();
 
 
   showFormMessage(
-    "লেনদেন Local-এ Save হয়েছে",
+    "হিসাব সংরক্ষণ হয়েছে",
     "success"
   );
 
 
-  isSaving =
-    true;
+  /* Server sync */
 
-  saveBtn.disabled =
-    true;
+  if(!navigator.onLine){
 
-  saveBtn.textContent =
-    "Sync হচ্ছে...";
+    addPending(tx);
 
+    showFormMessage(
+      "Offline — পরে Sync হবে",
+      "success"
+    );
 
-  setSyncStatus(
-    "Syncing..."
-  );
+    isSaving = false;
+
+    saveBtn.classList.remove(
+      "loading"
+    );
+
+    return;
+
+  }
 
 
   try{
 
-    const data =
+    await apiPost({
+
+      action:
+        "addTransaction",
+
+      transactionId:
+        tx.transactionId,
+
+      date:
+        tx.date,
+
+      amount:
+        tx.amount,
+
+      type:
+        tx.type,
+
+      category:
+        tx.category,
+
+      note:
+        tx.note,
+
+      createdAt:
+        tx.createdAt
+
+    });
+
+
+    removePending(
+      tx.transactionId
+    );
+
+
+    setSyncStatus(
+      "Synced"
+    );
+
+
+    showFormMessage(
+      "হিসাব Sync হয়েছে ✓",
+      "success"
+    );
+
+
+    await loadTransactions();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    addPending(tx);
+
+
+    setSyncStatus(
+      "Pending"
+    );
+
+
+    showFormMessage(
+      "Local-এ রাখা হয়েছে — পরে Sync হবে",
+      "success"
+    );
+
+  }finally{
+
+    isSaving = false;
+
+    saveBtn.classList.remove(
+      "loading"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   PENDING SYNC
+========================================================= */
+
+async function syncPending(){
+
+  if(
+    !navigator.onLine ||
+    !pendingTransactions.length
+  ){
+
+    return;
+
+  }
+
+
+  const pendingCopy =
+    [...pendingTransactions];
+
+
+  for(const tx of pendingCopy){
+
+    try{
+
       await apiPost({
 
         action:
@@ -3058,152 +2875,6 @@ async function saveTransaction(){
       });
 
 
-    if(
-      data &&
-      data.ok === false
-    ){
-
-      throw new Error(
-        data.message ||
-        "Server save failed"
-      );
-
-    }
-
-
-    removePending(
-      tx.transactionId
-    );
-
-
-    showFormMessage(
-      "✓ Google Sheets-এ Save হয়েছে",
-      "success"
-    );
-
-
-    setSyncStatus(
-      "Synced"
-    );
-
-
-  }catch(error){
-
-    console.error(
-      error
-    );
-
-
-    addPending(
-      tx
-    );
-
-
-    showFormMessage(
-      "Local-এ রাখা হয়েছে • Internet হলে Sync হবে",
-      "success"
-    );
-
-
-    setSyncStatus(
-      "Pending"
-    );
-
-  }finally{
-
-    isSaving =
-      false;
-
-    saveBtn.disabled =
-      false;
-
-    saveBtn.textContent =
-      "Save";
-
-  }
-
-}
-
-
-/* =========================================================
-   SYNC PENDING
-========================================================= */
-
-async function syncPending(){
-
-  if(
-    !pendingTransactions.length
-  ){
-
-    setSyncStatus(
-      "Synced"
-    );
-
-    return;
-
-  }
-
-
-  setSyncStatus(
-    "Syncing..."
-  );
-
-
-  const list =
-    [
-      ...pendingTransactions
-    ];
-
-
-  for(
-    const tx of list
-  ){
-
-    try{
-
-      const data =
-        await apiPost({
-
-          action:
-            "addTransaction",
-
-          transactionId:
-            tx.transactionId,
-
-          date:
-            tx.date,
-
-          amount:
-            tx.amount,
-
-          type:
-            tx.type,
-
-          category:
-            tx.category,
-
-          note:
-            tx.note,
-
-          createdAt:
-            tx.createdAt
-
-        });
-
-
-      if(
-        data &&
-        data.ok === false
-      ){
-
-        throw new Error(
-          data.message ||
-          "Sync failed"
-        );
-
-      }
-
-
       removePending(
         tx.transactionId
       );
@@ -3211,12 +2882,10 @@ async function syncPending(){
 
     }catch(error){
 
-      console.warn(
-        "Pending sync failed",
+      console.log(
+        "Pending sync failed:",
         error
       );
-
-      break;
 
     }
 
@@ -3224,17 +2893,17 @@ async function syncPending(){
 
 
   if(
-    pendingTransactions.length
+    pendingTransactions.length === 0
   ){
 
     setSyncStatus(
-      "Pending"
+      "Synced"
     );
 
   }else{
 
     setSyncStatus(
-      "Synced"
+      "Pending"
     );
 
   }
@@ -3243,10 +2912,21 @@ async function syncPending(){
 
 
 /* =========================================================
-   LOAD TRANSACTIONS FROM SHEETS
+   LOAD TRANSACTIONS
 ========================================================= */
 
 async function loadTransactions(){
+
+  if(!navigator.onLine){
+
+    setSyncStatus(
+      "Offline"
+    );
+
+    return;
+
+  }
+
 
   try{
 
@@ -3264,35 +2944,17 @@ async function loadTransactions(){
       });
 
 
-    if(
-      data &&
-      data.ok === false
-    ){
-
-      throw new Error(
-        data.message ||
-        "Transactions load failed"
-      );
-
-    }
+    let serverTransactions = [];
 
 
-    let serverTransactions =
-      [];
-
-
-    if(
-      Array.isArray(
-        data
-      )
-    ){
+    if(Array.isArray(data)){
 
       serverTransactions =
         data;
 
     }else if(
       Array.isArray(
-        data.transactions
+        data?.transactions
       )
     ){
 
@@ -3301,7 +2963,7 @@ async function loadTransactions(){
 
     }else if(
       Array.isArray(
-        data.data
+        data?.data
       )
     ){
 
@@ -3313,13 +2975,7 @@ async function loadTransactions(){
 
     const normalized =
       serverTransactions
-        .map(
-          normalizeTransaction
-        )
-        .filter(
-          tx =>
-            tx.transactionId
-        );
+        .map(normalizeTransaction);
 
 
     const pendingIds =
@@ -3331,7 +2987,7 @@ async function loadTransactions(){
       );
 
 
-    const merged =
+    transactions =
       normalized.filter(
         tx =>
           !pendingIds.has(
@@ -3340,144 +2996,59 @@ async function loadTransactions(){
       );
 
 
-    pendingTransactions.forEach(
-      pendingTx => {
+    /* Keep pending locally */
 
-        const exists =
-          merged.some(
-            tx =>
-              tx.transactionId ===
-              pendingTx.transactionId
-          );
+    for(
+      const pending
+      of pendingTransactions
+    ){
 
-        if(!exists){
+      const exists =
+        transactions.some(
+          tx =>
+            tx.transactionId ===
+            pending.transactionId
+        );
 
-          merged.push(
-            pendingTx
-          );
 
-        }
+      if(!exists){
+
+        transactions.push(
+          pending
+        );
 
       }
-    );
 
-
-    transactions =
-      merged;
+    }
 
 
     saveLocalTransactions();
 
-    renderTransactions();
-
-
-    setSyncStatus(
-      "Synced"
-    );
-
-
-  }catch(error){
-
-    console.warn(
-      "Could not load server transactions",
-      error
-    );
-
+    lastRenderSignature = "";
 
     renderTransactions();
 
 
     setSyncStatus(
-      "Offline"
+      pendingTransactions.length
+        ? "Pending"
+        : "Synced"
     );
 
-  }
-
-}
-
-
-/* =========================================================
-   BALANCE FROM SERVER
-========================================================= */
-
-async function loadServerBalance(){
-
-  try{
-
-    const data =
-      await apiPost({
-
-        action:
-          "getBalance"
-
-      });
-
-
-    if(
-      data &&
-      data.ok === false
-    ){
-
-      return;
-
-    }
-
-
-    let balance =
-      null;
-
-
-    if(
-      typeof data.balance ===
-      "number"
-    ){
-
-      balance =
-        data.balance;
-
-    }else if(
-      data.data &&
-      typeof data.data.balance ===
-      "number"
-    ){
-
-      balance =
-        data.data.balance;
-
-    }
-
-
-    if(
-      balance !== null
-    ){
-
-      const formatted =
-        formatIndianNumber(
-          Math.abs(
-            balance
-          )
-        );
-
-
-      balanceValue.textContent =
-        balance >= 0
-        ? formatted + " TK"
-        : "-" + formatted + " TK";
-
-
-      balanceValue.style.color =
-        balance >= 0
-        ? "#0b6b4f"
-        : "#d83232";
-
-    }
 
   }catch(error){
 
-    console.warn(
-      "Balance API error",
-      error
+    console.error(error);
+
+    setSyncStatus(
+      navigator.onLine
+        ? "Offline"
+        : "Offline"
     );
+
+    lastRenderSignature = "";
+
+    renderTransactions();
 
   }
 
@@ -3488,9 +3059,7 @@ async function loadServerBalance(){
    SYNC STATUS
 ========================================================= */
 
-function setSyncStatus(
-  status
-){
+function setSyncStatus(status){
 
   syncStatus.textContent =
     status;
@@ -3499,92 +3068,56 @@ function setSyncStatus(
 
 
 /* =========================================================
-   FORM MESSAGE
+   NAVIGATION
 ========================================================= */
 
-function showFormMessage(
-  message,
-  type
-){
+function showPage(page){
 
-  formMessage.textContent =
-    message;
-
-  formMessage.className =
-    "form-message " +
-    type;
-
-
-  clearTimeout(
-    showFormMessage.timer
-  );
-
-
-  showFormMessage.timer =
-    setTimeout(
-      () => {
-
-        formMessage.textContent =
-          "";
-
-        formMessage.className =
-          "form-message";
-
-      },
-      3500
-    );
-
-}
-
-
-/* =========================================================
-   PAGE NAVIGATION
-========================================================= */
-
-function showPage(
-  page
-){
-
-  if(
-    page === "add"
-  ){
+  if(page === "history"){
 
     addPage.classList.remove(
-      "hidden"
+      "active"
     );
 
     historyPage.classList.add(
-      "hidden"
-    );
-
-    navAdd.classList.add(
       "active"
     );
 
-    navHistory.classList.remove(
+
+    addNavBtn.classList.remove(
       "active"
     );
+
+    historyNavBtn.classList.add(
+      "active"
+    );
+
+
+    updateHistoryCategoryFilter(
+      true
+    );
+
+    renderTransactions();
+
 
   }else{
 
-    addPage.classList.add(
-      "hidden"
-    );
-
     historyPage.classList.remove(
-      "hidden"
-    );
-
-    navAdd.classList.remove(
       "active"
     );
 
-    navHistory.classList.add(
+    addPage.classList.add(
       "active"
     );
 
 
-    renderTransactions();
+    historyNavBtn.classList.remove(
+      "active"
+    );
+
+    addNavBtn.classList.add(
+      "active"
+    );
 
   }
 
@@ -3592,140 +3125,110 @@ function showPage(
 
 
 /* =========================================================
-   INITIALIZE
-========================================================= */
-
-async function initializeApp(){
-
-  dateInput.value =
-    getToday();
-
-  setType(
-    "income"
-  );
-
-  categoryFilter =
-    "all";
-
-  lastHistoryCategoryFilterMode =
-    "";
-
-  lastRenderSignature =
-    "";
-
-  updateHistoryCategoryFilter(
-    true
-  );
-
-  renderTransactions();
-
-
-  await loadTransactions();
-
-  await syncPending();
-
-}
-
-
-/* =========================================================
-   AMOUNT INPUT LIVE FORMAT
+   AMOUNT INPUT FORMAT
 ========================================================= */
 
 amountInput.addEventListener(
   "input",
   function(){
 
-    const cursorEnd =
-      this.selectionStart;
-
-    const before =
+    const oldValue =
       this.value;
 
-    const digitsBeforeCursor =
-      before
-        .slice(
-          0,
-          cursorEnd
-        )
-        .replace(
-          /[^\d]/g,
-          ""
-        )
+    const oldCursor =
+      this.selectionStart || 0;
+
+
+    const beforeDigits =
+      oldValue
+        .slice(0,oldCursor)
+        .replace(/[^\d]/g,"")
         .length;
 
 
-    const raw =
-      before.replace(
-        /[^\d]/g,
-        ""
-      );
+    const digits =
+      oldValue
+        .replace(/[^\d]/g,"");
 
 
     const formatted =
       formatIndianNumber(
-        raw
+        digits
       );
 
 
     this.value =
-      raw
-      ? formatted
-      : "";
+      formatted;
 
 
-    let position =
-      0;
+    let cursor =
+      formatted.length;
 
-    let digitCount =
-      0;
 
-    while(
-
-      position <
-      this.value.length &&
-
-      digitCount <
-      digitsBeforeCursor
-
+    if(
+      beforeDigits > 0
     ){
 
-      if(
-        /\d/.test(
-          this.value[position]
-        )
+      let count = 0;
+
+      cursor = 0;
+
+
+      for(
+        let i=0;
+        i<formatted.length;
+        i++
       ){
 
-        digitCount++;
+        if(/\d/.test(formatted[i])){
+
+          count++;
+
+        }
+
+
+        cursor = i + 1;
+
+
+        if(
+          count >= beforeDigits
+        ){
+
+          break;
+
+        }
 
       }
-
-      position++;
 
     }
 
 
-    this.setSelectionRange(
-      position,
-      position
-    );
+    try{
+
+      this.setSelectionRange(
+        cursor,
+        cursor
+      );
+
+    }catch(error){}
 
   }
 );
 
 
 /* =========================================================
-   ENTER KEY
+   KEYBOARD
 ========================================================= */
 
 amountInput.addEventListener(
   "keydown",
-  function(e){
+  function(event){
 
     if(
-      e.key === "Enter"
+      event.key === "Enter"
     ){
 
-      e.preventDefault();
+      event.preventDefault();
 
       saveTransaction();
 
@@ -3737,14 +3240,14 @@ amountInput.addEventListener(
 
 noteInput.addEventListener(
   "keydown",
-  function(e){
+  function(event){
 
     if(
-      e.key === "Enter" &&
-      !e.shiftKey
+      event.key === "Enter" &&
+      !event.shiftKey
     ){
 
-      e.preventDefault();
+      event.preventDefault();
 
       saveTransaction();
 
@@ -3764,13 +3267,15 @@ loginBtn.addEventListener(
 );
 
 
-loginPassword.addEventListener(
+passwordInput.addEventListener(
   "keydown",
-  e => {
+  function(event){
 
     if(
-      e.key === "Enter"
+      event.key === "Enter"
     ){
+
+      event.preventDefault();
 
       doLogin();
 
@@ -3780,71 +3285,19 @@ loginPassword.addEventListener(
 );
 
 
-loginUsername.addEventListener(
+usernameInput.addEventListener(
   "keydown",
-  e => {
+  function(event){
 
     if(
-      e.key === "Enter"
+      event.key === "Enter"
     ){
 
-      loginPassword.focus();
+      event.preventDefault();
+
+      passwordInput.focus();
 
     }
-
-  }
-);
-
-
-incomeBtn.addEventListener(
-  "click",
-  () => {
-
-    setType(
-      "income"
-    );
-
-  }
-);
-
-
-expenseBtn.addEventListener(
-  "click",
-  () => {
-
-    setType(
-      "expense"
-    );
-
-  }
-);
-
-
-saveBtn.addEventListener(
-  "click",
-  saveTransaction
-);
-
-
-navAdd.addEventListener(
-  "click",
-  () => {
-
-    showPage(
-      "add"
-    );
-
-  }
-);
-
-
-navHistory.addEventListener(
-  "click",
-  () => {
-
-    showPage(
-      "history"
-    );
 
   }
 );
@@ -3856,56 +3309,78 @@ logoutBtn.addEventListener(
 );
 
 
-/* =========================================================
-   TRANSACTION FILTER EVENTS
-========================================================= */
-
-filterAll.addEventListener(
+incomeBtn.addEventListener(
   "click",
-  () => {
+  function(){
 
-    setTransactionFilter(
-      "all"
-    );
+    setType("income");
 
   }
 );
 
 
-filterIncome.addEventListener(
+expenseBtn.addEventListener(
   "click",
-  () => {
+  function(){
 
-    setTransactionFilter(
-      "income"
-    );
+    setType("expense");
 
   }
 );
 
 
-filterExpense.addEventListener(
+saveBtn.addEventListener(
   "click",
-  () => {
+  saveTransaction
+);
 
-    setTransactionFilter(
-      "expense"
-    );
+
+addNavBtn.addEventListener(
+  "click",
+  function(){
+
+    showPage("add");
 
   }
 );
 
 
-/* =========================================================
-   CATEGORY FILTER EVENT
-========================================================= */
+historyNavBtn.addEventListener(
+  "click",
+  function(){
+
+    showPage("history");
+
+  }
+);
+
+
+filterButtons.forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        setTransactionFilter(
+          this.dataset.filter
+        );
+
+      }
+    );
+
+  }
+);
+
 
 historyCategoryFilter.addEventListener(
   "change",
-  () => {
+  function(){
 
     categoryFilter =
-      historyCategoryFilter.value;
+      this.value || "all";
+
+    lastRenderSignature = "";
 
     renderTransactions();
 
@@ -3919,7 +3394,7 @@ historyCategoryFilter.addEventListener(
 
 window.addEventListener(
   "online",
-  async () => {
+  async function(){
 
     setSyncStatus(
       "Online"
@@ -3935,7 +3410,7 @@ window.addEventListener(
 
 window.addEventListener(
   "offline",
-  () => {
+  function(){
 
     setSyncStatus(
       "Offline"
@@ -3950,7 +3425,7 @@ window.addEventListener(
 ========================================================= */
 
 setInterval(
-  async () => {
+  async function(){
 
     if(
       !session ||
@@ -3972,7 +3447,50 @@ setInterval(
 
 
 /* =========================================================
-   START
+   INITIALIZE
+========================================================= */
+
+async function initializeApp(){
+
+  dateInput.value =
+    getToday();
+
+
+  setType(
+    "income"
+  );
+
+
+  categoryFilter =
+    "all";
+
+
+  lastHistoryCategoryFilterMode =
+    "";
+
+
+  lastRenderSignature =
+    "";
+
+
+  updateHistoryCategoryFilter(
+    true
+  );
+
+
+  renderTransactions();
+
+
+  await loadTransactions();
+
+
+  await syncPending();
+
+}
+
+
+/* =========================================================
+   STARTUP
 ========================================================= */
 
 loadLocalData();
