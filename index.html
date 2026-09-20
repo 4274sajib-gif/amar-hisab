@@ -249,7 +249,7 @@ button{
 .page{
   display:none;
   height:100%;
-  overflow-y:auto;
+  overflow:hidden;
   overflow-x:hidden;
 
   padding:12px 12px 82px;
@@ -542,6 +542,23 @@ button{
    HISTORY FILTER
 ========================= */
 
+#historyPage{
+  flex-direction:column;
+  overflow:hidden;
+}
+
+#historyPage.active{
+  display:flex;
+}
+
+#historyPage .container{
+  height:100%;
+  min-height:0;
+
+  display:flex;
+  flex-direction:column;
+}
+
 .history-card{
   background:#fff;
 
@@ -554,9 +571,10 @@ button{
     0 3px 0 #e0e7e3,
     0 7px 17px rgba(0,0,0,.05);
 
-  /* ONLY CHANGE:
-     filter fixed + transaction area scroll */
-  height:100%;
+  height:auto;
+  flex:1;
+  min-height:0;
+
   display:flex;
   flex-direction:column;
   overflow:hidden;
@@ -568,7 +586,6 @@ button{
   gap:7px;
   margin-bottom:9px;
 
-  /* keep filter area fixed */
   flex:0 0 auto;
 }
 
@@ -594,7 +611,6 @@ button{
 .history-category-wrap{
   margin-bottom:9px;
 
-  /* keep category dropdown fixed */
   flex:0 0 auto;
 }
 
@@ -611,10 +627,9 @@ button{
   flex-direction:column;
   gap:7px;
 
-  /* ONLY CHANGE:
-     transaction cards scroll here */
   flex:1;
   min-height:0;
+
   overflow-y:auto;
   overflow-x:hidden;
 
