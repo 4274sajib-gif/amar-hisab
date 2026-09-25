@@ -388,6 +388,43 @@ button{
 }
 
 /* =========================
+   TOTAL BALANCE
+========================= */
+
+.balance-total-wrap{
+  position:absolute;
+  right:16px;
+  bottom:10px;
+
+  z-index:3;
+
+  text-align:right;
+}
+
+.balance-total-label{
+  font-size:8px;
+  font-weight:700;
+  color:rgba(255,255,255,.65);
+
+  margin-bottom:1px;
+
+  white-space:nowrap;
+}
+
+.balance-total-value{
+  font-size:12px;
+  line-height:1;
+  font-weight:900;
+
+  color:#fff;
+
+  white-space:nowrap;
+
+  text-shadow:
+    0 1px 2px rgba(0,0,0,.20);
+}
+
+/* =========================
    FORM CARD
 ========================= */
 
@@ -616,6 +653,56 @@ button{
 
 .history-category-wrap.hidden{
   display:none!important;
+}
+
+
+/* =========================
+   HISTORY TOTAL + CATEGORY
+========================= */
+
+.history-summary-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  align-items:stretch;
+}
+
+.history-total-box{
+  min-width:0;
+  height:38px;
+  padding:4px 8px;
+
+  background:#eaf5ef;
+  border:1px solid #cfe5d9;
+  border-radius:10px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.history-total-label{
+  font-size:9px;
+  font-weight:700;
+  color:#60776b;
+  margin-bottom:2px;
+}
+
+.history-total-value{
+  font-size:14px;
+  font-weight:900;
+  color:#0b6b4f;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.history-summary-row .select{
+  height:38px;
+  min-width:0;
+  padding:0 8px;
+  font-size:11px;
 }
 
 /* =========================
@@ -989,7 +1076,20 @@ button{
           >
             0 TK
           </div>
+<div class="balance-total-wrap">
 
+  <div class="balance-total-label">
+    মোট ব্যালেন্স
+  </div>
+
+  <div
+    id="totalBalanceValue"
+    class="balance-total-value"
+  >
+    0 TK
+  </div>
+
+</div>
           <div
             id="balanceStatus"
             class="balance-status"
@@ -1111,6 +1211,7 @@ button{
     </section>
 
 
+    
     <!-- =========================
          HISTORY PAGE
     ========================= -->
@@ -1152,19 +1253,40 @@ button{
 
           </div>
 
+          <!-- CATEGORY FILTER + TOTAL -->
 
           <div
             id="historyCategoryWrap"
             class="history-category-wrap hidden"
           >
 
-            <select
-              id="historyCategoryFilter"
-              class="select"
-            ></select>
+            <div class="history-summary-row">
+
+              <div class="history-total-box">
+
+                <div class="history-total-label">
+                  মোট এমাউন্ট
+                </div>
+
+                <div
+                  id="historyCategoryTotal"
+                  class="history-total-value"
+                >
+                  0 TK
+                </div>
+
+              </div>
+
+              <select
+                id="historyCategoryFilter"
+                class="select"
+              ></select>
+
+            </div>
 
           </div>
 
+          <!-- TRANSACTION LIST -->
 
           <div
             id="transactionList"
@@ -1176,8 +1298,6 @@ button{
       </div>
 
     </section>
-
-  </main>
 
 
   <!-- =========================
@@ -1271,7 +1391,8 @@ const historyPage =
 
 const balanceValue =
   document.getElementById("balanceValue");
-
+const totalBalanceValue =
+  document.getElementById("totalBalanceValue");
 const balanceStatus =
   document.getElementById("balanceStatus");
 
@@ -1308,6 +1429,9 @@ const historyCategoryWrap =
 const historyCategoryFilter =
   document.getElementById("historyCategoryFilter");
 
+const historyCategoryTotal =
+  document.getElementById("historyCategoryTotal");
+
 const addNavBtn =
   document.getElementById("addNavBtn");
 
@@ -1323,6 +1447,7 @@ const filterButtons =
 ========================================================= */
 
 const INCOME_CATEGORIES = [
+  "বিকাশ",
   "বেতন",
   "ব্যবসা",
   "প্রফিট",
@@ -1331,8 +1456,8 @@ const INCOME_CATEGORIES = [
 
 const EXPENSE_CATEGORIES = [
   "বিকাশ",
-  "ফ্যামিলি",
   "ব্যবসা",
+  "ফ্যামিলি",
   "বিল",
   "ব্যাংক ডিপোজিট",
   "অনলাইন অর্ডার",
@@ -2028,6 +2153,70 @@ function calculateBalance(){
 }
 
 
+function calculateTotalBalance(){
+
+  let total = 0;
+
+  for(const tx of transactions){
+
+    const amount =
+      Number(tx.amount) || 0;
+
+    if(tx.type === "income"){
+
+      // বিকাশের আয় মোট ব্যালান্সে যোগ হবে না
+      if(tx.category === "বিকাশ"){
+        continue;
+      }
+
+      total += amount;
+
+    }else if(tx.type === "expense"){
+
+      if(
+        tx.category === "বিকাশ" ||
+        tx.category === "ব্যবসা"
+      ){
+
+        continue;
+
+      }
+
+      total -= amount;
+
+    }
+
+  }
+
+  return total;
+
+}
+
+
+function renderTotalBalance(){
+
+  const total =
+    calculateTotalBalance();
+
+  const formatted =
+    formatIndianNumber(
+      Math.abs(total)
+    );
+
+  if(total >= 0){
+
+    totalBalanceValue.textContent =
+      formatted + " TK";
+
+  }else{
+
+    totalBalanceValue.textContent =
+      "-" + formatted + " TK";
+
+  }
+
+}
+
 function renderBalance(){
 
   const balance =
@@ -2057,7 +2246,9 @@ function renderBalance(){
       "#ffd6d6";
 
   }
-
+  
+  renderTotalBalance();
+  
 }
 
 
@@ -2305,6 +2496,46 @@ function setTransactionFilter(filter){
 
 }
 
+/* =========================================================
+   HISTORY CATEGORY TOTAL
+========================================================= */
+
+function renderHistoryCategoryTotal(){
+
+  if(
+    transactionFilter !== "income" &&
+    transactionFilter !== "expense"
+  ){
+
+    historyCategoryTotal.textContent = "0 TK";
+    return;
+
+  }
+
+  let total = 0;
+
+  for(const tx of transactions){
+
+    if(tx.type !== transactionFilter){
+      continue;
+    }
+
+    if(
+      categoryFilter !== "all" &&
+      tx.category !== categoryFilter
+    ){
+      continue;
+    }
+
+    total += Number(tx.amount) || 0;
+
+  }
+
+  historyCategoryTotal.textContent =
+    formatIndianNumber(total) + " TK";
+
+}
+
 
 /* =========================================================
    FILTERED TRANSACTIONS
@@ -2399,7 +2630,8 @@ function renderTransactions(){
   updateFilterButtons();
 
   updateHistoryCategoryFilter();
-
+  
+  renderHistoryCategoryTotal();
 
   const filtered =
     getFilteredTransactions();
