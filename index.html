@@ -266,8 +266,9 @@ button{
   margin:0 auto;
 }
 
+
 /* =========================
-   3D BALANCE CARD
+   PREMIUM 3D ATM CARD
 ========================= */
 
 .balance-card{
@@ -276,37 +277,43 @@ button{
 
   background:
     linear-gradient(
-      145deg,
-      #15906d 0%,
-      #0b6b4f 45%,
-      #07523d 100%
+      135deg,
+      #167d61 0%,
+      #0b6b4f 38%,
+      #064b39 75%,
+      #033a2c 100%
     );
 
-  border-radius:20px;
+  border-radius:21px;
 
-  padding:18px 20px 19px;
+  padding:21px 20px 23px;
   margin-bottom:10px;
 
-  border:1px solid rgba(255,255,255,.20);
+  min-height:145px;
+
+  border:1px solid rgba(255,255,255,.22);
 
   box-shadow:
-    0 3px 0 #064735,
-    0 6px 0 #053d2f,
-    0 12px 18px rgba(0,0,0,.18),
-    0 18px 28px rgba(11,107,79,.20),
-    inset 0 1px 0 rgba(255,255,255,.28),
-    inset 0 -10px 20px rgba(0,0,0,.10);
+    0 3px 0 #06412f,
+    0 6px 0 #043727,
+    0 12px 20px rgba(0,0,0,.18),
+    0 18px 30px rgba(11,107,79,.20),
+    inset 0 1px 0 rgba(255,255,255,.30),
+    inset 0 -12px 22px rgba(0,0,0,.15);
 }
+
+/* Glossy highlight */
 
 .balance-card::before{
   content:"";
+
   position:absolute;
 
-  left:10px;
-  right:10px;
+  left:12px;
+  right:12px;
   top:7px;
 
-  height:3px;
+  height:2px;
 
   border-radius:999px;
 
@@ -314,26 +321,28 @@ button{
     linear-gradient(
       90deg,
       transparent,
-      rgba(255,255,255,.52),
+      rgba(255,255,255,.60),
       transparent
     );
 
   box-shadow:
-    0 0 8px rgba(255,255,255,.18);
+    0 0 10px rgba(255,255,255,.20);
 
   pointer-events:none;
 }
+
+/* ATM card decorative shine */
 
 .balance-card::after{
   content:"";
 
   position:absolute;
 
-  width:175px;
-  height:175px;
+  width:210px;
+  height:210px;
 
-  right:-74px;
-  top:-84px;
+  right:-85px;
+  top:-115px;
 
   border-radius:50%;
 
@@ -341,30 +350,37 @@ button{
     radial-gradient(
       circle,
       rgba(255,255,255,.18) 0%,
-      rgba(255,255,255,.07) 30%,
-      transparent 68%
+      rgba(255,255,255,.07) 35%,
+      transparent 70%
     );
 
+  border:1px solid rgba(255,255,255,.08);
+
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.08);
+    0 0 0 18px rgba(255,255,255,.025),
+    0 0 0 38px rgba(255,255,255,.018);
 
   pointer-events:none;
 }
+
+/* Balance label */
 
 .balance-label{
   position:relative;
   z-index:2;
 
-  color:rgba(255,255,255,.84);
+  color:rgba(255,255,255,.82);
 
   font-size:12px;
   font-weight:700;
 
-  margin-bottom:7px;
+  margin-bottom:9px;
 
   text-shadow:
-    0 1px 2px rgba(0,0,0,.22);
+    0 1px 3px rgba(0,0,0,.25);
 }
+
+/* Main balance */
 
 .balance-value{
   position:relative;
@@ -375,12 +391,12 @@ button{
   font-size:30px;
   font-weight:900;
 
-  line-height:1.12;
+  line-height:1.15;
   letter-spacing:-.5px;
 
   text-shadow:
-    0 2px 2px rgba(0,0,0,.20),
-    0 4px 8px rgba(0,0,0,.16);
+    0 2px 3px rgba(0,0,0,.22),
+    0 5px 10px rgba(0,0,0,.15);
 }
 
 .balance-status{
@@ -388,13 +404,14 @@ button{
 }
 
 /* =========================
-   TOTAL BALANCE
+   ATM TOTAL BALANCE
 ========================= */
 
 .balance-total-wrap{
   position:absolute;
-  right:16px;
-  bottom:10px;
+
+  right:17px;
+  bottom:13px;
 
   z-index:3;
 
@@ -402,18 +419,20 @@ button{
 }
 
 .balance-total-label{
-  font-size:8px;
+  font-size:9px;
   font-weight:700;
-  color:rgba(255,255,255,.65);
 
-  margin-bottom:1px;
+  color:rgba(255,255,255,.68);
+
+  margin-bottom:4px;
 
   white-space:nowrap;
 }
 
 .balance-total-value{
-  font-size:12px;
-  line-height:1;
+  font-size:13px;
+  line-height:1.1;
+
   font-weight:900;
 
   color:#fff;
@@ -421,8 +440,51 @@ button{
   white-space:nowrap;
 
   text-shadow:
-    0 1px 2px rgba(0,0,0,.20);
+    0 2px 3px rgba(0,0,0,.25);
 }
+
+/* =========================
+   ATM CARD RESPONSIVE
+========================= */
+
+@media(max-width:420px){
+
+  .balance-card{
+    padding:19px 17px 22px;
+    margin-bottom:9px;
+    border-radius:20px;
+    min-height:140px;
+  }
+
+  .balance-value{
+    font-size:28px;
+  }
+
+  .balance-total-wrap{
+    right:15px;
+    bottom:12px;
+  }
+
+  .balance-total-value{
+    font-size:12px;
+  }
+
+}
+
+@media(max-height:700px){
+
+  .balance-card{
+    padding:16px 15px 20px;
+    margin-bottom:8px;
+    min-height:132px;
+  }
+
+  .balance-value{
+    font-size:26px;
+  }
+
+}
+
 
 /* =========================
    FORM CARD
