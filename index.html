@@ -33,7 +33,7 @@ button{cursor:pointer}
 .container{width:100%;max-width:520px;margin:0 auto}
 
 /* =========================================================
-   ★ BIG ATM CARD — GLOW BALL + SYNC BORDER (NO sweep) ★
+   ★ ATM CARD — static glow + sync border + balance pop only ★
    ========================================================= */
 .atm-card{
   position:relative;
@@ -52,35 +52,30 @@ button{cursor:pointer}
     radial-gradient(140% 120% at 90% 110%, rgba(0,0,0,.35) 0%, transparent 60%),
     linear-gradient(135deg, #0f7d5d 0%, #0b6b4f 35%, #074c37 70%, #033023 100%);
 
-  /* SYNC-LINKED BORDER GLOW — default green (synced) */
   --sync-glow: 127,255,191;
+
+  /* Static shadows — no animation */
   box-shadow:
     0 0 0 1px rgba(var(--sync-glow),.55),
-    0 0 18px rgba(var(--sync-glow),.45),
-    0 0 34px rgba(var(--sync-glow),.25),
+    0 0 18px rgba(var(--sync-glow),.40),
+    0 0 34px rgba(var(--sync-glow),.22),
     0 7px 0 #052f24,
     0 16px 30px rgba(3,48,35,.45),
     0 28px 55px rgba(11,107,79,.25),
     inset 0 1px 0 rgba(255,255,255,.28),
     inset 0 -22px 44px rgba(0,0,0,.22);
 
-  animation: cardBreath 6s ease-in-out infinite;
-  transition: box-shadow .5s ease;
-}
-
-@keyframes cardBreath{
-  0%,100%{ transform: translateY(0); }
-  50%    { transform: translateY(-2px); }
+  transition: box-shadow .5s ease;   /* only when sync changes */
 }
 
 /* Sync-state variations */
-.atm-card.sync-synced{  --sync-glow: 127,255,191; }   /* green */
-.atm-card.sync-syncing{ --sync-glow: 127,200,255; }   /* blue  */
-.atm-card.sync-pending{ --sync-glow: 255,217,127; }   /* amber */
-.atm-card.sync-offline{ --sync-glow: 255,155,127; }   /* orange/red */
-.atm-card.sync-online{  --sync-glow: 127,255,191; }   /* green */
+.atm-card.sync-synced{  --sync-glow: 127,255,191; }
+.atm-card.sync-syncing{ --sync-glow: 127,200,255; }
+.atm-card.sync-pending{ --sync-glow: 255,217,127; }
+.atm-card.sync-offline{ --sync-glow: 255,155,127; }
+.atm-card.sync-online{  --sync-glow: 127,255,191; }
 
-/* ★ SOFT FLOATING GOLD GLOW BALL (kept) ★ */
+/* Static gold glow — rendered once, no animation */
 .atm-card::after{
   content:"";
   position:absolute;
@@ -89,18 +84,12 @@ button{cursor:pointer}
   border-radius:50%;
   background:
     radial-gradient(circle,
-      rgba(255,240,180,.35) 0%,
-      rgba(246,217,122,.18) 35%,
-      rgba(255,255,255,.06) 55%,
+      rgba(255,240,180,.30) 0%,
+      rgba(246,217,122,.15) 35%,
+      rgba(255,255,255,.05) 55%,
       transparent 72%);
   pointer-events:none;
   z-index:1;
-  filter: blur(2px);
-  animation: glowFloat 8s ease-in-out infinite;
-}
-@keyframes glowFloat{
-  0%,100%{ transform: translate(0,0) scale(1);     opacity:.85; }
-  50%    { transform: translate(-18px,20px) scale(1.10); opacity:1; }
 }
 
 /* Chip */
@@ -140,27 +129,23 @@ button{cursor:pointer}
   border:1px solid rgba(255,255,255,.22);
   color:#fff;white-space:nowrap;
   text-shadow:0 1px 1px rgba(0,0,0,.25);
-  transition: background .4s ease, border-color .4s ease, box-shadow .4s ease;
+  transition: background .4s ease, border-color .4s ease;
 }
 .atm-card.sync-synced .card-sync{
   background:rgba(127,255,191,.20);
   border-color:rgba(127,255,191,.55);
-  box-shadow:0 0 10px rgba(127,255,191,.35);
 }
 .atm-card.sync-syncing .card-sync{
   background:rgba(127,200,255,.20);
   border-color:rgba(127,200,255,.55);
-  box-shadow:0 0 10px rgba(127,200,255,.35);
 }
 .atm-card.sync-pending .card-sync{
   background:rgba(255,217,127,.22);
   border-color:rgba(255,217,127,.55);
-  box-shadow:0 0 10px rgba(255,217,127,.35);
 }
 .atm-card.sync-offline .card-sync{
   background:rgba(255,155,127,.20);
   border-color:rgba(255,155,127,.55);
-  box-shadow:0 0 10px rgba(255,155,127,.35);
 }
 
 .card-logout{
@@ -188,7 +173,7 @@ button{cursor:pointer}
 }
 .card-number .dots{letter-spacing:4px;opacity:.55}
 
-/* Balance */
+/* Balance label — static dot, no pulse */
 .card-balance-label{
   position:relative;z-index:3;
   font-size:10px;font-weight:800;letter-spacing:1.4px;
@@ -202,15 +187,10 @@ button{cursor:pointer}
   display:inline-block;
   width:6px;height:6px;border-radius:50%;
   background:#7fffbf;
-  box-shadow:0 0 8px #7fffbf;
-  animation: dotPulse 1.8s ease-in-out infinite;
-}
-@keyframes dotPulse{
-  0%,100%{ transform:scale(1); opacity:1; }
-  50%    { transform:scale(1.5); opacity:.5; }
+  box-shadow:0 0 6px #7fffbf;
 }
 
-/* Balance value with pulse glow + pop */
+/* Balance value — static shadow + light pop on change */
 .card-balance-value{
   position:relative;z-index:3;
   font-size:32px;font-weight:900;letter-spacing:-.6px;
@@ -222,30 +202,17 @@ button{cursor:pointer}
   display:inline-block;
   padding:2px 10px 2px 0;
   border-radius:10px;
-  animation: balanceGlow 2.4s ease-in-out infinite;
-}
-@keyframes balanceGlow{
-  0%,100%{
-    text-shadow:
-      0 2px 2px rgba(0,0,0,.30),
-      0 5px 12px rgba(0,0,0,.30),
-      0 0 0 rgba(127,255,191,0);
-  }
-  50%{
-    text-shadow:
-      0 2px 2px rgba(0,0,0,.30),
-      0 5px 12px rgba(0,0,0,.30),
-      0 0 22px rgba(127,255,191,.85),
-      0 0 40px rgba(127,255,191,.55);
-  }
+
+  will-change: transform;   /* GPU layer ready for pop */
+  transform: translateZ(0);
 }
 .card-balance-value.pop{
-  animation: balancePop .45s ease-out, balanceGlow 2.4s ease-in-out infinite;
+  animation: balancePop .45s ease-out;
 }
 @keyframes balancePop{
-  0%  { transform: scale(1); }
-  40% { transform: scale(1.08); }
-  100%{ transform: scale(1); }
+  0%  { transform: translateZ(0) scale(1); }
+  40% { transform: translateZ(0) scale(1.08); }
+  100%{ transform: translateZ(0) scale(1); }
 }
 
 /* Bottom row */
@@ -293,6 +260,11 @@ button{cursor:pointer}
   border-radius:999px;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
   z-index:3;pointer-events:none;
+}
+
+/* Reduce motion — respect user setting */
+@media (prefers-reduced-motion: reduce){
+  .card-balance-value.pop{ animation: none; }
 }
 
 /* =========================================================
@@ -495,7 +467,7 @@ button{cursor:pointer}
     <section id="addPage" class="page active">
       <div class="container">
 
-        <!-- ★ BIG ATM CARD (no top-left→right sweep) ★ -->
+        <!-- ★ BIG ATM CARD ★ -->
         <div id="kqdsi4" class="atm-card sync-synced">
 
           <div class="card-top">
@@ -786,7 +758,6 @@ function createTransactionId(){
   return "TXN" + Date.now() + Math.random().toString(36).slice(2,8).toUpperCase();
 }
 
-/* Current month name (full) + year → "September 2026" */
 const MONTH_NAMES = [
   "January","February","March","April","May","June",
   "July","August","September","October","November","December"
@@ -1035,9 +1006,6 @@ function updateFilterButtons(){
   });
 }
 
-/* =========================================================
-   SET FILTER
-========================================================= */
 function setTransactionFilter(filter){
   transactionFilter = filter || "all";
   categoryFilter = "all";
@@ -1062,9 +1030,6 @@ function renderHistoryCategoryTotal(){
   historyCategoryTotal.textContent = formatIndianNumber(total) + " TK";
 }
 
-/* =========================================================
-   FILTERED TRANSACTIONS
-========================================================= */
 function getFilteredTransactions(){
   let result = transactions;
   if(transactionFilter !== "all"){
@@ -1076,9 +1041,6 @@ function getFilteredTransactions(){
   return result;
 }
 
-/* =========================================================
-   RENDER SIGNATURE
-========================================================= */
 function getTransactionRenderSignature(){
   const filtered = getFilteredTransactions();
   return JSON.stringify({
