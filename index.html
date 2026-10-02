@@ -2,3760 +2,1473 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>আমার হিসাব</title>
-
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
+/* ===== RESET & BASE ===== */
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden}
+body{font-family:Arial,"Noto Sans Bengali",sans-serif;background:#f4f6f5;color:#202522}
+button,input,select,textarea{font-family:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
 
-html,body{
-  margin:0;
-  padding:0;
+/* ===== LOGIN ===== */
+#loginScreen{position:fixed;inset:0;background:radial-gradient(circle at top,#e7f5ef 0%,#f4f6f5 45%,#eef2f0 100%);display:flex;align-items:center;justify-content:center;padding:20px;z-index:1000}
+.login-box{width:100%;max-width:380px;background:#fff;border-radius:24px;padding:28px 22px 24px;box-shadow:0 8px 0 #dce6e1,0 18px 35px rgba(0,0,0,.12)}
+.login-logo{width:68px;height:68px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;border-radius:20px;color:#fff;font-size:34px;font-weight:900;background:linear-gradient(145deg,#15906d,#0b6b4f 55%,#07523d);box-shadow:0 4px 0 #064735,0 9px 18px rgba(11,107,79,.25),inset 0 1px 0 rgba(255,255,255,.30)}
+.login-title{text-align:center;font-size:25px;font-weight:900;color:#0b6b4f;margin-bottom:5px}
+.login-subtitle{text-align:center;font-size:12px;color:#7b8580;margin-bottom:24px}
+.login-input{width:100%;height:48px;border:1px solid #dce5e1;border-radius:13px;padding:0 14px;outline:none;background:#f8faf9;font-size:14px;margin-bottom:11px}
+.login-input:focus{border-color:#0b6b4f;background:#fff;box-shadow:0 0 0 3px rgba(11,107,79,.08)}
+.login-btn{width:100%;height:48px;border:0;border-radius:13px;color:#fff;background:linear-gradient(145deg,#14906c,#0b6b4f);font-size:15px;font-weight:800;box-shadow:0 3px 0 #064735,0 7px 14px rgba(11,107,79,.18)}
+.login-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #064735,0 4px 9px rgba(11,107,79,.16)}
+.login-error{min-height:18px;text-align:center;color:#d83232;font-size:12px;margin-top:10px}
+
+/* ===== APP ===== */
+#app{display:none;width:100%;height:100%;overflow:hidden}
+.main{height:100%;overflow:hidden;position:relative}
+.page{display:none;height:100%;overflow:hidden;overflow-x:hidden;padding:12px 12px 82px;-webkit-overflow-scrolling:touch}
+.page.active{display:block}
+.container{width:100%;max-width:520px;margin:0 auto}
+
+/* =========================================================
+   ★ BIG ATM CARD — GLOW BALL + SYNC BORDER (NO sweep) ★
+   ========================================================= */
+.atm-card{
+  position:relative;
   width:100%;
-  height:100%;
-  overflow:hidden;
-}
-
-body{
-  font-family:Arial,"Noto Sans Bengali",sans-serif;
-  background:#f4f6f5;
-  color:#202522;
-}
-
-button,
-input,
-select,
-textarea{
-  font-family:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* =========================
-   LOGIN
-========================= */
-
-#loginScreen{
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at top,#e7f5ef 0%,#f4f6f5 45%,#eef2f0 100%);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:1000;
-}
-
-.login-box{
-  width:100%;
-  max-width:380px;
-  background:#fff;
-  border-radius:24px;
-  padding:28px 22px 24px;
-  box-shadow:
-    0 8px 0 #dce6e1,
-    0 18px 35px rgba(0,0,0,.12);
-}
-
-.login-logo{
-  width:68px;
-  height:68px;
-  margin:0 auto 14px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
+  aspect-ratio:1.42/1;
+  max-height:280px;
+  margin:0 auto 16px;
   border-radius:20px;
-
+  padding:18px 20px;
   color:#fff;
-  font-size:34px;
-  font-weight:900;
+  overflow:hidden;
+  isolation:isolate;
 
   background:
-    linear-gradient(145deg,#15906d,#0b6b4f 55%,#07523d);
+    radial-gradient(120% 90% at 15% 10%, rgba(255,255,255,.14) 0%, transparent 55%),
+    radial-gradient(140% 120% at 90% 110%, rgba(0,0,0,.35) 0%, transparent 60%),
+    linear-gradient(135deg, #0f7d5d 0%, #0b6b4f 35%, #074c37 70%, #033023 100%);
 
+  /* SYNC-LINKED BORDER GLOW — default green (synced) */
+  --sync-glow: 127,255,191;
   box-shadow:
-    0 4px 0 #064735,
-    0 9px 18px rgba(11,107,79,.25),
-    inset 0 1px 0 rgba(255,255,255,.30);
-}
-
-.login-title{
-  text-align:center;
-  font-size:25px;
-  font-weight:900;
-  color:#0b6b4f;
-  margin-bottom:5px;
-}
-
-.login-subtitle{
-  text-align:center;
-  font-size:12px;
-  color:#7b8580;
-  margin-bottom:24px;
-}
-
-.login-input{
-  width:100%;
-  height:48px;
-  border:1px solid #dce5e1;
-  border-radius:13px;
-  padding:0 14px;
-  outline:none;
-  background:#f8faf9;
-  font-size:14px;
-  margin-bottom:11px;
-}
-
-.login-input:focus{
-  border-color:#0b6b4f;
-  background:#fff;
-  box-shadow:0 0 0 3px rgba(11,107,79,.08);
-}
-
-.login-btn{
-  width:100%;
-  height:48px;
-  border:0;
-  border-radius:13px;
-
-  color:#fff;
-  background:linear-gradient(145deg,#14906c,#0b6b4f);
-
-  font-size:15px;
-  font-weight:800;
-
-  box-shadow:
-    0 3px 0 #064735,
-    0 7px 14px rgba(11,107,79,.18);
-}
-
-.login-btn:active{
-  transform:translateY(2px);
-  box-shadow:
-    0 1px 0 #064735,
-    0 4px 9px rgba(11,107,79,.16);
-}
-
-.login-error{
-  min-height:18px;
-  text-align:center;
-  color:#d83232;
-  font-size:12px;
-  margin-top:10px;
-}
-
-/* =========================
-   APP
-========================= */
-
-#app{
-  display:none;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-}
-
-.app-header{
-  height:62px;
-  background:#0b6b4f;
-  color:#fff;
-
-  display:flex;
-  align-items:center;
-
-  padding:0 13px;
-
-  box-shadow:
-    0 3px 10px rgba(0,0,0,.14);
-
-  position:relative;
-  z-index:20;
-}
-
-.header-left{
-  min-width:0;
-  flex:1;
-}
-
-.app-title{
-  font-size:18px;
-  line-height:20px;
-  font-weight:900;
-}
-
-.username{
-  font-size:10px;
-  opacity:.78;
-  margin-top:2px;
-}
-
-.header-right{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.sync-status{
-  font-size:10px;
-  white-space:nowrap;
-  opacity:.9;
-}
-
-.logout-btn{
-  width:34px;
-  height:34px;
-  border:0;
-  border-radius:10px;
-
-  color:#fff;
-  background:rgba(255,255,255,.13);
-
-  font-size:18px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.logout-btn:active{
-  background:rgba(255,255,255,.22);
-}
-
-/* =========================
-   CONTENT
-========================= */
-
-.main{
-  height:calc(100% - 62px);
-  overflow:hidden;
-  position:relative;
-}
-
-.page{
-  display:none;
-  height:100%;
-  overflow:hidden;
-  overflow-x:hidden;
-
-  padding:12px 12px 82px;
-  -webkit-overflow-scrolling:touch;
-}
-
-.page.active{
-  display:block;
-}
-
-.container{
-  width:100%;
-  max-width:520px;
-  margin:0 auto;
-}
-
-/* =========================
-   3D BALANCE CARD
-========================= */
-
-.balance-card{
-  position:relative;
-  overflow:hidden;
-
-  background:
-    linear-gradient(
-      145deg,
-      #15906d 0%,
-      #0b6b4f 45%,
-      #07523d 100%
-    );
-
-  border-radius:20px;
-
-  padding:18px 20px 19px;
-  margin-bottom:10px;
-
-  border:1px solid rgba(255,255,255,.20);
-
-  box-shadow:
-    0 3px 0 #064735,
-    0 6px 0 #053d2f,
-    0 12px 18px rgba(0,0,0,.18),
-    0 18px 28px rgba(11,107,79,.20),
+    0 0 0 1px rgba(var(--sync-glow),.55),
+    0 0 18px rgba(var(--sync-glow),.45),
+    0 0 34px rgba(var(--sync-glow),.25),
+    0 7px 0 #052f24,
+    0 16px 30px rgba(3,48,35,.45),
+    0 28px 55px rgba(11,107,79,.25),
     inset 0 1px 0 rgba(255,255,255,.28),
-    inset 0 -10px 20px rgba(0,0,0,.10);
+    inset 0 -22px 44px rgba(0,0,0,.22);
+
+  animation: cardBreath 6s ease-in-out infinite;
+  transition: box-shadow .5s ease;
 }
 
-.balance-card::before{
-  content:"";
-  position:absolute;
-
-  left:10px;
-  right:10px;
-  top:7px;
-
-  height:3px;
-
-  border-radius:999px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,255,255,.52),
-      transparent
-    );
-
-  box-shadow:
-    0 0 8px rgba(255,255,255,.18);
-
-  pointer-events:none;
+@keyframes cardBreath{
+  0%,100%{ transform: translateY(0); }
+  50%    { transform: translateY(-2px); }
 }
 
-.balance-card::after{
+/* Sync-state variations */
+.atm-card.sync-synced{  --sync-glow: 127,255,191; }   /* green */
+.atm-card.sync-syncing{ --sync-glow: 127,200,255; }   /* blue  */
+.atm-card.sync-pending{ --sync-glow: 255,217,127; }   /* amber */
+.atm-card.sync-offline{ --sync-glow: 255,155,127; }   /* orange/red */
+.atm-card.sync-online{  --sync-glow: 127,255,191; }   /* green */
+
+/* ★ SOFT FLOATING GOLD GLOW BALL (kept) ★ */
+.atm-card::after{
   content:"";
-
   position:absolute;
-
-  width:175px;
-  height:175px;
-
-  right:-74px;
-  top:-84px;
-
+  width:240px;height:240px;
+  right:-100px;top:-110px;
   border-radius:50%;
-
   background:
-    radial-gradient(
-      circle,
-      rgba(255,255,255,.18) 0%,
-      rgba(255,255,255,.07) 30%,
-      transparent 68%
-    );
-
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.08);
-
+    radial-gradient(circle,
+      rgba(255,240,180,.35) 0%,
+      rgba(246,217,122,.18) 35%,
+      rgba(255,255,255,.06) 55%,
+      transparent 72%);
   pointer-events:none;
+  z-index:1;
+  filter: blur(2px);
+  animation: glowFloat 8s ease-in-out infinite;
+}
+@keyframes glowFloat{
+  0%,100%{ transform: translate(0,0) scale(1);     opacity:.85; }
+  50%    { transform: translate(-18px,20px) scale(1.10); opacity:1; }
 }
 
-.balance-label{
+/* Chip */
+.card-chip{
+  width:38px;height:28px;border-radius:6px;
+  background:linear-gradient(135deg,#e6c67a 0%,#c9a24a 40%,#a9832f 60%,#e0bf6f 100%);
   position:relative;
-  z-index:2;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.18),0 1px 2px rgba(0,0,0,.25);
+}
+.card-chip::before,.card-chip::after{content:"";position:absolute;background:rgba(0,0,0,.18)}
+.card-chip::before{left:7px;right:7px;top:50%;height:1px;transform:translateY(-50%)}
+.card-chip::after{top:6px;bottom:6px;left:50%;width:1px;transform:translateX(-50%)}
 
-  color:rgba(255,255,255,.84);
+/* Top row */
+.card-top{
+  position:relative;z-index:3;
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:14px;
+}
+.card-top-left{display:flex;align-items:center;gap:10px}
+.card-brand{
+  font-size:13px;font-weight:900;letter-spacing:.6px;
+  text-transform:uppercase;opacity:.94;
+  text-shadow:0 1px 2px rgba(0,0,0,.30);
+}
+.card-brand small{
+  display:block;font-size:9px;font-weight:600;
+  letter-spacing:1.6px;opacity:.68;margin-top:2px;
+}
 
-  font-size:12px;
+/* Right controls */
+.card-actions{display:flex;align-items:center;gap:7px}
+.card-sync{
+  font-size:9px;font-weight:800;letter-spacing:.5px;
+  padding:4px 9px;border-radius:999px;
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.22);
+  color:#fff;white-space:nowrap;
+  text-shadow:0 1px 1px rgba(0,0,0,.25);
+  transition: background .4s ease, border-color .4s ease, box-shadow .4s ease;
+}
+.atm-card.sync-synced .card-sync{
+  background:rgba(127,255,191,.20);
+  border-color:rgba(127,255,191,.55);
+  box-shadow:0 0 10px rgba(127,255,191,.35);
+}
+.atm-card.sync-syncing .card-sync{
+  background:rgba(127,200,255,.20);
+  border-color:rgba(127,200,255,.55);
+  box-shadow:0 0 10px rgba(127,200,255,.35);
+}
+.atm-card.sync-pending .card-sync{
+  background:rgba(255,217,127,.22);
+  border-color:rgba(255,217,127,.55);
+  box-shadow:0 0 10px rgba(255,217,127,.35);
+}
+.atm-card.sync-offline .card-sync{
+  background:rgba(255,155,127,.20);
+  border-color:rgba(255,155,127,.55);
+  box-shadow:0 0 10px rgba(255,155,127,.35);
+}
+
+.card-logout{
+  width:32px;height:32px;
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:10px;
+  background:rgba(255,255,255,.14);
+  color:#fff;font-size:15px;
+  display:flex;align-items:center;justify-content:center;
+}
+.card-logout:active{background:rgba(255,255,255,.28)}
+
+/* Card date row */
+.card-number{
+  position:relative;z-index:3;
+  display:flex;align-items:center;
+  gap:14px;
+  margin:2px 0 12px;
+  font-family:"Courier New",monospace;
+  font-size:16px;letter-spacing:3px;
   font-weight:700;
+  color:rgba(255,255,255,.88);
+  text-shadow:0 1px 2px rgba(0,0,0,.35);
+  text-transform:uppercase;
+}
+.card-number .dots{letter-spacing:4px;opacity:.55}
 
-  margin-bottom:7px;
+/* Balance */
+.card-balance-label{
+  position:relative;z-index:3;
+  font-size:10px;font-weight:800;letter-spacing:1.4px;
+  text-transform:uppercase;color:rgba(255,255,255,.72);
+  margin-bottom:3px;
+  text-shadow:0 1px 1px rgba(0,0,0,.30);
+  display:flex;align-items:center;gap:6px;
+}
+.card-balance-label::before{
+  content:"";
+  display:inline-block;
+  width:6px;height:6px;border-radius:50%;
+  background:#7fffbf;
+  box-shadow:0 0 8px #7fffbf;
+  animation: dotPulse 1.8s ease-in-out infinite;
+}
+@keyframes dotPulse{
+  0%,100%{ transform:scale(1); opacity:1; }
+  50%    { transform:scale(1.5); opacity:.5; }
+}
 
+/* Balance value with pulse glow + pop */
+.card-balance-value{
+  position:relative;z-index:3;
+  font-size:32px;font-weight:900;letter-spacing:-.6px;
+  color:#fff;line-height:1.05;
   text-shadow:
-    0 1px 2px rgba(0,0,0,.22);
+    0 2px 2px rgba(0,0,0,.30),
+    0 5px 12px rgba(0,0,0,.30);
+  word-break:break-word;
+  display:inline-block;
+  padding:2px 10px 2px 0;
+  border-radius:10px;
+  animation: balanceGlow 2.4s ease-in-out infinite;
+}
+@keyframes balanceGlow{
+  0%,100%{
+    text-shadow:
+      0 2px 2px rgba(0,0,0,.30),
+      0 5px 12px rgba(0,0,0,.30),
+      0 0 0 rgba(127,255,191,0);
+  }
+  50%{
+    text-shadow:
+      0 2px 2px rgba(0,0,0,.30),
+      0 5px 12px rgba(0,0,0,.30),
+      0 0 22px rgba(127,255,191,.85),
+      0 0 40px rgba(127,255,191,.55);
+  }
+}
+.card-balance-value.pop{
+  animation: balancePop .45s ease-out, balanceGlow 2.4s ease-in-out infinite;
+}
+@keyframes balancePop{
+  0%  { transform: scale(1); }
+  40% { transform: scale(1.08); }
+  100%{ transform: scale(1); }
 }
 
-.balance-value{
-  position:relative;
-  z-index:2;
-
-  color:#fff!important;
-
-  font-size:30px;
-  font-weight:900;
-
-  line-height:1.12;
-  letter-spacing:-.5px;
-
-  text-shadow:
-    0 2px 2px rgba(0,0,0,.20),
-    0 4px 8px rgba(0,0,0,.16);
+/* Bottom row */
+.card-bottom{
+  position:relative;z-index:3;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:12px;margin-top:14px;
+}
+.card-holder{min-width:0;flex:1}
+.card-holder-label{
+  font-size:8px;font-weight:800;letter-spacing:1.4px;
+  text-transform:uppercase;color:rgba(255,255,255,.62);
+  margin-bottom:3px;
+}
+.card-holder-row{display:flex;align-items:baseline;gap:8px;min-width:0}
+.card-holder-name{
+  font-size:14px;font-weight:800;letter-spacing:.6px;
+  color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-shadow:0 1px 2px rgba(0,0,0,.30);
+}
+.card-total{text-align:right;flex:0 0 auto}
+.card-total-label{
+  font-size:8px;font-weight:800;letter-spacing:1.4px;
+  text-transform:uppercase;color:rgba(255,255,255,.62);
+  margin-bottom:3px;white-space:nowrap;
+}
+.card-total-value{
+  font-size:16px;font-weight:900;color:#fff;
+  white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.30);
 }
 
-.balance-status{
-  display:none!important;
+/* Network logo */
+.card-network{
+  position:absolute;right:20px;bottom:18px;z-index:3;
+  display:flex;align-items:center;
+}
+.card-network .c1,.card-network .c2{
+  width:18px;height:18px;border-radius:50%;display:inline-block;
+}
+.card-network .c1{background:rgba(255,255,255,.85)}
+.card-network .c2{background:rgba(255,255,255,.55);margin-left:-8px}
+
+.card-strip{
+  position:absolute;left:20px;right:20px;bottom:7px;height:2px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+  z-index:3;pointer-events:none;
 }
 
-/* =========================
-   TOTAL BALANCE
-========================= */
-
-.balance-total-wrap{
-  position:absolute;
-  right:16px;
-  bottom:10px;
-
-  z-index:3;
-
-  text-align:right;
-}
-
-.balance-total-label{
-  font-size:8px;
-  font-weight:700;
-  color:rgba(255,255,255,.65);
-
-  margin-bottom:1px;
-
-  white-space:nowrap;
-}
-
-.balance-total-value{
-  font-size:12px;
-  line-height:1;
-  font-weight:900;
-
-  color:#fff;
-
-  white-space:nowrap;
-
-  text-shadow:
-    0 1px 2px rgba(0,0,0,.20);
-}
-
-/* =========================
+/* =========================================================
    FORM CARD
-========================= */
-
+   ========================================================= */
 .form-card{
-  background:#fff;
-  border:1px solid #e4ebe8;
-  border-radius:18px;
-
-  padding:14px;
-
-  box-shadow:
-    0 3px 0 #e0e7e3,
-    0 7px 17px rgba(0,0,0,.06);
+  background:#fff;border:1px solid #e4ebe8;border-radius:20px;
+  padding:16px 14px 14px;
+  box-shadow:0 3px 0 #e0e7e3,0 8px 20px rgba(0,0,0,.06);
 }
-
-.field{
-  margin-bottom:11px;
+.date-row{
+  display:flex;align-items:center;gap:8px;padding:9px 11px;
+  background:#f7faf9;border:1px solid #e2ebe6;border-radius:12px;margin-bottom:12px;
 }
-
-.field-label{
-  display:block;
-  font-size:11px;
-  font-weight:800;
-  color:#5f6965;
-  margin-bottom:5px;
+.date-row .date-icon{font-size:15px;opacity:.65}
+.date-row input[type="date"]{
+  flex:1;border:0;background:transparent;outline:none;
+  font-size:13px;font-weight:700;color:#202522;font-family:inherit;
 }
-
-.input,
-.select,
-.textarea{
-  width:100%;
-  border:1px solid #dce5e1;
-  border-radius:11px;
-
-  background:#f9fbfa;
-
-  outline:none;
-
-  font-size:14px;
-  color:#202522;
+.type-pill{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:4px;background:#f1f6f3;border:1px solid #e0eae5;
+  border-radius:14px;margin-bottom:14px;
 }
-
-.input,
-.select{
-  height:44px;
-  padding:0 12px;
+.type-pill .type-btn{
+  height:40px;border:0;border-radius:11px;background:transparent;
+  color:#7a8580;font-size:13px;font-weight:900;letter-spacing:.3px;
+  transition:all .18s ease;
+  display:flex;align-items:center;justify-content:center;gap:6px;
 }
-
-.textarea{
-  min-height:70px;
-  padding:10px 12px;
-  resize:none;
+.type-pill .type-btn .dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#b6c2bc;transition:background .18s ease;
 }
+.type-pill .type-btn.active.income{
+  background:#fff;color:#0b6b4f;
+  box-shadow:0 2px 6px rgba(11,107,79,.16),0 0 0 1px #0b6b4f inset;
+}
+.type-pill .type-btn.active.income .dot{background:#0b6b4f}
+.type-pill .type-btn.active.expense{
+  background:#fff;color:#d83232;
+  box-shadow:0 2px 6px rgba(216,50,50,.16),0 0 0 1px #d83232 inset;
+}
+.type-pill .type-btn.active.expense .dot{background:#d83232}
+.type-divider{width:1px;height:22px;background:#d7e2dc;margin:0 2px}
 
-.input:focus,
-.select:focus,
-.textarea:focus{
-  border-color:#0b6b4f;
-  background:#fff;
+.section-title{
+  font-size:11px;font-weight:900;color:#5f6965;
+  letter-spacing:.4px;text-transform:uppercase;
+  margin:0 0 8px 4px;
+}
+.category-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.cat-chip{
+  padding:8px 13px;border-radius:999px;
+  border:1px solid #dfe8e3;background:#f8fbf9;color:#5d6763;
+  font-size:12px;font-weight:800;line-height:1;
+  transition:all .15s ease;white-space:nowrap;
+}
+.cat-chip:active{transform:scale(.96)}
+.cat-chip.active{
+  background:#0b6b4f;border-color:#0b6b4f;color:#fff;
+  box-shadow:0 3px 8px rgba(11,107,79,.28);
+}
+.amount-block{
+  margin-bottom:14px;padding:14px 14px 12px;border-radius:16px;
+  background:linear-gradient(180deg,#f4faf7 0%,#eaf5ef 100%);
+  border:1px solid #d3e8dd;box-shadow:inset 0 1px 0 #fff;
+}
+.amount-label{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:11px;font-weight:800;color:#5f6965;
+  margin-bottom:6px;letter-spacing:.2px;
+}
+.amount-label .hint{font-size:10px;font-weight:600;color:#8fa39a}
+.amount-input-wrap{display:flex;align-items:center;gap:6px}
+.amount-currency{font-size:22px;font-weight:900;color:#0b6b4f;line-height:1}
+.amount-input{
+  flex:1;border:0;background:transparent;outline:none;
+  font-size:26px;font-weight:900;color:#0b6b4f;
+  letter-spacing:-.5px;padding:2px 0;min-width:0;font-family:inherit;
+}
+.amount-input::placeholder{color:#a9c4b7;font-weight:800}
+.note-wrap{margin-bottom:14px}
+.note-wrap textarea{
+  width:100%;min-height:56px;padding:10px 12px;
+  border:1px solid #dfe8e3;border-radius:12px;
+  background:#f9fbfa;outline:none;font-size:13px;color:#202522;
+  resize:none;font-family:inherit;
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+.note-wrap textarea:focus{
+  border-color:#0b6b4f;background:#fff;
   box-shadow:0 0 0 3px rgba(11,107,79,.07);
 }
-
-/* =========================
-   TYPE BUTTON
-========================= */
-
-.type-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-.type-btn{
-  height:43px;
-
-  border:1px solid #dce5e1;
-  border-radius:11px;
-
-  background:#f7f9f8;
-  color:#606a66;
-
-  font-size:13px;
-  font-weight:800;
-}
-
-.type-btn.active.income{
-  background:#e7f6f0;
-  border-color:#0b6b4f;
-  color:#0b6b4f;
-  box-shadow:inset 0 0 0 1px rgba(11,107,79,.08);
-}
-
-.type-btn.active.expense{
-  background:#fff0f0;
-  border-color:#d83232;
-  color:#d83232;
-  box-shadow:inset 0 0 0 1px rgba(216,50,50,.07);
-}
-
-/* =========================
-   SAVE
-========================= */
-
 .save-btn{
-  width:100%;
-  height:47px;
-
-  border:0;
-  border-radius:12px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #15906d,
-      #0b6b4f
-    );
-
-  color:#fff;
-
-  font-size:14px;
-  font-weight:900;
-
-  box-shadow:
-    0 3px 0 #064735,
-    0 7px 14px rgba(11,107,79,.18);
+  width:100%;height:52px;border:0;border-radius:14px;
+  background:linear-gradient(145deg,#15906d,#0b6b4f);
+  color:#fff;font-size:15px;font-weight:900;letter-spacing:.3px;
+  box-shadow:0 3px 0 #064735,0 8px 16px rgba(11,107,79,.22);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:transform .08s ease,box-shadow .08s ease;
 }
-
 .save-btn:active{
   transform:translateY(2px);
-
-  box-shadow:
-    0 1px 0 #064735,
-    0 4px 9px rgba(11,107,79,.16);
+  box-shadow:0 1px 0 #064735,0 4px 9px rgba(11,107,79,.18);
 }
-
+.save-btn .save-icon{font-size:16px}
 .form-message{
-  min-height:17px;
-  text-align:center;
-  font-size:11px;
-  margin-top:8px;
+  min-height:17px;text-align:center;font-size:11px;margin-top:8px;
 }
-
-.form-message.success{
-  color:#0b6b4f;
-}
-
-.form-message.error{
-  color:#d83232;
-}
-
-/* =========================
-   HISTORY FILTER
-========================= */
-
-#historyPage{
-  flex-direction:column;
-  overflow:hidden;
-}
-
-#historyPage.active{
-  display:flex;
-}
-
-#historyPage .container{
-  height:100%;
-  min-height:0;
-
-  display:flex;
-  flex-direction:column;
-}
-
-.history-card{
-  background:#fff;
-
-  border:1px solid #e4ebe8;
-  border-radius:17px;
-
-  padding:11px;
-
-  box-shadow:
-    0 3px 0 #e0e7e3,
-    0 7px 17px rgba(0,0,0,.05);
-
-  height:auto;
-  flex:1;
-  min-height:0;
-
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
-
-.filter-row{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:7px;
-  margin-bottom:9px;
-
-  flex:0 0 auto;
-}
-
-.filter-btn{
-  height:38px;
-
-  border:1px solid #dce5e1;
-  border-radius:10px;
-
-  background:#f7f9f8;
-  color:#66706c;
-
-  font-size:11px;
-  font-weight:800;
-}
-
-.filter-btn.active{
-  background:#0b6b4f;
-  border-color:#0b6b4f;
-  color:#fff;
-}
-
-.history-category-wrap{
-  margin-bottom:9px;
-
-  flex:0 0 auto;
-}
-
-.history-category-wrap.hidden{
-  display:none!important;
-}
-
-
-/* =========================
-   HISTORY TOTAL + CATEGORY
-========================= */
-
-.history-summary-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  align-items:stretch;
-}
-
-.history-total-box{
-  min-width:0;
-  height:38px;
-  padding:4px 8px;
-
-  background:#eaf5ef;
-  border:1px solid #cfe5d9;
-  border-radius:10px;
-
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  overflow:hidden;
-}
-
-.history-total-label{
-  font-size:9px;
-  font-weight:700;
-  color:#60776b;
-  margin-bottom:2px;
-}
-
-.history-total-value{
-  font-size:14px;
-  font-weight:900;
-  color:#0b6b4f;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.history-summary-row .select{
-  height:38px;
-  min-width:0;
-  padding:0 8px;
-  font-size:11px;
-}
-
-/* =========================
-   TRANSACTION LIST
-========================= */
-
-.transaction-list{
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-
-  flex:1;
-  min-height:0;
-
-  overflow-y:auto;
-  overflow-x:hidden;
-
-  -webkit-overflow-scrolling:touch;
-
-  padding-bottom:2px;
-}
-
-.transaction-card{
-  position:relative;
-  padding:9px 11px;
-  border-radius:12px;
-  background:#fff;
-  border:1px solid #e6ebe9;
-  box-shadow:0 2px 5px rgba(0,0,0,.035);
-}
-
-.transaction-card.income{
-  border-left:3px solid #0b6b4f;
-}
-
-.transaction-card.expense{
-  border-left:3px solid #d83232;
-}
-
-.txn-row-top,
-.txn-row-bottom{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  min-width:0;
-}
-
-.txn-row-bottom{
-  margin-top:3px;
-}
-
-.txn-amount{
-  font-size:13px;
-  font-weight:900;
-  line-height:1.15;
-  white-space:nowrap;
-}
-
-.transaction-card.income .txn-amount{
-  color:#0b6b4f;
-}
-
-.transaction-card.expense .txn-amount{
-  color:#d83232;
-}
-
-.txn-date{
-  flex:0 0 auto;
-  font-size:10px;
-  font-weight:600;
-  color:#66706c;
-  white-space:nowrap;
-}
-
-.txn-info{
-  min-width:0;
-  flex:1;
-  display:flex;
-  align-items:center;
-  gap:5px;
-  overflow:hidden;
-  white-space:nowrap;
-}
-
-.txn-category{
-  font-size:11px;
-  font-weight:900;
-  color:#252b28;
-  flex:0 0 auto;
-}
-
-.txn-note-separator{
-  font-size:10px;
-  color:#a1a9a5;
-  flex:0 0 auto;
-}
-
-.txn-note{
-  font-size:10px;
-  color:#747d79;
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-
-.txn-type{
-  flex:0 0 auto;
-  font-size:11px;
-  font-weight:800;
-  white-space:nowrap;
-}
-
-.transaction-card.income .txn-type{
-  color:#0b6b4f;
-}
-
-.transaction-card.expense .txn-type{
-  color:#d83232;
-}
-
-.empty-state{
-  text-align:center;
-  padding:35px 15px;
-  color:#8a9390;
-  font-size:12px;
-}
-
-/* =========================
-   BOTTOM NAV
-========================= */
-
-.bottom-nav{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-
-  height:60px;
-
-  background:rgba(255,255,255,.97);
-
-  border-top:1px solid #e1e8e5;
-
-  box-shadow:
-    0 -5px 18px rgba(0,0,0,.07);
-
-  display:flex;
-
-  z-index:50;
-}
-
-.nav-btn{
-  flex:1;
-
-  border:0;
-  background:transparent;
-
-  color:#89928e;
-
-  font-size:10px;
-  font-weight:800;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-
-  gap:3px;
-}
-
-.nav-icon{
-  font-size:19px;
-  line-height:19px;
-}
-
-.nav-btn.active{
-  color:#0b6b4f;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
+.form-message.success{color:#0b6b4f}
+.form-message.error{color:#d83232}
+
+/* ===== HISTORY ===== */
+#historyPage{flex-direction:column;overflow:hidden}
+#historyPage.active{display:flex}
+#historyPage .container{height:100%;min-height:0;display:flex;flex-direction:column}
+.history-card{background:#fff;border:1px solid #e4ebe8;border-radius:17px;padding:11px;box-shadow:0 3px 0 #e0e7e3,0 7px 17px rgba(0,0,0,.05);height:auto;flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.filter-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:9px;flex:0 0 auto}
+.filter-btn{height:38px;border:1px solid #dce5e1;border-radius:10px;background:#f7f9f8;color:#66706c;font-size:11px;font-weight:800}
+.filter-btn.active{background:#0b6b4f;border-color:#0b6b4f;color:#fff}
+.history-category-wrap{margin-bottom:9px;flex:0 0 auto}
+.history-category-wrap.hidden{display:none!important}
+.history-summary-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:stretch}
+.history-total-box{min-width:0;height:38px;padding:4px 8px;background:#eaf5ef;border:1px solid #cfe5d9;border-radius:10px;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.history-total-label{font-size:9px;font-weight:700;color:#60776b;margin-bottom:2px}
+.history-total-value{font-size:14px;font-weight:900;color:#0b6b4f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.history-summary-row .select{height:38px;min-width:0;padding:0 8px;font-size:11px}
+.transaction-list{display:flex;flex-direction:column;gap:7px;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.transaction-card{position:relative;padding:9px 11px;border-radius:12px;background:#fff;border:1px solid #e6ebe9;box-shadow:0 2px 5px rgba(0,0,0,.035)}
+.transaction-card.income{border-left:3px solid #0b6b4f}
+.transaction-card.expense{border-left:3px solid #d83232}
+.txn-row-top,.txn-row-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0}
+.txn-row-bottom{margin-top:3px}
+.txn-amount{font-size:13px;font-weight:900;line-height:1.15;white-space:nowrap}
+.transaction-card.income .txn-amount{color:#0b6b4f}
+.transaction-card.expense .txn-amount{color:#d83232}
+.txn-date{flex:0 0 auto;font-size:10px;font-weight:600;color:#66706c;white-space:nowrap}
+.txn-info{min-width:0;flex:1;display:flex;align-items:center;gap:5px;overflow:hidden;white-space:nowrap}
+.txn-category{font-size:11px;font-weight:900;color:#252b28;flex:0 0 auto}
+.txn-note-separator{font-size:10px;color:#a1a9a5;flex:0 0 auto}
+.txn-note{font-size:10px;color:#747d79;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.txn-type{flex:0 0 auto;font-size:11px;font-weight:800;white-space:nowrap}
+.transaction-card.income .txn-type{color:#0b6b4f}
+.transaction-card.expense .txn-type{color:#d83232}
+.empty-state{text-align:center;padding:35px 15px;color:#8a9390;font-size:12px}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;height:60px;background:rgba(255,255,255,.97);border-top:1px solid #e1e8e5;box-shadow:0 -5px 18px rgba(0,0,0,.07);display:flex;z-index:50}
+.nav-btn{flex:1;border:0;background:transparent;color:#89928e;font-size:10px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.nav-icon{font-size:19px;line-height:19px}
+.nav-btn.active{color:#0b6b4f}
+
+/* ===== RESPONSIVE ===== */
 @media(max-width:420px){
-
-  .balance-card{
-    padding:16px 17px 18px;
-    margin-bottom:9px;
-    border-radius:19px;
-  }
-
-  .balance-value{
-    font-size:28px;
-  }
-
-  .form-card{
-    padding:12px;
-  }
-
+  .atm-card{padding:16px 17px;border-radius:18px;max-height:250px}
+  .card-balance-value{font-size:28px}
+  .card-number{font-size:14px;letter-spacing:2.5px;gap:10px}
+  .form-card{padding:14px 12px 12px}
+  .amount-input{font-size:24px}
 }
-
 @media(max-height:700px){
-
-  .app-header{
-    height:58px;
-  }
-
-  .main{
-    height:calc(100% - 58px);
-  }
-
-  .page{
-    padding-top:9px;
-  }
-
-  .balance-card{
-    padding:13px 15px 15px;
-    margin-bottom:8px;
-  }
-
-  .balance-value{
-    font-size:26px;
-  }
-
-  .field{
-    margin-bottom:8px;
-  }
-
-  .input,
-  .select{
-    height:41px;
-  }
-
-  .textarea{
-    min-height:58px;
-  }
-
-  .save-btn{
-    height:44px;
-  }
-
+  .atm-card{max-height:220px;padding:14px 16px;margin-bottom:12px;aspect-ratio:1.55/1}
+  .card-balance-value{font-size:25px}
+  .card-chip{width:32px;height:24px}
+  .card-brand{font-size:12px}
+  .card-number{font-size:13px;margin:1px 0 9px;letter-spacing:2.5px}
+  .card-balance-label{font-size:9px}
+  .card-holder-name{font-size:13px}
+  .card-total-value{font-size:14px}
+  .amount-input{font-size:22px}
+  .amount-block{padding:11px 12px 9px;margin-bottom:11px}
+  .type-pill .type-btn{height:36px;font-size:12px}
+  .cat-chip{padding:7px 11px;font-size:11px}
+  .note-wrap textarea{min-height:48px}
+  .save-btn{height:46px}
 }
-
-/* =========================
-   LOADING
-========================= */
-
-.loading{
-  opacity:.65;
-  pointer-events:none;
-}
+.loading{opacity:.65;pointer-events:none}
 </style>
 </head>
-
 <body>
 
-<!-- =========================
-     LOGIN SCREEN
-========================= -->
-
+<!-- ===== LOGIN ===== -->
 <div id="loginScreen">
-
   <div class="login-box">
-
     <div class="login-logo">৳</div>
-
-    <div class="login-title">
-      আমার হিসাব
-    </div>
-
-    <div class="login-subtitle">
-      সহজে আয়-ব্যয়ের হিসাব রাখুন
-    </div>
-
-    <input
-      id="usernameInput"
-      class="login-input"
-      type="text"
-      autocomplete="username"
-      placeholder="Username"
-    >
-
-    <input
-      id="passwordInput"
-      class="login-input"
-      type="password"
-      autocomplete="current-password"
-      placeholder="Password"
-    >
-
-    <button
-      id="loginBtn"
-      class="login-btn"
-      type="button"
-    >
-      Login
-    </button>
-
+    <div class="login-title">আমার হিসাব</div>
+    <div class="login-subtitle">সহজে আয়-ব্যয়ের হিসাব রাখুন</div>
+    <input id="usernameInput" class="login-input" type="text" autocomplete="username" placeholder="Username">
+    <input id="passwordInput" class="login-input" type="password" autocomplete="current-password" placeholder="Password">
+    <button id="loginBtn" class="login-btn" type="button">Login</button>
     <div id="loginError" class="login-error"></div>
-
   </div>
-
 </div>
 
-
-<!-- =========================
-     APP
-========================= -->
-
+<!-- ===== APP ===== -->
 <div id="app">
-
-  <header class="app-header">
-
-    <div class="header-left">
-
-      <div class="app-title">
-        আমার হিসাব
-      </div>
-
-      <div id="usernameDisplay" class="username"></div>
-
-    </div>
-
-    <div class="header-right">
-
-      <div id="syncStatus" class="sync-status">
-        Offline
-      </div>
-
-      <button
-        id="logoutBtn"
-        class="logout-btn"
-        type="button"
-        aria-label="Logout"
-      >
-        🚪
-      </button>
-
-    </div>
-
-  </header>
-
-
   <main class="main">
-
-    <!-- =========================
-         ADD PAGE
-    ========================= -->
-
-    <section
-      id="addPage"
-      class="page active"
-    >
-
+    <!-- ===== ADD PAGE ===== -->
+    <section id="addPage" class="page active">
       <div class="container">
 
-        <div
-          id="kqdsi4"
-          class="balance-card"
-        >
+        <!-- ★ BIG ATM CARD (no top-left→right sweep) ★ -->
+        <div id="kqdsi4" class="atm-card sync-synced">
 
-          <div class="balance-label">
-            বর্তমান ব্যালেন্স
-          </div>
-
-          <div
-            id="balanceValue"
-            class="balance-value"
-          >
-            0 TK
-          </div>
-<div class="balance-total-wrap">
-
-  <div class="balance-total-label">
-    মোট ব্যালেন্স
-  </div>
-
-  <div
-    id="totalBalanceValue"
-    class="balance-total-value"
-  >
-    0 TK
-  </div>
-
-</div>
-          <div
-            id="balanceStatus"
-            class="balance-status"
-          ></div>
-
-        </div>
-
-
-        <div class="form-card">
-
-          <div class="field">
-
-            <label class="field-label">
-              তারিখ
-            </label>
-
-            <input
-              id="dateInput"
-              class="input"
-              type="date"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label class="field-label">
-              Amount
-            </label>
-
-            <input
-              id="amountInput"
-              class="input"
-              type="text"
-              inputmode="numeric"
-              autocomplete="off"
-              placeholder="টাকার পরিমাণ"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label class="field-label">
-              হিসাবের ধরন
-            </label>
-
-            <div class="type-row">
-
-              <button
-                id="incomeBtn"
-                class="type-btn income active"
-                type="button"
-              >
-                আয়
-              </button>
-
-              <button
-                id="expenseBtn"
-                class="type-btn expense"
-                type="button"
-              >
-                ব্যয়
-              </button>
-
+          <div class="card-top">
+            <div class="card-top-left">
+              <div class="card-chip"></div>
+              <div class="card-brand">
+                আমার হিসাব
+                <small>PREMIUM</small>
+              </div>
             </div>
 
+            <div class="card-actions">
+              <div id="syncStatus" class="card-sync">Synced</div>
+              <button
+                id="logoutBtn"
+                class="card-logout"
+                type="button"
+                aria-label="Logout"
+                title="Logout"
+              >🚪</button>
+            </div>
           </div>
 
-
-          <div class="field">
-
-            <label class="field-label">
-              ক্যাটাগরি
-            </label>
-
-            <select
-              id="categoryInput"
-              class="select"
-            ></select>
-
+          <div class="card-number">
+            <span class="dots">••••</span>
+            <span class="dots">••••</span>
+            <span id="cardExpiry">September 2026</span>
           </div>
 
+          <div class="card-balance-label">বর্তমান ব্যালেন্স</div>
+          <div id="balanceValue" class="card-balance-value">0 TK</div>
 
-          <div class="field">
-
-            <label class="field-label">
-              নোট
-            </label>
-
-            <textarea
-              id="noteInput"
-              class="textarea"
-              placeholder="প্রয়োজনে কিছু লিখুন"
-            ></textarea>
-
+          <div class="card-bottom">
+            <div class="card-holder">
+              <div class="card-holder-label">Card Holder</div>
+              <div class="card-holder-row">
+                <div id="usernameDisplay" class="card-holder-name">Sajib Hossain</div>
+              </div>
+            </div>
+            <div class="card-total">
+              <div class="card-total-label">মোট ব্যালেন্স</div>
+              <div id="totalBalanceValue" class="card-total-value">0 TK</div>
+            </div>
           </div>
 
+          <div class="card-network">
+            <span class="c1"></span><span class="c2"></span>
+          </div>
 
-          <button
-            id="saveBtn"
-            class="save-btn"
-            type="button"
-          >
+          <div class="card-strip"></div>
+
+          <div id="balanceStatus" class="hidden"></div>
+        </div>
+
+        <!-- FORM -->
+        <div class="form-card">
+
+          <div class="date-row">
+            <span class="date-icon">📅</span>
+            <input id="dateInput" type="date">
+          </div>
+
+          <div class="type-pill">
+            <button id="incomeBtn" class="type-btn income active" type="button">
+              <span class="dot"></span> আয়
+            </button>
+            <span class="type-divider"></span>
+            <button id="expenseBtn" class="type-btn expense" type="button">
+              <span class="dot"></span> ব্যয়
+            </button>
+          </div>
+
+          <div class="section-title">ক্যাটাগরি</div>
+          <div id="categoryChips" class="category-chips"></div>
+          <select id="categoryInput" class="hidden"></select>
+
+          <div class="amount-block">
+            <div class="amount-label">
+              <span>টাকার পরিমাণ</span>
+              <span class="hint">Enter চাপলে সেভ হবে</span>
+            </div>
+            <div class="amount-input-wrap">
+              <span class="amount-currency">৳</span>
+              <input
+                id="amountInput"
+                class="amount-input"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                placeholder="0"
+              >
+            </div>
+          </div>
+
+          <div class="note-wrap">
+            <textarea id="noteInput" placeholder="নোট (ঐচ্ছিক)"></textarea>
+          </div>
+
+          <button id="saveBtn" class="save-btn" type="button">
+            <span class="save-icon">💾</span>
             হিসাব সংরক্ষণ করুন
           </button>
 
-          <div
-            id="formMessage"
-            class="form-message"
-          ></div>
+          <div id="formMessage" class="form-message"></div>
 
         </div>
-
       </div>
-
     </section>
 
-
-    
-    <!-- =========================
-         HISTORY PAGE
-    ========================= -->
-
-    <section
-      id="historyPage"
-      class="page"
-    >
-
+    <!-- ===== HISTORY ===== -->
+    <section id="historyPage" class="page">
       <div class="container">
-
         <div class="history-card">
-
           <div class="filter-row">
-
-            <button
-              class="filter-btn active"
-              data-filter="all"
-              type="button"
-            >
-              সব
-            </button>
-
-            <button
-              class="filter-btn"
-              data-filter="income"
-              type="button"
-            >
-              আয়
-            </button>
-
-            <button
-              class="filter-btn"
-              data-filter="expense"
-              type="button"
-            >
-              ব্যয়
-            </button>
-
+            <button class="filter-btn active" data-filter="all" type="button">সব</button>
+            <button class="filter-btn" data-filter="income" type="button">আয়</button>
+            <button class="filter-btn" data-filter="expense" type="button">ব্যয়</button>
           </div>
-
-          <!-- CATEGORY FILTER + TOTAL -->
-
-          <div
-            id="historyCategoryWrap"
-            class="history-category-wrap hidden"
-          >
-
+          <div id="historyCategoryWrap" class="history-category-wrap hidden">
             <div class="history-summary-row">
-
               <div class="history-total-box">
-
-                <div class="history-total-label">
-                  মোট এমাউন্ট
-                </div>
-
-                <div
-                  id="historyCategoryTotal"
-                  class="history-total-value"
-                >
-                  0 TK
-                </div>
-
+                <div class="history-total-label">মোট এমাউন্ট</div>
+                <div id="historyCategoryTotal" class="history-total-value">0 TK</div>
               </div>
-
-              <select
-                id="historyCategoryFilter"
-                class="select"
-              ></select>
-
+              <select id="historyCategoryFilter" class="select"></select>
             </div>
-
           </div>
-
-          <!-- TRANSACTION LIST -->
-
-          <div
-            id="transactionList"
-            class="transaction-list"
-          ></div>
-
+          <div id="transactionList" class="transaction-list"></div>
         </div>
-
       </div>
-
     </section>
+  </main>
 
-
-  <!-- =========================
-       BOTTOM NAV
-  ========================= -->
-
+  <!-- ===== BOTTOM NAV ===== -->
   <nav class="bottom-nav">
-
-    <button
-      id="addNavBtn"
-      class="nav-btn active"
-      type="button"
-    >
-
-      <span class="nav-icon">➕</span>
-      <span>যোগ করুন</span>
-
+    <button id="addNavBtn" class="nav-btn active" type="button">
+      <span class="nav-icon">➕</span><span>যোগ করুন</span>
     </button>
-
-
-    <button
-      id="historyNavBtn"
-      class="nav-btn"
-      type="button"
-    >
-
-      <span class="nav-icon">📋</span>
-      <span>সকল হিসাব</span>
-
+    <button id="historyNavBtn" class="nav-btn" type="button">
+      <span class="nav-icon">📋</span><span>সকল হিসাব</span>
     </button>
-
   </nav>
-
 </div>
 
-
 <script>
-
 /* =========================================================
    CONFIG
 ========================================================= */
-
-const API =
-"https://script.google.com/macros/s/AKfycbwywJPWi2Q1sIXA4gLx2r0qb78yByaKZ7RvwmxDEpmqwqUVtCcyMXzuqEWupu50G6Vj/exec";
-
+const API = "https://script.google.com/macros/s/AKfycbwywJPWi2Q1sIXA4gLx2r0qb78yByaKZ7RvwmxDEpmqwqUVtCcyMXzuqEWupu50G6Vj/exec";
 const APP_NAME = "AmarHisab";
-
 const STORAGE = {
   session: APP_NAME + "_session",
   transactions: APP_NAME + "_transactions",
   pending: APP_NAME + "_pending"
 };
 
-
 /* =========================================================
    ELEMENTS
 ========================================================= */
-
-const loginScreen =
-  document.getElementById("loginScreen");
-
-const app =
-  document.getElementById("app");
-
-const usernameInput =
-  document.getElementById("usernameInput");
-
-const passwordInput =
-  document.getElementById("passwordInput");
-
-const loginBtn =
-  document.getElementById("loginBtn");
-
-const loginError =
-  document.getElementById("loginError");
-
-const usernameDisplay =
-  document.getElementById("usernameDisplay");
-
-const syncStatus =
-  document.getElementById("syncStatus");
-
-const logoutBtn =
-  document.getElementById("logoutBtn");
-
-const addPage =
-  document.getElementById("addPage");
-
-const historyPage =
-  document.getElementById("historyPage");
-
-const balanceValue =
-  document.getElementById("balanceValue");
-const totalBalanceValue =
-  document.getElementById("totalBalanceValue");
-const balanceStatus =
-  document.getElementById("balanceStatus");
-
-const dateInput =
-  document.getElementById("dateInput");
-
-const amountInput =
-  document.getElementById("amountInput");
-
-const incomeBtn =
-  document.getElementById("incomeBtn");
-
-const expenseBtn =
-  document.getElementById("expenseBtn");
-
-const categoryInput =
-  document.getElementById("categoryInput");
-
-const noteInput =
-  document.getElementById("noteInput");
-
-const saveBtn =
-  document.getElementById("saveBtn");
-
-const formMessage =
-  document.getElementById("formMessage");
-
-const transactionList =
-  document.getElementById("transactionList");
-
-const historyCategoryWrap =
-  document.getElementById("historyCategoryWrap");
-
-const historyCategoryFilter =
-  document.getElementById("historyCategoryFilter");
-
-const historyCategoryTotal =
-  document.getElementById("historyCategoryTotal");
-
-const addNavBtn =
-  document.getElementById("addNavBtn");
-
-const historyNavBtn =
-  document.getElementById("historyNavBtn");
-
-const filterButtons =
-  document.querySelectorAll(".filter-btn");
-
+const loginScreen = document.getElementById("loginScreen");
+const app = document.getElementById("app");
+const usernameInput = document.getElementById("usernameInput");
+const passwordInput = document.getElementById("passwordInput");
+const loginBtn = document.getElementById("loginBtn");
+const loginError = document.getElementById("loginError");
+const usernameDisplay = document.getElementById("usernameDisplay");
+const syncStatus = document.getElementById("syncStatus");
+const logoutBtn = document.getElementById("logoutBtn");
+const cardExpiry = document.getElementById("cardExpiry");
+const atmCard = document.getElementById("kqdsi4");
+const addPage = document.getElementById("addPage");
+const historyPage = document.getElementById("historyPage");
+const balanceValue = document.getElementById("balanceValue");
+const totalBalanceValue = document.getElementById("totalBalanceValue");
+const balanceStatus = document.getElementById("balanceStatus");
+const dateInput = document.getElementById("dateInput");
+const amountInput = document.getElementById("amountInput");
+const incomeBtn = document.getElementById("incomeBtn");
+const expenseBtn = document.getElementById("expenseBtn");
+const categoryInput = document.getElementById("categoryInput");
+const categoryChips = document.getElementById("categoryChips");
+const noteInput = document.getElementById("noteInput");
+const saveBtn = document.getElementById("saveBtn");
+const formMessage = document.getElementById("formMessage");
+const transactionList = document.getElementById("transactionList");
+const historyCategoryWrap = document.getElementById("historyCategoryWrap");
+const historyCategoryFilter = document.getElementById("historyCategoryFilter");
+const historyCategoryTotal = document.getElementById("historyCategoryTotal");
+const addNavBtn = document.getElementById("addNavBtn");
+const historyNavBtn = document.getElementById("historyNavBtn");
+const filterButtons = document.querySelectorAll(".filter-btn");
 
 /* =========================================================
    CATEGORIES
 ========================================================= */
-
-const INCOME_CATEGORIES = [
-  "বিকাশ",
-  "বেতন",
-  "ব্যবসা",
-  "প্রফিট",
-  "অন্যান্য"
-];
-
-const EXPENSE_CATEGORIES = [
-  "বিকাশ",
-  "ব্যবসা",
-  "ফ্যামিলি",
-  "বিল",
-  "ব্যাংক ডিপিএস",
-  "অনলাইন অর্ডার",
-  "অন্যান্য"
-];
-
+const INCOME_CATEGORIES = ["বিকাশ","বেতন","ব্যবসা","প্রফিট","অন্যান্য"];
+const EXPENSE_CATEGORIES = ["বিকাশ","ব্যবসা","ফ্যামিলি","বিল","ব্যাংক ডিপিএস","অনলাইন অর্ডার","অন্যান্য"];
 
 /* =========================================================
    STATE
 ========================================================= */
-
 let currentType = "income";
-
+let selectedCategory = "";
 let transactions = [];
-
 let pendingTransactions = [];
-
 let session = null;
-
 let isSaving = false;
-
 let transactionFilter = "all";
-
 let categoryFilter = "all";
-
 let lastHistoryCategoryFilterMode = "";
-
 let lastRenderSignature = "";
-
+let lastRenderedBalance = null;
 
 /* =========================================================
    LOCAL STORAGE
 ========================================================= */
-
 function loadLocalData(){
-
   try{
-
-    const storedSession =
-      localStorage.getItem(STORAGE.session);
-
-    const storedTransactions =
-      localStorage.getItem(STORAGE.transactions);
-
-    const storedPending =
-      localStorage.getItem(STORAGE.pending);
-
-
-    if(storedSession){
-
-      session =
-        JSON.parse(storedSession);
-
-    }
-
-
+    const storedSession = localStorage.getItem(STORAGE.session);
+    const storedTransactions = localStorage.getItem(STORAGE.transactions);
+    const storedPending = localStorage.getItem(STORAGE.pending);
+    if(storedSession){ session = JSON.parse(storedSession); }
     if(storedTransactions){
-
-      const parsed =
-        JSON.parse(storedTransactions);
-
-      if(Array.isArray(parsed)){
-
-        transactions =
-          parsed.map(normalizeTransaction);
-
-      }
-
+      const parsed = JSON.parse(storedTransactions);
+      if(Array.isArray(parsed)){ transactions = parsed.map(normalizeTransaction); }
     }
-
-
     if(storedPending){
-
-      const parsed =
-        JSON.parse(storedPending);
-
-      if(Array.isArray(parsed)){
-
-        pendingTransactions =
-          parsed.map(normalizeTransaction);
-
-      }
-
+      const parsed = JSON.parse(storedPending);
+      if(Array.isArray(parsed)){ pendingTransactions = parsed.map(normalizeTransaction); }
     }
-
-  }catch(error){
-
-    console.error(
-      "Local data error:",
-      error
-    );
-
-  }
-
+  }catch(error){ console.error("Local data error:", error); }
 }
-
-
 function saveLocalTransactions(){
-
-  try{
-
-    localStorage.setItem(
-      STORAGE.transactions,
-      JSON.stringify(transactions)
-    );
-
-  }catch(error){
-
-    console.error(
-      "Save transactions error:",
-      error
-    );
-
-  }
-
+  try{ localStorage.setItem(STORAGE.transactions, JSON.stringify(transactions)); }
+  catch(error){ console.error("Save transactions error:", error); }
 }
-
-
 function saveLocalPending(){
-
-  try{
-
-    localStorage.setItem(
-      STORAGE.pending,
-      JSON.stringify(pendingTransactions)
-    );
-
-  }catch(error){
-
-    console.error(
-      "Save pending error:",
-      error
-    );
-
-  }
-
+  try{ localStorage.setItem(STORAGE.pending, JSON.stringify(pendingTransactions)); }
+  catch(error){ console.error("Save pending error:", error); }
 }
-
 
 /* =========================================================
    HELPERS
 ========================================================= */
-
 function escapeHTML(value){
-
   return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;").replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
-
 }
-
-
 function formatIndianNumber(value){
-
-  let str =
-    String(value ?? "")
-      .replace(/[^\d]/g,"");
-
-  if(!str){
-
-    return "0";
-
-  }
-
-  str =
-    str.replace(/^0+(?=\d)/,"");
-
-  if(str.length <= 3){
-
-    return str;
-
-  }
-
-  const lastThree =
-    str.slice(-3);
-
-  const other =
-    str.slice(0,-3);
-
-  return (
-    other.replace(
-      /\B(?=(\d{2})+(?!\d))/g,
-      ","
-    )
-    + "," +
-    lastThree
-  );
-
+  let str = String(value ?? "").replace(/[^\d]/g,"");
+  if(!str){ return "0"; }
+  str = str.replace(/^0+(?=\d)/,"");
+  if(str.length <= 3){ return str; }
+  const lastThree = str.slice(-3);
+  const other = str.slice(0,-3);
+  return other.replace(/\B(?=(\d{2})+(?!\d))/g,",") + "," + lastThree;
 }
-
-
 function amountToNumber(value){
-
-  const cleaned =
-    String(value ?? "")
-      .replace(/,/g,"")
-      .replace(/[^\d]/g,"");
-
-  if(!cleaned){
-
-    return 0;
-
-  }
-
-  const number =
-    Number(cleaned);
-
-  return Number.isFinite(number)
-    ? number
-    : 0;
-
+  const cleaned = String(value ?? "").replace(/,/g,"").replace(/[^\d]/g,"");
+  if(!cleaned){ return 0; }
+  const number = Number(cleaned);
+  return Number.isFinite(number) ? number : 0;
 }
-
-
 function getToday(){
-
   const d = new Date();
-
-  const year =
-    d.getFullYear();
-
-  const month =
-    String(d.getMonth()+1)
-      .padStart(2,"0");
-
-  const day =
-    String(d.getDate())
-      .padStart(2,"0");
-
+  const year = d.getFullYear();
+  const month = String(d.getMonth()+1).padStart(2,"0");
+  const day = String(d.getDate()).padStart(2,"0");
   return `${year}-${month}-${day}`;
-
 }
-
-
 function formatDate(value){
-
-  if(!value){
-
-    return "";
-
-  }
-
-  const str =
-    String(value);
-
+  if(!value){ return ""; }
+  const str = String(value);
   if(/^\d{4}-\d{2}-\d{2}$/.test(str)){
-
-    const [
-      y,
-      m,
-      d
-    ] =
-      str.split("-");
-
+    const [y,m,d] = str.split("-");
     return `${d}/${m}/${y}`;
-
   }
-
-  const date =
-    new Date(value);
-
-  if(Number.isNaN(date.getTime())){
-
-    return str;
-
-  }
-
-  const day =
-    String(date.getDate())
-      .padStart(2,"0");
-
-  const month =
-    String(date.getMonth()+1)
-      .padStart(2,"0");
-
-  const year =
-    date.getFullYear();
-
+  const date = new Date(value);
+  if(Number.isNaN(date.getTime())){ return str; }
+  const day = String(date.getDate()).padStart(2,"0");
+  const month = String(date.getMonth()+1).padStart(2,"0");
+  const year = date.getFullYear();
   return `${day}/${month}/${year}`;
-
 }
-
-
 function createTransactionId(){
-
-  return (
-    "TXN" +
-    Date.now() +
-    Math.random()
-      .toString(36)
-      .slice(2,8)
-      .toUpperCase()
-  );
-
+  return "TXN" + Date.now() + Math.random().toString(36).slice(2,8).toUpperCase();
 }
 
+/* Current month name (full) + year → "September 2026" */
+const MONTH_NAMES = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December"
+];
+function getCardDateLabel(){
+  const d = new Date();
+  return `${MONTH_NAMES[d.getMonth()]} ${d.getFullYear()}`;
+}
 
 /* =========================================================
    API
 ========================================================= */
-
 async function apiPost(payload){
-
-  const response =
-    await fetch(API,{
-      method:"POST",
-      headers:{
-        "Content-Type":
-          "text/plain;charset=utf-8"
-      },
-      body:JSON.stringify(payload)
-    });
-
-
-  const text =
-    await response.text();
-
-
+  const response = await fetch(API,{
+    method:"POST",
+    headers:{ "Content-Type":"text/plain;charset=utf-8" },
+    body:JSON.stringify(payload)
+  });
+  const text = await response.text();
   let data;
-
-
-  try{
-
-    data =
-      JSON.parse(text);
-
-  }catch(error){
-
-    throw new Error(
-      "Server response invalid"
-    );
-
-  }
-
-
-  if(data && data.ok === false){
-
-    throw new Error(
-      data.message ||
-      "Server error"
-    );
-
-  }
-
-
+  try{ data = JSON.parse(text); }
+  catch(error){ throw new Error("Server response invalid"); }
+  if(data && data.ok === false){ throw new Error(data.message || "Server error"); }
   return data;
-
 }
-
 
 /* =========================================================
    LOGIN
 ========================================================= */
-
 async function doLogin(){
-
-  const username =
-    usernameInput.value.trim();
-
-  const password =
-    passwordInput.value;
-
-
-  if(!username){
-
-    loginError.textContent =
-      "Username দিন";
-
-    return;
-
-  }
-
-
-  if(!password){
-
-    loginError.textContent =
-      "Password দিন";
-
-    return;
-
-  }
-
-
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value;
+  if(!username){ loginError.textContent = "Username দিন"; return; }
+  if(!password){ loginError.textContent = "Password দিন"; return; }
   loginBtn.disabled = true;
-
-  loginBtn.textContent =
-    "Login হচ্ছে...";
-
+  loginBtn.textContent = "Login হচ্ছে...";
   loginError.textContent = "";
-
-
   try{
-
-    const data =
-      await apiPost({
-        action:"login",
-        username,
-        password
-      });
-
-
-    if(!data || data.ok === false){
-
-      throw new Error(
-        data?.message ||
-        "Login failed"
-      );
-
-    }
-
-
+    const data = await apiPost({ action:"login", username, password });
+    if(!data || data.ok === false){ throw new Error(data?.message || "Login failed"); }
     session = {
-      username:
-        data.username ||
-        username,
-
-      userId:
-        data.userId ||
-        data.id ||
-        "",
-
-      loginAt:
-        Date.now()
+      username: data.username || username,
+      userId: data.userId || data.id || "",
+      loginAt: Date.now()
     };
-
-
-    localStorage.setItem(
-      STORAGE.session,
-      JSON.stringify(session)
-    );
-
-
+    localStorage.setItem(STORAGE.session, JSON.stringify(session));
     showApp();
-
     await initializeApp();
-
-
   }catch(error){
-
     console.error(error);
-
-    loginError.textContent =
-      error.message ||
-      "Login করা যায়নি";
-
+    loginError.textContent = error.message || "Login করা যায়নি";
   }finally{
-
     loginBtn.disabled = false;
-
-    loginBtn.textContent =
-      "Login";
-
+    loginBtn.textContent = "Login";
   }
-
 }
-
 
 /* =========================================================
    SHOW / HIDE
 ========================================================= */
-
 function showApp(){
-
-  loginScreen.style.display =
-    "none";
-
-  app.style.display =
-    "block";
-
-  usernameDisplay.textContent =
-    session?.username
-      ? session.username
-      : "";
-
+  loginScreen.style.display = "none";
+  app.style.display = "block";
+  usernameDisplay.textContent = "Sajib Hossain";
+  if(cardExpiry){ cardExpiry.textContent = getCardDateLabel(); }
 }
-
-
 function showLogin(){
-
-  app.style.display =
-    "none";
-
-  loginScreen.style.display =
-    "flex";
-
+  app.style.display = "none";
+  loginScreen.style.display = "flex";
 }
-
-
 function logout(){
-
   session = null;
-
-  localStorage.removeItem(
-    STORAGE.session
-  );
-
+  localStorage.removeItem(STORAGE.session);
   transactions = [];
-
   pendingTransactions = [];
-
   showLogin();
-
   usernameInput.value = "";
-
   passwordInput.value = "";
-
   loginError.textContent = "";
-
 }
-
 
 /* =========================================================
    CATEGORY
 ========================================================= */
-
 function updateCategories(){
+  const list = currentType === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
 
-  const list =
-    currentType === "income"
-      ? INCOME_CATEGORIES
-      : EXPENSE_CATEGORIES;
+  categoryInput.innerHTML = list.map(category =>
+    `<option value="${escapeHTML(category)}">${escapeHTML(category)}</option>`
+  ).join("");
 
+  categoryChips.innerHTML = list.map(category =>
+    `<button type="button" class="cat-chip" data-category="${escapeHTML(category)}">${escapeHTML(category)}</button>`
+  ).join("");
 
-  categoryInput.innerHTML =
-    list.map(
-      category =>
-        `<option value="${escapeHTML(category)}">
-          ${escapeHTML(category)}
-        </option>`
-    ).join("");
-
-
+  if(!list.includes(selectedCategory)){
+    selectedCategory = list[0] || "";
+  }
+  applySelectedCategory();
 }
-
+function applySelectedCategory(){
+  categoryInput.value = selectedCategory;
+  categoryChips.querySelectorAll(".cat-chip").forEach(chip => {
+    chip.classList.toggle("active", chip.dataset.category === selectedCategory);
+  });
+}
+categoryChips.addEventListener("click", function(event){
+  const chip = event.target.closest(".cat-chip");
+  if(!chip){ return; }
+  selectedCategory = chip.dataset.category || "";
+  applySelectedCategory();
+});
 
 function getHistoryCategoryList(){
-
-  if(transactionFilter === "income"){
-
-    return INCOME_CATEGORIES;
-
-  }
-
-  if(transactionFilter === "expense"){
-
-    return EXPENSE_CATEGORIES;
-
-  }
-
+  if(transactionFilter === "income"){ return INCOME_CATEGORIES; }
+  if(transactionFilter === "expense"){ return EXPENSE_CATEGORIES; }
   return [];
-
 }
-
-
-function updateHistoryCategoryFilter(
-  force = false
-){
-
-  const mode =
-    transactionFilter;
-
-
-  if(
-    !force &&
-    lastHistoryCategoryFilterMode === mode
-  ){
-
-    return;
-
-  }
-
-
-  lastHistoryCategoryFilterMode =
-    mode;
-
-
-  const categories =
-    getHistoryCategoryList();
-
-
-  if(
-    mode === "income" ||
-    mode === "expense"
-  ){
-
-    historyCategoryWrap
-      .classList
-      .remove("hidden");
-
-
-    historyCategoryFilter.innerHTML =
-      `<option value="all">সব ক্যাটাগরি</option>` +
-      categories.map(
-        category =>
-          `<option value="${escapeHTML(category)}">
-            ${escapeHTML(category)}
-          </option>`
+function updateHistoryCategoryFilter(force = false){
+  const mode = transactionFilter;
+  if(!force && lastHistoryCategoryFilterMode === mode){ return; }
+  lastHistoryCategoryFilterMode = mode;
+  const categories = getHistoryCategoryList();
+  if(mode === "income" || mode === "expense"){
+    historyCategoryWrap.classList.remove("hidden");
+    historyCategoryFilter.innerHTML = `<option value="all">সব ক্যাটাগরি</option>` +
+      categories.map(category =>
+        `<option value="${escapeHTML(category)}">${escapeHTML(category)}</option>`
       ).join("");
-
-
-    if(
-      categories.includes(categoryFilter)
-    ){
-
-      historyCategoryFilter.value =
-        categoryFilter;
-
+    if(categories.includes(categoryFilter)){
+      historyCategoryFilter.value = categoryFilter;
     }else{
-
       categoryFilter = "all";
-
-      historyCategoryFilter.value =
-        "all";
-
+      historyCategoryFilter.value = "all";
     }
-
   }else{
-
-    historyCategoryWrap
-      .classList
-      .add("hidden");
-
+    historyCategoryWrap.classList.add("hidden");
     categoryFilter = "all";
-
     historyCategoryFilter.innerHTML = "";
-
   }
-
 }
-
 
 /* =========================================================
    TYPE
 ========================================================= */
-
 function setType(type){
-
-  currentType =
-    type === "expense"
-      ? "expense"
-      : "income";
-
-
-  incomeBtn.classList.toggle(
-    "active",
-    currentType === "income"
-  );
-
-  expenseBtn.classList.toggle(
-    "active",
-    currentType === "expense"
-  );
-
-
+  currentType = type === "expense" ? "expense" : "income";
+  incomeBtn.classList.toggle("active", currentType === "income");
+  expenseBtn.classList.toggle("active", currentType === "expense");
   updateCategories();
-
 }
-
 
 /* =========================================================
    BALANCE
 ========================================================= */
-
 function calculateBalance(){
-
   let balance = 0;
-
-
   for(const tx of transactions){
-
-    const amount =
-      Number(tx.amount) || 0;
-
-
-    if(tx.type === "income"){
-
-      balance += amount;
-
-    }else if(tx.type === "expense"){
-
-      balance -= amount;
-
-    }
-
+    const amount = Number(tx.amount) || 0;
+    if(tx.type === "income"){ balance += amount; }
+    else if(tx.type === "expense"){ balance -= amount; }
   }
-
-
   return balance;
-
 }
-
-
 function calculateTotalBalance(){
-
   let total = 0;
-
   for(const tx of transactions){
-
-    const amount =
-      Number(tx.amount) || 0;
-
+    const amount = Number(tx.amount) || 0;
     if(tx.type === "income"){
-
-      // বিকাশের আয় মোট ব্যালান্সে যোগ হবে না
-      if(tx.category === "বিকাশ"){
-        continue;
-      }
-
+      if(tx.category === "বিকাশ"){ continue; }
       total += amount;
-
     }else if(tx.type === "expense"){
-
-      if(
-        tx.category === "বিকাশ" ||
-        tx.category === "ব্যবসা"
-      ){
-
-        continue;
-
-      }
-
+      if(tx.category === "বিকাশ" || tx.category === "ব্যবসা"){ continue; }
       total -= amount;
-
     }
-
   }
-
   return total;
-
 }
-
-
 function renderTotalBalance(){
-
-  const total =
-    calculateTotalBalance();
-
-  const formatted =
-    formatIndianNumber(
-      Math.abs(total)
-    );
-
-  if(total >= 0){
-
-    totalBalanceValue.textContent =
-      formatted + " TK";
-
-  }else{
-
-    totalBalanceValue.textContent =
-      "-" + formatted + " TK";
-
-  }
-
+  const total = calculateTotalBalance();
+  const formatted = formatIndianNumber(Math.abs(total));
+  if(total >= 0){ totalBalanceValue.textContent = formatted + " TK"; }
+  else{ totalBalanceValue.textContent = "-" + formatted + " TK"; }
 }
-
 function renderBalance(){
+  const balance = calculateBalance();
+  const formatted = formatIndianNumber(Math.abs(balance));
+  const text = balance >= 0
+    ? formatted + " TK"
+    : "-" + formatted + " TK";
 
-  const balance =
-    calculateBalance();
+  const changed = (lastRenderedBalance !== null && lastRenderedBalance !== balance);
+  lastRenderedBalance = balance;
 
+  balanceValue.textContent = text;
+  balanceValue.style.color = balance >= 0 ? "#ffffff" : "#ffd6d6";
 
-  const formatted =
-    formatIndianNumber(
-      Math.abs(balance)
-    );
-
-
-  if(balance >= 0){
-
-    balanceValue.textContent =
-      formatted + " TK";
-
-    balanceValue.style.color =
-      "#ffffff";
-
-  }else{
-
-    balanceValue.textContent =
-      "-" + formatted + " TK";
-
-    balanceValue.style.color =
-      "#ffd6d6";
-
+  if(changed){
+    balanceValue.classList.remove("pop");
+    void balanceValue.offsetWidth;
+    balanceValue.classList.add("pop");
   }
-  
+
   renderTotalBalance();
-  
 }
-
-
-/* =========================================================
-   SERVER BALANCE
-========================================================= */
-
-async function loadServerBalance(){
-
-  try{
-
-    const data =
-      await apiPost({
-        action:"getBalance"
-      });
-
-
-    let balance = null;
-
-
-    if(
-      typeof data?.balance === "number"
-    ){
-
-      balance =
-        data.balance;
-
-    }else if(
-      typeof data?.data?.balance === "number"
-    ){
-
-      balance =
-        data.data.balance;
-
-    }
-
-
-    if(
-      typeof balance !== "number" ||
-      !Number.isFinite(balance)
-    ){
-
-      return;
-
-    }
-
-
-    const formatted =
-      formatIndianNumber(
-        Math.abs(balance)
-      );
-
-
-    if(balance >= 0){
-
-      balanceValue.textContent =
-        formatted + " TK";
-
-      balanceValue.style.color =
-        "#ffffff";
-
-    }else{
-
-      balanceValue.textContent =
-        "-" + formatted + " TK";
-
-      balanceValue.style.color =
-        "#ffd6d6";
-
-    }
-
-  }catch(error){
-
-    console.log(
-      "Server balance unavailable:",
-      error
-    );
-
-  }
-
-}
-
 
 /* =========================================================
    NORMALIZE
 ========================================================= */
-
 function normalizeType(type){
-
-  const value =
-    String(type ?? "")
-      .trim()
-      .toLowerCase();
-
-
-  if(
-    value === "income" ||
-    value === "আয়" ||
-    value === "আয়"
-  ){
-
-    return "income";
-
-  }
-
-
-  if(
-    value === "expense" ||
-    value === "ব্যয়" ||
-    value === "ব্যয়"
-  ){
-
-    return "expense";
-
-  }
-
-
+  const value = String(type ?? "").trim().toLowerCase();
+  if(value === "income" || value === "আয়" || value === "আয়"){ return "income"; }
+  if(value === "expense" || value === "ব্যয়" || value === "ব্যয়"){ return "expense"; }
   return "income";
-
 }
-
-
 function normalizeTransaction(tx){
-
   return {
-
-    transactionId:
-      tx?.transactionId ||
-      tx?.id ||
-      createTransactionId(),
-
-    date:
-      tx?.date ||
-      getToday(),
-
-    amount:
-      Number(
-        tx?.amount ??
-        tx?.value ??
-        0
-      ) || 0,
-
-    type:
-      normalizeType(
-        tx?.type
-      ),
-
-    category:
-      tx?.category ||
-      "",
-
-    note:
-      tx?.note ||
-      "",
-
-    createdAt:
-      tx?.createdAt ||
-      tx?.timestamp ||
-      new Date().toISOString()
-
+    transactionId: tx?.transactionId || tx?.id || createTransactionId(),
+    date: tx?.date || getToday(),
+    amount: Number(tx?.amount ?? tx?.value ?? 0) || 0,
+    type: normalizeType(tx?.type),
+    category: tx?.category || "",
+    note: tx?.note || "",
+    createdAt: tx?.createdAt || tx?.timestamp || new Date().toISOString()
   };
-
 }
-
 
 /* =========================================================
    SORT
 ========================================================= */
-
 function sortTransactions(){
-
-  transactions.sort(
-    (a,b)=>{
-
-      const createdA =
-        new Date(
-          a.createdAt || 0
-        ).getTime();
-
-      const createdB =
-        new Date(
-          b.createdAt || 0
-        ).getTime();
-
-
-      if(createdB !== createdA){
-
-        return createdB - createdA;
-
-      }
-
-
-      return String(
-        b.transactionId || ""
-      ).localeCompare(
-        String(
-          a.transactionId || ""
-        )
-      );
-
-    }
-  );
-
+  transactions.sort((a,b)=>{
+    const createdA = new Date(a.createdAt || 0).getTime();
+    const createdB = new Date(b.createdAt || 0).getTime();
+    if(createdB !== createdA){ return createdB - createdA; }
+    return String(b.transactionId || "").localeCompare(String(a.transactionId || ""));
+  });
 }
-
 
 /* =========================================================
    FILTER BUTTONS
 ========================================================= */
-
 function updateFilterButtons(){
-
-  filterButtons.forEach(
-    button => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.filter ===
-        transactionFilter
-      );
-
-    }
-  );
-
+  filterButtons.forEach(button => {
+    button.classList.toggle("active", button.dataset.filter === transactionFilter);
+  });
 }
-
 
 /* =========================================================
    SET FILTER
 ========================================================= */
-
 function setTransactionFilter(filter){
-
-  transactionFilter =
-    filter || "all";
-
-  categoryFilter =
-    "all";
-
-  updateHistoryCategoryFilter(
-    true
-  );
-
+  transactionFilter = filter || "all";
+  categoryFilter = "all";
+  updateHistoryCategoryFilter(true);
   renderTransactions();
-
 }
 
 /* =========================================================
    HISTORY CATEGORY TOTAL
 ========================================================= */
-
 function renderHistoryCategoryTotal(){
-
-  if(
-    transactionFilter !== "income" &&
-    transactionFilter !== "expense"
-  ){
-
+  if(transactionFilter !== "income" && transactionFilter !== "expense"){
     historyCategoryTotal.textContent = "0 TK";
     return;
-
   }
-
   let total = 0;
-
   for(const tx of transactions){
-
-    if(tx.type !== transactionFilter){
-      continue;
-    }
-
-    if(
-      categoryFilter !== "all" &&
-      tx.category !== categoryFilter
-    ){
-      continue;
-    }
-
+    if(tx.type !== transactionFilter){ continue; }
+    if(categoryFilter !== "all" && tx.category !== categoryFilter){ continue; }
     total += Number(tx.amount) || 0;
-
   }
-
-  historyCategoryTotal.textContent =
-    formatIndianNumber(total) + " TK";
-
+  historyCategoryTotal.textContent = formatIndianNumber(total) + " TK";
 }
-
 
 /* =========================================================
    FILTERED TRANSACTIONS
 ========================================================= */
-
 function getFilteredTransactions(){
-
-  let result =
-    transactions;
-
-
-  if(
-    transactionFilter !== "all"
-  ){
-
-    result =
-      result.filter(
-        tx =>
-          tx.type ===
-          transactionFilter
-      );
-
+  let result = transactions;
+  if(transactionFilter !== "all"){
+    result = result.filter(tx => tx.type === transactionFilter);
   }
-
-
-  if(
-    categoryFilter !== "all"
-  ){
-
-    result =
-      result.filter(
-        tx =>
-          tx.category ===
-          categoryFilter
-      );
-
+  if(categoryFilter !== "all"){
+    result = result.filter(tx => tx.category === categoryFilter);
   }
-
-
   return result;
-
 }
-
 
 /* =========================================================
    RENDER SIGNATURE
 ========================================================= */
-
 function getTransactionRenderSignature(){
-
-  const filtered =
-    getFilteredTransactions();
-
-
+  const filtered = getFilteredTransactions();
   return JSON.stringify({
-
-    filter:
-      transactionFilter,
-
-    category:
-      categoryFilter,
-
-    data:
-      filtered.map(
-        tx => [
-
-          tx.transactionId,
-          tx.date,
-          tx.amount,
-          tx.type,
-          tx.category,
-          tx.note
-
-        ]
-      )
-
+    filter: transactionFilter,
+    category: categoryFilter,
+    data: filtered.map(tx => [
+      tx.transactionId, tx.date, tx.amount,
+      tx.type, tx.category, tx.note
+    ])
   });
-
 }
-
 
 /* =========================================================
    RENDER TRANSACTIONS
 ========================================================= */
-
 function renderTransactions(){
-
   sortTransactions();
-
   renderBalance();
-
   updateFilterButtons();
-
   updateHistoryCategoryFilter();
-  
   renderHistoryCategoryTotal();
 
-  const filtered =
-    getFilteredTransactions();
-
-
-  const signature =
-    getTransactionRenderSignature();
-
-
-  if(
-    signature ===
-    lastRenderSignature
-  ){
-
-    return;
-
-  }
-
-
-  lastRenderSignature =
-    signature;
-
+  const filtered = getFilteredTransactions();
+  const signature = getTransactionRenderSignature();
+  if(signature === lastRenderSignature){ return; }
+  lastRenderSignature = signature;
 
   if(!filtered.length){
-
-    transactionList.innerHTML =
-      `
-      <div class="empty-state">
-        কোনো হিসাব পাওয়া যায়নি
-      </div>
-      `;
-
+    transactionList.innerHTML = `<div class="empty-state">কোনো হিসাব পাওয়া যায়নি</div>`;
     return;
-
   }
 
+  const scrollTop = historyPage.scrollTop;
 
-  const scrollTop =
-    historyPage.scrollTop;
+  transactionList.innerHTML = filtered.map(tx => {
+    const amount = formatIndianNumber(Math.abs(Number(tx.amount) || 0));
+    const isIncome = tx.type === "income";
+    const typeText = isIncome ? "আয়" : "ব্যয়";
+    const sign = isIncome ? "+" : "-";
 
-
-  transactionList.innerHTML =
-    filtered.map(
-      tx => {
-
-        const amount =
-          formatIndianNumber(
-            Math.abs(
-              Number(tx.amount) || 0
-            )
-          );
-
-
-        const isIncome =
-          tx.type === "income";
-
-
-        const typeText =
-          isIncome
-            ? "আয়"
-            : "ব্যয়";
-
-
-        const sign =
-          isIncome
-            ? "+"
-            : "-";
-
-
-        return `
+    return `
 <div class="transaction-card ${isIncome ? "income" : "expense"}">
-
   <div class="txn-row-top">
-
-    <div class="txn-amount">
-      ${sign}${amount} TK
-    </div>
-
-    <div class="txn-date">
-      ${escapeHTML(formatDate(tx.date))}
-    </div>
-
+    <div class="txn-amount">${sign}${amount} TK</div>
+    <div class="txn-date">${escapeHTML(formatDate(tx.date))}</div>
   </div>
-
   <div class="txn-row-bottom">
-
     <div class="txn-info">
-
-      <span class="txn-category">
-        ${escapeHTML(tx.category || "অন্যান্য")}
-      </span>
-
-      ${
-        tx.note
-          ? `
-            <span class="txn-note-separator">•</span>
-            <span class="txn-note">
-              ${escapeHTML(tx.note)}
-            </span>
-          `
-          : ""
-      }
-
+      <span class="txn-category">${escapeHTML(tx.category || "অন্যান্য")}</span>
+      ${tx.note ? `<span class="txn-note-separator">•</span><span class="txn-note">${escapeHTML(tx.note)}</span>` : ""}
     </div>
-
-    <div class="txn-type">
-      ${typeText}
-    </div>
-
+    <div class="txn-type">${typeText}</div>
   </div>
+</div>`;
+  }).join("");
 
-</div>
-`;
-
-      }
-    ).join("");
-
-
-  historyPage.scrollTop =
-    scrollTop;
-
+  historyPage.scrollTop = scrollTop;
 }
-
 
 /* =========================================================
    LOCAL TRANSACTION
 ========================================================= */
-
 function addLocalTransaction(tx){
-
-  const exists =
-    transactions.some(
-      item =>
-        item.transactionId ===
-        tx.transactionId
-    );
-
-
-  if(!exists){
-
-    transactions.unshift(
-      normalizeTransaction(tx)
-    );
-
-  }
-
-
+  const exists = transactions.some(item => item.transactionId === tx.transactionId);
+  if(!exists){ transactions.unshift(normalizeTransaction(tx)); }
   saveLocalTransactions();
-
 }
-
 
 /* =========================================================
    PENDING
 ========================================================= */
-
 function addPending(tx){
-
-  const exists =
-    pendingTransactions.some(
-      item =>
-        item.transactionId ===
-        tx.transactionId
-    );
-
-
-  if(!exists){
-
-    pendingTransactions.push(
-      normalizeTransaction(tx)
-    );
-
-  }
-
-
+  const exists = pendingTransactions.some(item => item.transactionId === tx.transactionId);
+  if(!exists){ pendingTransactions.push(normalizeTransaction(tx)); }
   saveLocalPending();
-
 }
-
-
 function removePending(transactionId){
-
-  pendingTransactions =
-    pendingTransactions.filter(
-      tx =>
-        tx.transactionId !==
-        transactionId
-    );
-
-
+  pendingTransactions = pendingTransactions.filter(tx => tx.transactionId !== transactionId);
   saveLocalPending();
-
 }
-
 
 /* =========================================================
    FORM MESSAGE
 ========================================================= */
-
-function showFormMessage(
-  message,
-  type = ""
-){
-
-  formMessage.textContent =
-    message;
-
-  formMessage.className =
-    "form-message " +
-    type;
-
-
+function showFormMessage(message, type = ""){
+  formMessage.textContent = message;
+  formMessage.className = "form-message " + type;
 }
-
 
 /* =========================================================
    SAVE TRANSACTION
 ========================================================= */
-
 async function saveTransaction(){
+  if(isSaving){ return; }
 
-  if(isSaving){
+  const date = dateInput.value;
+  const amount = amountToNumber(amountInput.value);
+  const category = selectedCategory || categoryInput.value;
+  const note = noteInput.value.trim();
 
-    return;
-
-  }
-
-
-  const date =
-    dateInput.value;
-
-
-  const amount =
-    amountToNumber(
-      amountInput.value
-    );
-
-
-  const category =
-    categoryInput.value;
-
-
-  const note =
-    noteInput.value.trim();
-
-
-  if(!date){
-
-    showFormMessage(
-      "তারিখ দিন",
-      "error"
-    );
-
-    return;
-
-  }
-
-
+  if(!date){ showFormMessage("তারিখ দিন", "error"); return; }
   if(amount <= 0){
-
-    showFormMessage(
-      "সঠিক Amount দিন",
-      "error"
-    );
-
+    showFormMessage("সঠিক Amount দিন", "error");
     amountInput.focus();
-
     return;
-
   }
-
-
-  if(!category){
-
-    showFormMessage(
-      "ক্যাটাগরি নির্বাচন করুন",
-      "error"
-    );
-
-    return;
-
-  }
-
+  if(!category){ showFormMessage("ক্যাটাগরি নির্বাচন করুন", "error"); return; }
 
   const tx = {
-
-    transactionId:
-      createTransactionId(),
-
-    date,
-
-    amount,
-
-    type:
-      currentType,
-
-    category,
-
-    note,
-
-    createdAt:
-      new Date().toISOString()
-
+    transactionId: createTransactionId(),
+    date, amount,
+    type: currentType,
+    category, note,
+    createdAt: new Date().toISOString()
   };
 
-
   isSaving = true;
-
-  saveBtn.classList.add(
-    "loading"
-  );
-
-
-  /* Local first */
+  saveBtn.classList.add("loading");
 
   addLocalTransaction(tx);
-
   lastRenderSignature = "";
-
   renderTransactions();
 
-
   amountInput.value = "";
-
   noteInput.value = "";
-
-  dateInput.value =
-    getToday();
-
-
-  showFormMessage(
-    "হিসাব সংরক্ষণ হয়েছে",
-    "success"
-  );
-
-
-  /* Server sync */
+  dateInput.value = getToday();
+  showFormMessage("হিসাব সংরক্ষণ হয়েছে", "success");
 
   if(!navigator.onLine){
-
     addPending(tx);
-
-    showFormMessage(
-      "Offline — পরে Sync হবে",
-      "success"
-    );
-
+    showFormMessage("Offline — পরে Sync হবে", "success");
     isSaving = false;
-
-    saveBtn.classList.remove(
-      "loading"
-    );
-
+    saveBtn.classList.remove("loading");
     return;
-
   }
-
 
   try{
-
     await apiPost({
-
-      action:
-        "addTransaction",
-
-      transactionId:
-        tx.transactionId,
-
-      date:
-        tx.date,
-
-      amount:
-        tx.amount,
-
-      type:
-        tx.type,
-
-      category:
-        tx.category,
-
-      note:
-        tx.note,
-
-      createdAt:
-        tx.createdAt
-
+      action: "addTransaction",
+      transactionId: tx.transactionId,
+      date: tx.date,
+      amount: tx.amount,
+      type: tx.type,
+      category: tx.category,
+      note: tx.note,
+      createdAt: tx.createdAt
     });
-
-
-    removePending(
-      tx.transactionId
-    );
-
-
-    setSyncStatus(
-      "Synced"
-    );
-
-
-    showFormMessage(
-      "হিসাব Sync হয়েছে ✓",
-      "success"
-    );
-
-
+    removePending(tx.transactionId);
+    setSyncStatus("Synced");
+    showFormMessage("হিসাব Sync হয়েছে ✓", "success");
     await loadTransactions();
-
-
   }catch(error){
-
     console.error(error);
-
     addPending(tx);
-
-
-    setSyncStatus(
-      "Pending"
-    );
-
-
-    showFormMessage(
-      "Local-এ রাখা হয়েছে — পরে Sync হবে",
-      "success"
-    );
-
+    setSyncStatus("Pending");
+    showFormMessage("Local-এ রাখা হয়েছে — পরে Sync হবে", "success");
   }finally{
-
     isSaving = false;
-
-    saveBtn.classList.remove(
-      "loading"
-    );
-
+    saveBtn.classList.remove("loading");
   }
-
 }
-
 
 /* =========================================================
    PENDING SYNC
 ========================================================= */
-
 async function syncPending(){
-
-  if(
-    !navigator.onLine ||
-    !pendingTransactions.length
-  ){
-
-    return;
-
-  }
-
-
-  const pendingCopy =
-    [...pendingTransactions];
-
-
+  if(!navigator.onLine || !pendingTransactions.length){ return; }
+  const pendingCopy = [...pendingTransactions];
   for(const tx of pendingCopy){
-
     try{
-
       await apiPost({
-
-        action:
-          "addTransaction",
-
-        transactionId:
-          tx.transactionId,
-
-        date:
-          tx.date,
-
-        amount:
-          tx.amount,
-
-        type:
-          tx.type,
-
-        category:
-          tx.category,
-
-        note:
-          tx.note,
-
-        createdAt:
-          tx.createdAt
-
+        action: "addTransaction",
+        transactionId: tx.transactionId,
+        date: tx.date,
+        amount: tx.amount,
+        type: tx.type,
+        category: tx.category,
+        note: tx.note,
+        createdAt: tx.createdAt
       });
-
-
-      removePending(
-        tx.transactionId
-      );
-
-
-    }catch(error){
-
-      console.log(
-        "Pending sync failed:",
-        error
-      );
-
-    }
-
+      removePending(tx.transactionId);
+    }catch(error){ console.log("Pending sync failed:", error); }
   }
-
-
-  if(
-    pendingTransactions.length === 0
-  ){
-
-    setSyncStatus(
-      "Synced"
-    );
-
-  }else{
-
-    setSyncStatus(
-      "Pending"
-    );
-
-  }
-
+  if(pendingTransactions.length === 0){ setSyncStatus("Synced"); }
+  else{ setSyncStatus("Pending"); }
 }
-
 
 /* =========================================================
    LOAD TRANSACTIONS
 ========================================================= */
-
 async function loadTransactions(){
-
-  if(!navigator.onLine){
-
-    setSyncStatus(
-      "Offline"
-    );
-
-    return;
-
-  }
-
-
+  if(!navigator.onLine){ setSyncStatus("Offline"); return; }
   try{
-
-    setSyncStatus(
-      "Syncing..."
-    );
-
-
-    const data =
-      await apiPost({
-
-        action:
-          "getTransactions"
-
-      });
-
+    setSyncStatus("Syncing...");
+    const data = await apiPost({ action:"getTransactions" });
 
     let serverTransactions = [];
+    if(Array.isArray(data)){ serverTransactions = data; }
+    else if(Array.isArray(data?.transactions)){ serverTransactions = data.transactions; }
+    else if(Array.isArray(data?.data)){ serverTransactions = data.data; }
 
+    const normalized = serverTransactions.map(normalizeTransaction);
+    const pendingIds = new Set(pendingTransactions.map(tx => tx.transactionId));
 
-    if(Array.isArray(data)){
+    transactions = normalized.filter(tx => !pendingIds.has(tx.transactionId));
 
-      serverTransactions =
-        data;
-
-    }else if(
-      Array.isArray(
-        data?.transactions
-      )
-    ){
-
-      serverTransactions =
-        data.transactions;
-
-    }else if(
-      Array.isArray(
-        data?.data
-      )
-    ){
-
-      serverTransactions =
-        data.data;
-
+    for(const pending of pendingTransactions){
+      const exists = transactions.some(tx => tx.transactionId === pending.transactionId);
+      if(!exists){ transactions.push(pending); }
     }
-
-
-    const normalized =
-      serverTransactions
-        .map(normalizeTransaction);
-
-
-    const pendingIds =
-      new Set(
-        pendingTransactions.map(
-          tx =>
-            tx.transactionId
-        )
-      );
-
-
-    transactions =
-      normalized.filter(
-        tx =>
-          !pendingIds.has(
-            tx.transactionId
-          )
-      );
-
-
-    /* Keep pending locally */
-
-    for(
-      const pending
-      of pendingTransactions
-    ){
-
-      const exists =
-        transactions.some(
-          tx =>
-            tx.transactionId ===
-            pending.transactionId
-        );
-
-
-      if(!exists){
-
-        transactions.push(
-          pending
-        );
-
-      }
-
-    }
-
 
     saveLocalTransactions();
-
     lastRenderSignature = "";
-
     renderTransactions();
-
-
-    setSyncStatus(
-      pendingTransactions.length
-        ? "Pending"
-        : "Synced"
-    );
-
-
+    setSyncStatus(pendingTransactions.length ? "Pending" : "Synced");
   }catch(error){
-
     console.error(error);
-
-    setSyncStatus(
-      navigator.onLine
-        ? "Offline"
-        : "Offline"
-    );
-
+    setSyncStatus(navigator.onLine ? "Offline" : "Offline");
     lastRenderSignature = "";
-
     renderTransactions();
-
   }
-
 }
-
 
 /* =========================================================
-   SYNC STATUS
+   SYNC STATUS + SYNC-LINKED CARD BORDER COLOR
 ========================================================= */
-
 function setSyncStatus(status){
+  syncStatus.textContent = status;
 
-  syncStatus.textContent =
-    status;
+  if(!atmCard){ return; }
 
+  atmCard.classList.remove(
+    "sync-synced","sync-syncing","sync-pending",
+    "sync-offline","sync-online"
+  );
+
+  const s = String(status || "").toLowerCase();
+
+  if(s.includes("sync") && s.includes("...")){
+    atmCard.classList.add("sync-syncing");
+  }else if(s.includes("sync") && s.includes("ed")){
+    atmCard.classList.add("sync-synced");
+  }else if(s.includes("pending")){
+    atmCard.classList.add("sync-pending");
+  }else if(s.includes("offline")){
+    atmCard.classList.add("sync-offline");
+  }else if(s.includes("online")){
+    atmCard.classList.add("sync-online");
+  }else{
+    atmCard.classList.add("sync-synced");
+  }
 }
-
 
 /* =========================================================
    NAVIGATION
 ========================================================= */
-
 function showPage(page){
-
   if(page === "history"){
-
-    addPage.classList.remove(
-      "active"
-    );
-
-    historyPage.classList.add(
-      "active"
-    );
-
-
-    addNavBtn.classList.remove(
-      "active"
-    );
-
-    historyNavBtn.classList.add(
-      "active"
-    );
-
-
-    updateHistoryCategoryFilter(
-      true
-    );
-
+    addPage.classList.remove("active");
+    historyPage.classList.add("active");
+    addNavBtn.classList.remove("active");
+    historyNavBtn.classList.add("active");
+    updateHistoryCategoryFilter(true);
     renderTransactions();
-
-
   }else{
-
-    historyPage.classList.remove(
-      "active"
-    );
-
-    addPage.classList.add(
-      "active"
-    );
-
-
-    historyNavBtn.classList.remove(
-      "active"
-    );
-
-    addNavBtn.classList.add(
-      "active"
-    );
-
+    historyPage.classList.remove("active");
+    addPage.classList.add("active");
+    historyNavBtn.classList.remove("active");
+    addNavBtn.classList.add("active");
   }
-
 }
-
 
 /* =========================================================
    AMOUNT INPUT FORMAT
 ========================================================= */
+amountInput.addEventListener("input", function(){
+  const oldValue = this.value;
+  const oldCursor = this.selectionStart || 0;
 
-amountInput.addEventListener(
-  "input",
-  function(){
+  const beforeDigits = oldValue.slice(0,oldCursor).replace(/[^\d]/g,"").length;
+  const digits = oldValue.replace(/[^\d]/g,"");
+  const formatted = formatIndianNumber(digits);
 
-    const oldValue =
-      this.value;
+  this.value = formatted;
 
-    const oldCursor =
-      this.selectionStart || 0;
-
-
-    const beforeDigits =
-      oldValue
-        .slice(0,oldCursor)
-        .replace(/[^\d]/g,"")
-        .length;
-
-
-    const digits =
-      oldValue
-        .replace(/[^\d]/g,"");
-
-
-    const formatted =
-      formatIndianNumber(
-        digits
-      );
-
-
-    this.value =
-      formatted;
-
-
-    let cursor =
-      formatted.length;
-
-
-    if(
-      beforeDigits > 0
-    ){
-
-      let count = 0;
-
-      cursor = 0;
-
-
-      for(
-        let i=0;
-        i<formatted.length;
-        i++
-      ){
-
-        if(/\d/.test(formatted[i])){
-
-          count++;
-
-        }
-
-
-        cursor = i + 1;
-
-
-        if(
-          count >= beforeDigits
-        ){
-
-          break;
-
-        }
-
-      }
-
+  let cursor = formatted.length;
+  if(beforeDigits > 0){
+    let count = 0;
+    cursor = 0;
+    for(let i=0; i<formatted.length; i++){
+      if(/\d/.test(formatted[i])){ count++; }
+      cursor = i + 1;
+      if(count >= beforeDigits){ break; }
     }
-
-
-    try{
-
-      this.setSelectionRange(
-        cursor,
-        cursor
-      );
-
-    }catch(error){}
-
   }
-);
-
+  try{ this.setSelectionRange(cursor, cursor); }catch(error){}
+});
 
 /* =========================================================
    KEYBOARD
 ========================================================= */
-
-amountInput.addEventListener(
-  "keydown",
-  function(event){
-
-    if(
-      event.key === "Enter"
-    ){
-
-      event.preventDefault();
-
-      saveTransaction();
-
-    }
-
-  }
-);
-
-
-noteInput.addEventListener(
-  "keydown",
-  function(event){
-
-    if(
-      event.key === "Enter" &&
-      !event.shiftKey
-    ){
-
-      event.preventDefault();
-
-      saveTransaction();
-
-    }
-
-  }
-);
-
+amountInput.addEventListener("keydown", function(event){
+  if(event.key === "Enter"){ event.preventDefault(); saveTransaction(); }
+});
+noteInput.addEventListener("keydown", function(event){
+  if(event.key === "Enter" && !event.shiftKey){ event.preventDefault(); saveTransaction(); }
+});
 
 /* =========================================================
    EVENTS
 ========================================================= */
+loginBtn.addEventListener("click", doLogin);
+passwordInput.addEventListener("keydown", function(event){
+  if(event.key === "Enter"){ event.preventDefault(); doLogin(); }
+});
+usernameInput.addEventListener("keydown", function(event){
+  if(event.key === "Enter"){ event.preventDefault(); passwordInput.focus(); }
+});
+logoutBtn.addEventListener("click", logout);
+incomeBtn.addEventListener("click", function(){ setType("income"); });
+expenseBtn.addEventListener("click", function(){ setType("expense"); });
+saveBtn.addEventListener("click", saveTransaction);
+addNavBtn.addEventListener("click", function(){ showPage("add"); });
+historyNavBtn.addEventListener("click", function(){ showPage("history"); });
 
-loginBtn.addEventListener(
-  "click",
-  doLogin
-);
+filterButtons.forEach(button => {
+  button.addEventListener("click", function(){
+    setTransactionFilter(this.dataset.filter);
+  });
+});
 
-
-passwordInput.addEventListener(
-  "keydown",
-  function(event){
-
-    if(
-      event.key === "Enter"
-    ){
-
-      event.preventDefault();
-
-      doLogin();
-
-    }
-
-  }
-);
-
-
-usernameInput.addEventListener(
-  "keydown",
-  function(event){
-
-    if(
-      event.key === "Enter"
-    ){
-
-      event.preventDefault();
-
-      passwordInput.focus();
-
-    }
-
-  }
-);
-
-
-logoutBtn.addEventListener(
-  "click",
-  logout
-);
-
-
-incomeBtn.addEventListener(
-  "click",
-  function(){
-
-    setType("income");
-
-  }
-);
-
-
-expenseBtn.addEventListener(
-  "click",
-  function(){
-
-    setType("expense");
-
-  }
-);
-
-
-saveBtn.addEventListener(
-  "click",
-  saveTransaction
-);
-
-
-addNavBtn.addEventListener(
-  "click",
-  function(){
-
-    showPage("add");
-
-  }
-);
-
-
-historyNavBtn.addEventListener(
-  "click",
-  function(){
-
-    showPage("history");
-
-  }
-);
-
-
-filterButtons.forEach(
-  button => {
-
-    button.addEventListener(
-      "click",
-      function(){
-
-        setTransactionFilter(
-          this.dataset.filter
-        );
-
-      }
-    );
-
-  }
-);
-
-
-historyCategoryFilter.addEventListener(
-  "change",
-  function(){
-
-    categoryFilter =
-      this.value || "all";
-
-    lastRenderSignature = "";
-
-    renderTransactions();
-
-  }
-);
-
+historyCategoryFilter.addEventListener("change", function(){
+  categoryFilter = this.value || "all";
+  lastRenderSignature = "";
+  renderTransactions();
+});
 
 /* =========================================================
    ONLINE / OFFLINE
 ========================================================= */
-
-window.addEventListener(
-  "online",
-  async function(){
-
-    setSyncStatus(
-      "Online"
-    );
-
-    await syncPending();
-
-    await loadTransactions();
-
-  }
-);
-
-
-window.addEventListener(
-  "offline",
-  function(){
-
-    setSyncStatus(
-      "Offline"
-    );
-
-  }
-);
-
+window.addEventListener("online", async function(){
+  setSyncStatus("Online");
+  await syncPending();
+  await loadTransactions();
+});
+window.addEventListener("offline", function(){
+  setSyncStatus("Offline");
+});
 
 /* =========================================================
    PERIODIC SYNC
 ========================================================= */
-
-setInterval(
-  async function(){
-
-    if(
-      !session ||
-      !navigator.onLine
-    ){
-
-      return;
-
-    }
-
-
-    await syncPending();
-
-    await loadTransactions();
-
-  },
-  10000
-);
-
+setInterval(async function(){
+  if(!session || !navigator.onLine){ return; }
+  await syncPending();
+  await loadTransactions();
+}, 10000);
 
 /* =========================================================
    INITIALIZE
 ========================================================= */
-
 async function initializeApp(){
+  dateInput.value = getToday();
+  selectedCategory = "";
+  setType("income");
 
-  dateInput.value =
-    getToday();
+  categoryFilter = "all";
+  lastHistoryCategoryFilterMode = "";
+  lastRenderSignature = "";
 
+  if(cardExpiry){ cardExpiry.textContent = getCardDateLabel(); }
 
-  setType(
-    "income"
-  );
-
-
-  categoryFilter =
-    "all";
-
-
-  lastHistoryCategoryFilterMode =
-    "";
-
-
-  lastRenderSignature =
-    "";
-
-
-  updateHistoryCategoryFilter(
-    true
-  );
-
-
+  updateHistoryCategoryFilter(true);
   renderTransactions();
 
-
   await loadTransactions();
-
-
   await syncPending();
-
 }
-
 
 /* =========================================================
    STARTUP
 ========================================================= */
-
 loadLocalData();
 
-
 if(session){
-
   showApp();
-
   initializeApp();
-
 }else{
-
   showLogin();
-
 }
-
 </script>
 
 </body>
